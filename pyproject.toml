@@ -7,7 +7,7 @@ name = "stocklab"
 version = "0.0.0"
 description = ""
 readme = "README.md"
-dependency = []
+dependencies = []
 
 # [project.optional-dependencies]
 
