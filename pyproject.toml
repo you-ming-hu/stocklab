@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0","wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stocklab"
+version = "0.0.0"
+description = ""
+readme = "README.md"
+dependency = []
+
+# [project.optional-dependencies]
+
+# [dependency-groups]
+# dev = []
+
+# [tool.uv.sources]
+
+# [tool.setuptools]
+# include-package-data = true
+
+# [tool.setuptools.package.find]
+# where = ["src"]
+
+# [tool.setuptools.package-data]
+# package_name = ["*.yaml", "*.json"]
