@@ -1,4 +1,1 @@
-import json
-import pathlib
-
-print(pathlib.Path(__file__).parent.joinpath('config.json').exists())
+from . import market, stock
