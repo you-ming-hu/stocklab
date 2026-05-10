@@ -1,0 +1,60 @@
+import pandas as pd
+import time
+
+from . import Scraper
+
+class TWSEScraper(Scraper):
+
+    def create_session(self):
+        header = {
+            "User-Agent": "Mozilla/5.0",
+            "Referer": "https://www.twse.com.tw/"
+        }
+        return self.create_session_template(header)
+
+    def create_request_date(self, date):
+        if isinstance(date, pd.Timestamp):
+            date = date.strftime("%Y%m%d")
+        elif isinstance(date, str):
+            date = pd.Timestamp(date)
+            date = date.strftime("%Y%m%d")
+        else:
+            assert False, 'not recognized date type'
+        date = f'date={date}'
+        return date
+    
+    def create_cache_id(self):
+        return f'_={int(time.time()*1000)}'
+    
+    def assemble_request_url(self, url, *contents):
+        return url + '?' + '&'.join(contents)
+
+class STOCKS(TWSEScraper):
+
+    def create_request_url(self, date):
+        root_url = 'https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX' # 每日收盤行情(全部(不含權證、牛熊證、可展延牛熊證))
+        date = self.create_request_date(date)
+        category = 'type=ALLBUT0999'
+        format = 'response=json'
+        cache_id = self.create_cache_id()
+        url = self.assemble_request_url(root_url, date, category, format, cache_id)
+        return url
+    
+    def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
+        return super().download_batch(start_date, end_date, 'D', save_dir, stage, timeout)
+
+class MARKET(TWSEScraper):
+
+    def create_request_url(self, date):
+        root_url = 'https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK'
+        date = self.create_request_date(date)
+        format = 'response=json'
+        cache_id = self.create_cache_id()
+        url = self.assemble_request_url(root_url, date, format, cache_id)
+        return url
+    
+    def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
+        return super().download_batch(start_date, end_date, 'MS', save_dir, stage, timeout)
+
+stocks = STOCKS()
+market = MARKET()
