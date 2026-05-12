@@ -1,9 +1,20 @@
 import pandas as pd
 import time
+import json
 
 from . import Scraper
 
 class TWSEScraper(Scraper):
+
+    def request(self, session, request_info, timeout):
+        url = request_info
+        res = session.get(url, timeout=timeout)
+        return res
+
+    def save(self, res, filename):
+        data = res.json()
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
 
     def create_session(self):
         header = {
@@ -31,7 +42,7 @@ class TWSEScraper(Scraper):
 
 class STOCKS(TWSEScraper):
 
-    def create_request_url(self, date):
+    def create_request_info(self, date):
         root_url = 'https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX' # 每日收盤行情(全部(不含權證、牛熊證、可展延牛熊證))
         date = self.create_request_date(date)
         category = 'type=ALLBUT0999'
@@ -41,11 +52,11 @@ class STOCKS(TWSEScraper):
         return url
     
     def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
-        return super().download_batch(start_date, end_date, 'D', save_dir, stage, timeout)
+        return super().download_batch(start_date, end_date, 'D', save_dir, '.json', stage, timeout)
 
 class MARKET(TWSEScraper):
 
-    def create_request_url(self, date):
+    def create_request_info(self, date):
         root_url = 'https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK'
         date = self.create_request_date(date)
         format = 'response=json'
@@ -54,7 +65,7 @@ class MARKET(TWSEScraper):
         return url
     
     def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
-        return super().download_batch(start_date, end_date, 'MS', save_dir, stage, timeout)
+        return super().download_batch(start_date, end_date, 'MS', save_dir, '.json', stage, timeout)
 
 stocks = STOCKS()
 market = MARKET()
