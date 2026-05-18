@@ -39,11 +39,8 @@ class STOCKS_STAGE_1(OTCScraper):
     def save(self, res, filename):
         res.encoding = 'big5'
         pathlib.Path(filename).write_text(res.text, encoding='utf-8')
-    
-    def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
-        return super().download_batch(start_date, end_date, 'D', save_dir, '.html', stage, timeout)
-    
-stocks_stage_1 = STOCKS_STAGE_1()
+
+stocks_stage_1 = STOCKS_STAGE_1('D', '.html')
 
 class STOCKS_STAGE_2(OTCScraper):
 
@@ -74,10 +71,7 @@ class STOCKS_STAGE_2(OTCScraper):
     def save(self, res, filename):
         pathlib.Path(filename).write_text(res.json().get('html',''), encoding='utf-8-sig')
     
-    def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
-        return super().download_batch(start_date, end_date, 'D', save_dir, '.html', stage, timeout)
-    
-stocks_stage_2 = STOCKS_STAGE_2()
+stocks_stage_2 = STOCKS_STAGE_2('D', '.html')
 
 class STOCKS_STAGE_3(STOCKS_STAGE_2):
     
@@ -95,4 +89,4 @@ class STOCKS_STAGE_3(STOCKS_STAGE_2):
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
 
-stocks_stage_3 = STOCKS_STAGE_3()
+stocks_stage_3 = STOCKS_STAGE_3('D', '.json')

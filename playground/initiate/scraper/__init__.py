@@ -5,6 +5,9 @@ import pathlib
 import random
 
 class Scraper:
+    def __init__(self, freq, suffix):
+        self.freq = freq
+        self.suffix = suffix
 
     def create_session(self):
         raise NotImplementedError
@@ -64,18 +67,17 @@ class Scraper:
         print(f'Sleep: {sleep_time:.1f}')
         time.sleep(sleep_time)
         return success
-
-    def download_batch(self, start_date, end_date, freq, save_dir, suffix, stage, timeout=10):
-        RESTART_SESSION_COUNT = 1000
-
+    
+    def download_group(self, dates, save_dir, stage, timeout=10):
         save_dir = pathlib.Path(save_dir, stage)
         save_dir.mkdir(parents=True, exist_ok=True)
 
-        dates = pd.date_range(start_date, end_date, freq=freq)
+        RESTART_SESSION_COUNT = 1000
         request_count = 0
         for date in dates:
+            date = pd.Timestamp(date)
             print(date, end='\t')
-            filename = save_dir.joinpath(date.strftime("%Y%m%d")).with_suffix(suffix)
+            filename = save_dir.joinpath(date.strftime("%Y%m%d")).with_suffix(self.suffix)
             if not filename.exists():
                 if request_count % RESTART_SESSION_COUNT == 0:
                     session = self.create_session()
@@ -83,5 +85,9 @@ class Scraper:
                 while not self.download_single(session, request_info, filename, timeout, True):
                     request_count += 1
             else:
-                print('Json Exist')
+                print(f'{self.suffix.replace('.','').upper()} Exist')
+
+    def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
+        dates = pd.date_range(start_date, end_date, freq=self.freq)
+        self.download_group(dates, save_dir, stage, timeout)
         return True

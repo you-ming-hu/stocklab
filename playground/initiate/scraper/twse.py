@@ -51,9 +51,6 @@ class STOCKS(TWSEScraper):
         url = self.assemble_request_url(root_url, date, category, format, cache_id)
         return url
     
-    def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
-        return super().download_batch(start_date, end_date, 'D', save_dir, '.json', stage, timeout)
-
 class MARKET(TWSEScraper):
 
     def create_request_info(self, date):
@@ -63,9 +60,6 @@ class MARKET(TWSEScraper):
         cache_id = self.create_cache_id()
         url = self.assemble_request_url(root_url, date, format, cache_id)
         return url
-    
-    def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
-        return super().download_batch(start_date, end_date, 'MS', save_dir, '.json', stage, timeout)
 
-stocks = STOCKS()
-market = MARKET()
+stocks = STOCKS('D', '.json')
+market = MARKET('MS', '.json')
