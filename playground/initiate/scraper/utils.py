@@ -22,11 +22,13 @@ def download_raw_material(material, start_date, end_date, save_path, cooldown_ti
                 
     print('Finished')
 
-def download_group_material(material, save_path, stage, keys, cooldown_time):
-    with open(save_path.joinpath('diff.json')) as f:
-        group = json.load(f)
-    for k in keys:
-        group = group[k]
+def download_group_material(material, save_path, stage, key, cooldown_time):
+    if isinstance(key, str):
+        with open(save_path.joinpath('diff.json')) as f:
+            group = json.load(f)
+        group = group[key]
+    else:
+        group = key
     finish = False
     while not finish:
         try:

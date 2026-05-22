@@ -86,6 +86,7 @@ class Scraper:
                     request_count += 1
             else:
                 print(f'{self.suffix.replace('.','').upper()} Exist')
+        return True
 
     def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
         dates = pd.date_range(start_date, end_date, freq=self.freq)

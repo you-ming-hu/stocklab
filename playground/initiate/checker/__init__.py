@@ -1,4 +1,3 @@
-import datetime
 import json
 
 class Checker:
@@ -13,12 +12,7 @@ class Checker:
                 prev = json.load(f)
         else:
             prev = {}
-        date = str(datetime.date.today())
-        key = f'{t1},{t2}'
-        if date in prev:
-            prev[date][key] = diff
-        else:
-            prev[date] = {key: diff}
+        prev[f'{t1},{t2}'] = diff
         with open(save_path, 'w') as f:
             json.dump(prev, f, indent=4)
 
@@ -31,4 +25,18 @@ class Checker:
             if not self.equal(t1st,t2nd):
                 diff.append(t1st.stem)
         self.save(save_path, t1, t2, diff)
-        return diff
+    
+    def check_intersection(self, save_path, t1, t2, skip=[]):
+        target1 = {x.stem: x for x in save_path.joinpath(t1).iterdir()}
+        target2 = {x.stem: x for x in save_path.joinpath(t2).iterdir()}
+        intersection = set(target1.keys()).intersection(set(target2.keys()))
+        print(f'check count before skip: {len(intersection)}')
+        intersection = intersection - set(skip)
+        print(f'check count after skip: {len(intersection)}')
+        print(f'skip count: {len(skip)}')
+        diff = []
+        for i in sorted(intersection):
+            if not self.equal(target1[i],target2[i]):
+                diff.append(i)
+        self.save(save_path, t1, t2, diff)
+
