@@ -21,7 +21,7 @@ class TWSEScraper(Scraper):
             "User-Agent": "Mozilla/5.0",
             "Referer": "https://www.twse.com.tw/"
         }
-        return self.create_session_template(header)
+        return super().create_session(header)
 
     def create_request_date(self, date):
         if isinstance(date, pd.Timestamp):

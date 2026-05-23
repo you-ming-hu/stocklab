@@ -11,7 +11,7 @@ class OTCScraper(Scraper):
             "User-Agent": "Mozilla/5.0",
             "Referer": "https://hist.tpex.org.tw/"
         }
-        return self.create_session_template(header)
+        return super().create_session(header)
 
 class STOCKS_STAGE_1(OTCScraper):
 

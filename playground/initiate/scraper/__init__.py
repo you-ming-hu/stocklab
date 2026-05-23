@@ -5,6 +5,11 @@ import pathlib
 import random
 
 class Scraper:
+    RESTART_SESSION_COUNT = 1000
+    MIN_SLEEP_TIME = 2
+    MAX_SLEEP_TIME = 4
+    COOLDOWN_TIME = 5 * 60
+
     def __init__(self, freq, suffix):
         self.freq = freq
         self.suffix = suffix
@@ -21,13 +26,13 @@ class Scraper:
     def save(self, res, filename):
         raise NotImplementedError
     
-    def create_session_template(self, header):
+    def create_session(self, header):
         session = requests.Session()
         session.headers.update(header)
         return session
 
     def download(self, session, request_info, filename, timeout, cooldown_if_abnormal=False):
-        COOLDOWN_TIME = 5 * 60
+        COOLDOWN_TIME = self.COOLDOWN_TIME
         try:
             print('Requesting', end='\t')
             res = self.request(session, request_info, timeout)
@@ -60,19 +65,19 @@ class Scraper:
         return True
 
     def download_single(self, session, request_info, filename, timeout, cooldown_if_abnormal=False):
-        MIN_SLEEP_TIME = 2
-        MAX_SLEEP_TIME = 4
+        MIN_SLEEP_TIME = self.MIN_SLEEP_TIME
+        MAX_SLEEP_TIME = self.MAX_SLEEP_TIME
         success = self.download(session, request_info, filename, timeout, cooldown_if_abnormal)
         sleep_time = random.uniform(MIN_SLEEP_TIME, MAX_SLEEP_TIME)
         print(f'Sleep: {sleep_time:.1f}')
         time.sleep(sleep_time)
         return success
     
-    def download_group(self, dates, save_dir, stage, timeout=10):
-        save_dir = pathlib.Path(save_dir, stage)
+    def download_batch(self, dates, save_dir, iteration, timeout=10):
+        RESTART_SESSION_COUNT = self.RESTART_SESSION_COUNT
+        save_dir = pathlib.Path(save_dir, iteration)
         save_dir.mkdir(parents=True, exist_ok=True)
 
-        RESTART_SESSION_COUNT = 1000
         request_count = 0
         for date in dates:
             date = pd.Timestamp(date)
@@ -88,7 +93,7 @@ class Scraper:
                 print(f'{self.suffix.replace('.','').upper()} Exist')
         return True
 
-    def download_batch(self, start_date, end_date, save_dir, stage, timeout=10):
+    def download_by_date_range(self, start_date, end_date, save_dir, iteration, timeout=10):
         dates = pd.date_range(start_date, end_date, freq=self.freq)
-        self.download_group(dates, save_dir, stage, timeout)
+        self.download_batch(dates, save_dir, iteration, timeout)
         return True
