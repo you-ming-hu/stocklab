@@ -12,12 +12,14 @@ dependencies = [
     "requests>=2.33.1",
 ]
 
-# [project.optional-dependencies]
+[project.optional-dependencies]
 
-# [dependency-groups]
-# dev = []
+[dependency-groups]
+dev = [
+    "beautifulsoup4>=4.14.3",
+]
 
-# [tool.uv.sources]
+[tool.uv.sources]
 
 [tool.setuptools]
 include-package-data = true
