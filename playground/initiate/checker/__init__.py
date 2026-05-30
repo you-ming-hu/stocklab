@@ -7,9 +7,9 @@ class Checker:
     def read(self, path):
         raise NotImplementedError
 
-    def standardize(self, path):
-        raise NotImplementedError
-    
+    def standardize(self, c):
+        return c
+
     def try_read_file(self, path):
         try:
             content = self.read(path)
@@ -24,7 +24,10 @@ class Checker:
             c2 = self.try_read_file(t2)
         except:
             return False
-        return self.standardize(c1) == self.standardize(c2)
+        try:
+            return self.standardize(c1) == self.standardize(c2)
+        except:
+            return False
     
     def read_diff(self, save_path):
         DIFF_FILENAME = self.DIFF_FILENAME

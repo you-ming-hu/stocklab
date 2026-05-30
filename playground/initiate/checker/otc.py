@@ -15,5 +15,12 @@ class STOCKS_STAGE_1(STOCKS):
         # return c.text
         return c.split('\n')[:-5]
 
-stocks_stage_1 = STOCKS_STAGE_1()
+class STOCKS_STAGE_2(STOCKS):
+    pass
 
+class STOCKS_STAGE_3(STOCKS):
+    pass
+    
+stocks_stage_1 = STOCKS_STAGE_1()
+stocks_stage_2 = STOCKS_STAGE_2()
+stocks_stage_3 = STOCKS_STAGE_3()

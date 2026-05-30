@@ -18,9 +18,7 @@ class STOCKS(TWSEChecker):
         return c
 
 class MARKET(TWSEChecker):
-    
-    def standardize(self, c):
-        return c
+    pass
 
 stocks = STOCKS()
 market = MARKET()
