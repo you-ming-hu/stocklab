@@ -7,6 +7,28 @@ class Checker:
     def equal(self, t1st, t2nd):
         raise NotImplementedError
     
+    def read(self, path):
+        raise NotImplementedError
+
+    def compare(self, c1, c2):
+        raise NotImplementedError
+    
+    def try_read_file(self, path):
+        try:
+            content = self.read(path)
+        except:
+            print(f'error file: {path}')
+            raise Exception
+        return content
+    
+    def equal(self, t1, t2):
+        try:
+            c1 = self.try_read_file(t1)
+            c2 = self.try_read_file(t2)
+        except:
+            return False
+        return self.compare(c1, c2)
+    
     def read_diff(self, save_path):
         DIFF_FILENAME = self.DIFF_FILENAME
         DIFF_KEY = self.DIFF_KEY
