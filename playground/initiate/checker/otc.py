@@ -8,7 +8,12 @@ class STOCKS(Checker):
 class STOCKS_STAGE_1(STOCKS):
     
     def standardize(self, c):
-        return c.split('\n')[:-3]
+        # standard process but extremely slow
+        # from bs4 import BeautifulSoup
+        # c = BeautifulSoup(c, "html.parser")
+        # c.find("script").decompose()
+        # return c.text
+        return c.split('\n')[:-5]
 
 stocks_stage_1 = STOCKS_STAGE_1()
 
