@@ -11,17 +11,16 @@ class TWSEChecker(Checker):
     
 class STOCKS(TWSEChecker):
 
-    def compare(self, c1, c2):
+    def standardize(self, c):
         drop_name = 'params'
-        if (drop_name in c1) and (drop_name in c2):
-            c1.pop(drop_name)
-            c2.pop(drop_name)
-        return c1 == c2
+        if drop_name in c:
+            c.pop(drop_name)
+        return c
 
-class Market(TWSEChecker):
+class MARKET(TWSEChecker):
     
-    def compare(self, c1, c2):
-        return c1 == c2
+    def standardize(self, c):
+        return c
 
 stocks = STOCKS()
-market = Market()
+market = MARKET()

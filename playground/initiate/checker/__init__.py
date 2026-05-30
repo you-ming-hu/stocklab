@@ -3,14 +3,11 @@ import json
 class Checker:
     DIFF_FILENAME = 'inconsistent.json'
     DIFF_KEY = 'files'
-
-    def equal(self, t1st, t2nd):
-        raise NotImplementedError
     
     def read(self, path):
         raise NotImplementedError
 
-    def compare(self, c1, c2):
+    def standardize(self, path):
         raise NotImplementedError
     
     def try_read_file(self, path):
@@ -27,7 +24,7 @@ class Checker:
             c2 = self.try_read_file(t2)
         except:
             return False
-        return self.compare(c1, c2)
+        return self.standardize(c1) == self.standardize(c2)
     
     def read_diff(self, save_path):
         DIFF_FILENAME = self.DIFF_FILENAME
