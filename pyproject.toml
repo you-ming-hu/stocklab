@@ -16,6 +16,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "pydantic>=2.13.4",
     "beautifulsoup4>=4.14.3",
 ]
 
