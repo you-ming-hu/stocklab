@@ -1,6 +1,6 @@
 import json
 
-from . import Checker
+from .. import Checker
 
 class TWSEChecker(Checker):
     

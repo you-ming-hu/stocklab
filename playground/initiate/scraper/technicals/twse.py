@@ -2,7 +2,7 @@ import pandas as pd
 import time
 import json
 
-from . import Scraper
+from .. import Scraper
 
 class TWSEScraper(Scraper):
 

@@ -2,7 +2,7 @@ import pandas as pd
 import pathlib
 import json
 
-from . import Scraper
+from .. import Scraper
 
 class OTCScraper(Scraper):
     

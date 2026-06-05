@@ -1,4 +1,4 @@
-from . import Checker
+from .. import Checker
 
 class STOCKS(Checker):
     
