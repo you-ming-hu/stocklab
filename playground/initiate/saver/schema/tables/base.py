@@ -1,0 +1,18 @@
+from ..fields import Field
+
+class Table(type):
+    def __new__(mcls, name, bases, namespace:dict):
+        cols = {}
+        fs = {}
+        for k, v in namespace.items():
+            if isinstance(v, type):
+                if issubclass(v, Field):
+                    cols.update(v._member_map_)
+                    fs.update({k:v.__chinese__})
+        namespace.update(cols)
+        namespace.update({'cols':cols})
+        namespace.update({'fs':fs})
+        namespace.setdefault('__primary_keys__', [])
+        namespace.setdefault('__additional_index__', [])
+        cls = super().__new__(mcls, name, bases, namespace)
+        return cls
