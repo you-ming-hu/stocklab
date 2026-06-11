@@ -48,7 +48,6 @@ stocks = Stocks(
     {
         '證券代號': schema.tables.Stocks.f_company_info.代號, 
         '證券名稱': schema.tables.Stocks.f_company_info.名稱,
-        '市場別': schema.tables.Stocks.f_company_info.市場別,
         '開盤價': schema.tables.Stocks.f_techicals.開盤價,
         '最高價': schema.tables.Stocks.f_techicals.最高價,
         '最低價': schema.tables.Stocks.f_techicals.最低價,

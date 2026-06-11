@@ -50,13 +50,21 @@ class Commander:
         """
         parameters = [tuple(row.values()) for row in data]
         return command, parameters, execute
+    
+    @execute_line
+    def get_table_columns(self, table, execute=True):
+        return f"PRAGMA table_info({table.__name__})", execute
             
     @execute_lines
     def create_table(self, table, execute=True):
-        create = [f'{k} {v.sqltype}' for k,v in table.cols.items()]
+        create = [f'{v} {v.sqltype}' for v in table.cols.values()]
         create.append(f'PRIMARY KEY ({", ".join(table.__primary_keys__)})')
         create = "    " + ",\n    ".join(create)
         create = [f'CREATE TABLE IF NOT EXISTS {table.__name__} (\n{create}\n);']
-        add_additional_index = [f'CREATE INDEX idx_{n} ON {table.__name__} ({n});' for n in table.__additional_index__]
-        commands = create + add_additional_index
+        add_additional_index = [f'CREATE INDEX IF NOT EXISTS idx_{n} ON {table.__name__} ({n});' for n in table.__additional_index__]
+        
+        add_new_columns = set(table.cols.values()) - set(row[1] for row in self.get_table_columns(table))
+        add_new_columns = [f'ALTER TABLE {table.__name__} ADD COLUMN {col} {col.sqltype}' for col in add_new_columns]
+
+        commands = create + add_additional_index + add_new_columns
         return commands, execute
