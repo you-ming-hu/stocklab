@@ -1,6 +1,6 @@
 from ..fields import Field
 
-class Table(type):
+class MetaTable(type):
     def __new__(mcls, name, bases, namespace:dict):
         cols = {}
         fs = {}
@@ -15,4 +15,5 @@ class Table(type):
         namespace.setdefault('__primary_keys__', [])
         namespace.setdefault('__additional_index__', [])
         cls = super().__new__(mcls, name, bases, namespace)
+        cls.__name__ = cls.__name__.lower()
         return cls

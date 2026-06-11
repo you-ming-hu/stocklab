@@ -5,13 +5,14 @@ from .base import Field
 
 class General(Field):
     __chinese__ = '通用欄位'
-    日期 = 'date', (datetime.date, sql.dtype.str)
-    添加時間 = 'add_time', (datetime.datetime, sql.dtype.str)
+    資料日期 = 'date', (datetime.date, sql.dtype.str)
+    新增日期 = 'add_time', (datetime.datetime, sql.dtype.str)
 
 class CompanyInfo(Field):
     __chinese__ = '公司資訊'
     代號 = 'id', (str, sql.dtype.str)
     名稱 = 'name', (str, sql.dtype.str)
+    市場別 = 'market', (str, sql.dtype.str)
 
 class Technicals(Field):
     __chinese__ = '技術分析'
