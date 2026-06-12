@@ -31,11 +31,12 @@ class Saver:
         df = self.register_save_date(df)
         data = [self.item.pydatamodel(**row.to_dict()).model_dump(exclude_unset=True) for _,row in df.iterrows()]
         
+        columns = list(data[0].keys())
         table = self.item.table
         name = table.__name__
         command = [
-            f'INSERT INTO {name} {list2text(df.columns)}',
-            f'VALUES {list2text(["?"]*len(df.columns))}',
+            f'INSERT INTO {name} {list2text(columns)}',
+            f'VALUES {list2text(["?"]*len(columns))}',
             f'ON CONFLICT {list2text(table.__primary_keys__)}',
             f'DO UPDATE SET',
         ]
