@@ -5,8 +5,8 @@ from .base import Field
 
 class General(Field):
     __chinese__ = '通用欄位'
+    新增日期 = 'add_time', (datetime.date, sql.dtype.str)
     資料日期 = 'date', (datetime.date, sql.dtype.str)
-    新增日期 = 'add_time', (datetime.datetime, sql.dtype.str)
 
 class CompanyInfo(Field):
     __chinese__ = '公司資訊'

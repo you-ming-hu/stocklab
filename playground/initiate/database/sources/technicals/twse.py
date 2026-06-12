@@ -1,10 +1,10 @@
-from ..base import Saver
+from ..base import Source
 from ... import schema
 
 import json
 import pandas as pd
 
-class Stocks(Saver):
+class Stocks(Source):
     
     def open(self, file):
         with open(file, encoding="utf-8") as f:

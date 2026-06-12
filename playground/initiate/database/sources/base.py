@@ -3,22 +3,16 @@ import pandas as pd
 import pydantic
 
 from ..schema.tables import Table
-from ...commander import Commander
 
-sqltype_key = 'sqltype'
-
-class Saver:
+class Source:
     def __init__(self, table: Table, mapping: dict):
         self.table = table
         self.mapping = mapping
-        
-        self.save_date = pd.Timestamp.today()
-        self.save_data_model = pydantic.create_model(
-            'save_data_model', **{
-                v: (v.pytype, pydantic.Field(json_schema_extra={sqltype_key: v.sqltype}))
-                for v in mapping.values()
-            }
+        self.pydatamodel = pydantic.create_model(
+            table.__name__,
+            **{v: (v.pytype, None)for v in table.cols.values()}
         )
+        self.sqldatamodel = {v:v.sqltype for v in table.cols.values()}
     
     def open(self, file):
         raise NotImplementedError
@@ -35,8 +29,8 @@ class Saver:
     def add_other_columns(self, df):
         return df
     
-    def add_source(self, source):
-        self.source = pathlib.Path(source)
+    def add_path(self, path):
+        self.path = pathlib.Path(path)
 
     def add_database_path(self, path, name):
         self.database_path = pathlib.Path(path, name).with_suffix('.db')
@@ -66,31 +60,11 @@ class Saver:
         return df
 
     def get_df(self, file):
-        file = self.source.joinpath(file)
+        file = self.path.joinpath(file)
         content = self.open(file)
         if self.check_empty(content):
-            return False, None
+            return None
         else:
             df = self.standardize(content, file.stem)
-            return True, df
-        
-    def add_save_date(self, df):
-        df[self.table.f_general.新增日期] = pd.Timestamp(self.save_date)
-        return df
-        
-    def save_df(self, df, commander:Commander):
-        df = self.add_save_date(df)
-        data = [self.save_data_model(**row.to_dict()).model_dump() for _,row in df.iterrows()]
-        sqlschema = {
-            name: field.json_schema_extra[sqltype_key]
-            for name, field in self.save_data_model.model_fields.items()
-        }
-        commander.save_df(self.table.__name__, sqlschema, data)
-
-    def save_bacth(self, commander):
-        for file in self.source.iterdir():
-            print(f'processing: {file.stem}')
-            success, df = self.get_df(file.name)
-            if not success:
-                continue
-            self.save_df(df, commander)
+            return df
+    
