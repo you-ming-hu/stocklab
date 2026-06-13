@@ -3,13 +3,17 @@ import datetime
 from . import sql
 from .base import Field
 
-class General(Field):
-    __chinese__ = '通用欄位'
-    新增日期 = 'add_time', (datetime.date, sql.dtype.str)
+class UpdateTimestamp(Field):
+    __chinese__ = '更新時間戳記欄位'
+    更新日期 = 'update_time', (datetime.date, sql.dtype.str)
+
+class DataTimestamp(Field):
+    __chinese__ = '資料時間戳記欄位'
+    添加日期 = 'add_time', (datetime.date, sql.dtype.str)
     資料日期 = 'date', (datetime.date, sql.dtype.str)
 
-class CompanyInfo(Field):
-    __chinese__ = '公司資訊'
+class StockInfo(Field):
+    __chinese__ = '股票資訊'
     代號 = 'id', (str, sql.dtype.str)
     名稱 = 'name', (str, sql.dtype.str)
     市場別 = 'market', (str, sql.dtype.str)
@@ -24,8 +28,16 @@ class Technicals(Field):
     交易金額 = 'turnover', (int, sql.dtype.int)
     交易筆數 = 'trades', (int, sql.dtype.int)
 
-class Sharehold(Field):
+class Ownership(Field):
     __chinese__ = '持股比例'
     外資比例 = 'foreign', (float, sql.dtype.float)
     投信比例 = 'trust', (float, sql.dtype.float)
     自行商比例 = 'investor', (float, sql.dtype.float)
+
+class CompanyInfo(Field):
+    __chinese__ = '公司資訊'
+    代號 = 'id', (str, sql.dtype.str)
+    名稱 = 'name', (str, sql.dtype.str)
+    市場別 = 'market', (str, sql.dtype.str)
+    產業別 = 'industry', (str, sql.dtype.str)
+    題材 = 'theme', (str, sql.dtype.str)
