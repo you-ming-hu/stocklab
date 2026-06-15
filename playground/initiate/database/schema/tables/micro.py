@@ -31,7 +31,7 @@ class CompanyInfo(base.UpdateTimestampTable):
         fields.CompanyInfo.代號
     ]
     __additional_index__ = [
-        
+        fields.CompanyInfo.名稱
     ]
     f_company_info = fields.CompanyInfo
 

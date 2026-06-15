@@ -3,6 +3,7 @@ import pandas as pd
 from .decorators import *
 from .utils import list2text
 from ..sources.base import Source
+from ..schema.tables.base import DataTimestampTable, UpdateTimestampTable
 
 class Saver:
     def __init__(self, path):
@@ -23,7 +24,11 @@ class Saver:
         del self.item
 
     def register_save_date(self, df:pd.DataFrame):
-        df[self.item.table.f_general.新增日期] = self.session_date
+        if issubclass(self.item.table, DataTimestampTable):
+            key = self.item.table.f_datatimestamp.添加日期
+        elif issubclass(self.item.table, UpdateTimestampTable):
+            key = self.item.table.f_updatetimestamp.更新日期
+        df[key] = self.session_date
         return df
     
     @exec_many

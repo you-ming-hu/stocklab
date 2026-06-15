@@ -40,20 +40,20 @@ class Stocks(Source):
         return df
     
     def add_other_columns(self, df):
-        df[self.table.f_company_info.市場別] = 'TWSE'
+        df[self.table.f_stock_info.市場別] = 'TWSE'
         return df
 
 stocks = Stocks(
-    schema.tables.Stocks,
+    schema.tables.StockDaily,
     {
-        '證券代號': schema.tables.Stocks.f_company_info.代號, 
-        '證券名稱': schema.tables.Stocks.f_company_info.名稱,
-        '開盤價': schema.tables.Stocks.f_techicals.開盤價,
-        '最高價': schema.tables.Stocks.f_techicals.最高價,
-        '最低價': schema.tables.Stocks.f_techicals.最低價,
-        '收盤價': schema.tables.Stocks.f_techicals.收盤價,
-        '成交股數': schema.tables.Stocks.f_techicals.交易股數,
-        '成交筆數': schema.tables.Stocks.f_techicals.交易筆數,
-        '成交金額': schema.tables.Stocks.f_techicals.交易金額,
+        '證券代號': schema.tables.StockDaily.f_stock_info.代號, 
+        '證券名稱': schema.tables.StockDaily.f_stock_info.名稱,
+        '開盤價': schema.tables.StockDaily.f_techicals.開盤價,
+        '最高價': schema.tables.StockDaily.f_techicals.最高價,
+        '最低價': schema.tables.StockDaily.f_techicals.最低價,
+        '收盤價': schema.tables.StockDaily.f_techicals.收盤價,
+        '成交股數': schema.tables.StockDaily.f_techicals.交易股數,
+        '成交筆數': schema.tables.StockDaily.f_techicals.交易筆數,
+        '成交金額': schema.tables.StockDaily.f_techicals.交易金額,
     },
 )

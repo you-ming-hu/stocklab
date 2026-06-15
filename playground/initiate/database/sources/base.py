@@ -2,7 +2,7 @@ import pathlib
 import pandas as pd
 import pydantic
 
-from ..schema.tables import Table
+from ..schema.tables.base import Table, DataTimestampTable, UpdateTimestampTable
 
 class Source:
     def __init__(self, table: Table, mapping: dict):
@@ -46,7 +46,11 @@ class Source:
         return df.dropna()
     
     def add_data_date(self, df, date):
-        df[self.table.f_general.資料日期] = pd.Timestamp(date)
+        if issubclass(self.table, DataTimestampTable):
+            key = self.table.f_datatimestamp.資料日期
+        if issubclass(self.table, UpdateTimestampTable):
+            key = self.table.f_updatetimestamp.更新日期
+        df[key] = pd.Timestamp(date)
         return df
     
     def standardize(self, content, date):

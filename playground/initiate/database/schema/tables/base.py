@@ -25,9 +25,12 @@ class MetaTable(type):
         cls = super().__new__(mcls, name, bases, namespace)
         cls.__name__ = cls.__name__.lower()
         return cls
-    
-class DataTimestampTable(metaclass = MetaTable):
+
+class Table(metaclass = MetaTable):
+    pass
+
+class DataTimestampTable(Table):
     f_datatimestamp = fields.DataTimestamp
 
-class UpdateTimestampTable(metaclass = MetaTable):
+class UpdateTimestampTable(Table):
     f_updatetimestamp = fields.UpdateTimestamp
