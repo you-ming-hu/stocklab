@@ -17,8 +17,12 @@ class STOCKS(TWSEChecker):
             c.pop(drop_name)
         return c
 
-class MARKET(TWSEChecker):
+class MARKET_VOLUME(TWSEChecker):
+    pass
+
+class MARKET_PRICE(TWSEChecker):
     pass
 
 stocks = STOCKS()
-market = MARKET()
+market_volume = MARKET_VOLUME()
+market_price = MARKET_PRICE()

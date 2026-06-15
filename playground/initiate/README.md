@@ -2,15 +2,32 @@
 - 技術面-價量
     - 上市
         - 個股
-            1. https://www.twse.com.tw/zh/trading/historical/mi-index.html
+            - 開高低收 交易量
+                - https://www.twse.com.tw/zh/trading/historical/mi-index.html
                 - 分類項目 選取 **每日收盤行情(全部(不含權證、牛熊證、可展延牛熊證))**
                 - 這個選項可以保留大盤資訊 並且 移除不是標的的項目
                 - 但是早期資料內容並不包含指數點數，只有交易量
-                - 後期資料更新可以只依據此查詢進行，但前期資料應該要到**每日市場成交資訊查詢**
-
+                    - 但這邊只能取得收盤價，沒有完整開高低收
+                - 後期交易量更新可以只依據此查詢進行，但前期資料應該要到**每日市場成交資訊查詢**
+                - API: 
+                    - https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX
+                    - type=ALLBUT0999
+                    - response=json
+                    - date=yyyymmdd
         - 總體市場
-            1. https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK
-                - **每日市場成交資訊查詢**頁面
+            - 交易量
+                - https://www.twse.com.tw/zh/trading/historical/fmtqik.html
+                - API:
+                    - https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK
+                    - response=json
+                    - date=yyyymmdd
+            - 開高低收
+                - https://www.twse.com.tw/zh/indices/taiex/mi-5min-hist.html
+                - API:
+                    - https://www.twse.com.tw/indicesReport/MI_5MINS_HIST
+                    - response=json
+                    - date=yyyymmdd
+                
     - 上櫃
         - 個股
             1. https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES/param_3104.html

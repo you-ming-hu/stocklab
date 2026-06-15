@@ -51,7 +51,7 @@ class STOCKS(TWSEScraper):
         url = self.assemble_request_url(root_url, date, category, format, cache_id)
         return url
     
-class MARKET(TWSEScraper):
+class MARKET_VOLUME(TWSEScraper):
 
     def create_request_info(self, date):
         root_url = 'https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK'
@@ -60,6 +60,17 @@ class MARKET(TWSEScraper):
         cache_id = self.create_cache_id()
         url = self.assemble_request_url(root_url, date, format, cache_id)
         return url
+    
+class MARKET_PRICE(TWSEScraper):
+
+    def create_request_info(self, date):
+        root_url = 'https://www.twse.com.tw/indicesReport/MI_5MINS_HIST'
+        date = self.create_request_date(date)
+        format = 'response=json'
+        cache_id = self.create_cache_id()
+        url = self.assemble_request_url(root_url, date, format, cache_id)
+        return url
 
 stocks = STOCKS('D', '.json')
-market = MARKET('MS', '.json')
+market_volume = MARKET_VOLUME('MS', '.json')
+market_price = MARKET_PRICE('MS', '.json')
