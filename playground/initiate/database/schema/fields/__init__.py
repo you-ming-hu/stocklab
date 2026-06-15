@@ -69,7 +69,7 @@ class InstitutionFundFlow(Field):
     外陸資買進金額 = 'foreign_buy_amount', (int, sql.dtype.int)
     外陸資賣出金額 = 'foreign_sell_amount', (int, sql.dtype.int)
     投信買進金額 = 'trust_buy_amount', (int, sql.dtype.int)
-    投信賣出金額 = 'trust_sell_shares', (int, sql.dtype.int)
+    投信賣出金額 = 'trust_sell_amount', (int, sql.dtype.int)
     自營商_自行買賣_買進金額 = 'dealer_proprietary_buy_amount', (int, sql.dtype.int)
     自營商_自行買賣_賣出金額 = 'dealer_proprietary_sell_amount', (int, sql.dtype.int)
     自營商_避險_買進金額 = 'dealer_hedge_buy_amount', (int, sql.dtype.int)
