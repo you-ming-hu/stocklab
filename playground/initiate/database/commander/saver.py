@@ -88,7 +88,7 @@ class Saver:
 
     def update_database(self):
         print(f'{self.item.table.__name__} start')
-        for file in self.item.path.iterdir():
+        for file in sorted(self.item.path.iterdir()):
             print(f'processing: {file.stem}')
             df = self.item.get_df(file.name)
             if df is None:
