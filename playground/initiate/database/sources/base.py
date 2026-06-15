@@ -2,10 +2,10 @@ import pathlib
 import pandas as pd
 import pydantic
 
-from ..schema.tables.base import Table, DataTimestampTable, UpdateTimestampTable
+from ..schema.tables.base import Table
 
 class Source:
-    def __init__(self, table: Table, mapping: dict):
+    def __init__(self, table: Table, mapping: dict, filename_is_data_date=True):
         self.table = table
         self.mapping = mapping
         self.pydatamodel = pydantic.create_model(
@@ -13,6 +13,7 @@ class Source:
             **{v: (v.pytype, None)for v in table.cols.values()}
         )
         self.sqldatamodel = {v:v.sqltype for v in table.cols.values()}
+        self.filename_is_data_date = filename_is_data_date
     
     def open(self, file):
         raise NotImplementedError
@@ -46,11 +47,7 @@ class Source:
         return df.dropna()
     
     def add_data_date(self, df, date):
-        if issubclass(self.table, DataTimestampTable):
-            key = self.table.f_datatimestamp.資料日期
-        if issubclass(self.table, UpdateTimestampTable):
-            key = self.table.f_updatetimestamp.更新日期
-        df[key] = pd.Timestamp(date)
+        df[self.table.f_datatimestamp.資料日期] = pd.Timestamp(date)
         return df
     
     def standardize(self, content, date):
@@ -59,7 +56,8 @@ class Source:
         df = self.rename_columns(df)
         df = self.format_dtype(df)
         df = self.drop_incomplete(df)
-        df = self.add_data_date(df, date)
+        if self.filename_is_data_date:
+            df = self.add_data_date(df, date)
         df = self.add_other_columns(df)
         return df
 

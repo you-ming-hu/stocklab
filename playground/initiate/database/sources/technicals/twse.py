@@ -66,7 +66,7 @@ class MARKET_VOLUME(Source):
         return content
     
     def check_empty(self, content):
-        return content['stat'] == 'OK'
+        return content['stat'] != 'OK'
     
     def to_df(self, content):
         df = pd.DataFrame(
@@ -87,12 +87,16 @@ class MARKET_VOLUME(Source):
         for name in [cols['交易股數'], cols['交易筆數'], cols['交易金額']]:
             df[name] = df[name].str.replace(',','').astype(int)
 
+        for name in [cols['收盤價']]:
+            df[name] = df[name].str.replace(',','').astype(float)
+
         return df
 
 market_volume = MARKET_VOLUME(
     schema.tables.TWSEDaily,
     {
         '日期': schema.tables.TWSEDaily.f_datatimestamp.資料日期,
+        '發行量加權股價指數': schema.tables.TWSEDaily.f_techicals.收盤價,
         '成交股數': schema.tables.TWSEDaily.f_techicals.交易股數,
         '成交金額': schema.tables.TWSEDaily.f_techicals.交易金額,
         '成交筆數': schema.tables.TWSEDaily.f_techicals.交易筆數
@@ -107,7 +111,7 @@ class MARKET_PRICE(Source):
         return content
     
     def check_empty(self, content):
-        return content['stat'] == 'OK'
+        return content['stat'] != 'OK'
     
     def to_df(self, content):
         df = pd.DataFrame(
