@@ -30,12 +30,25 @@
                 
     - 上櫃
         - 個股
-            1. https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES/param_3104.html
-                - 民國92年8月至95年12月資訊
-            2. https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing_hist96.html
-                - 民國96年1月2日至96年4月20日資訊
-            3. https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html
-                - 民國96年1月起開始
+            1. 民國92年8月至95年12月資訊
+                - https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES/param_3104.html
+                - API: 
+                    - https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES
+                    - '/RSTA3104_' + date + '.HTML'
+            2. 民國96年1月2日至96年4月20日資訊
+                - https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing_hist96.html
+                - API:
+                    - https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotesHis
+                    - id = ''
+                    - response = 'json'
+                    - date = 
+            3. 民國96年1月起開始
+                - https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html
+                - API:
+                    - 'https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotes'
+                    - id = ''
+                    - response = 'json'
+                    - date = 
         - 總體市場
             1. Not start yet
 
