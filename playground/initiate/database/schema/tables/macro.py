@@ -2,12 +2,6 @@ from .. import fields
 from . import base
 
 class MarketDaily(base.DataTimestampTable):
-    __primary_keys__ = [
-        fields.DataTimestamp.資料日期
-    ]
-    __additional_index__ = [
-        
-    ]
     # 技術面
     f_techicals = fields.Technicals
     # 籌碼面 - 融資券
@@ -19,8 +13,18 @@ class MarketDaily(base.DataTimestampTable):
     f_institution_fund_flow = fields.InstitutionFundFlow
     
 class TWSEDaily(MarketDaily):
-    pass
+    __primary_keys__ = [
+        fields.DataTimestamp.資料日期
+    ]
+    __additional_index__ = [
+        
+    ]
 
 class OTCDaily(MarketDaily):
-    pass
+    __primary_keys__ = [
+        fields.DataTimestamp.資料日期
+    ]
+    __additional_index__ = [
+        
+    ]
 
