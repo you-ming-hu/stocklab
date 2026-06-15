@@ -24,26 +24,24 @@
 
 - 籌碼面
     - 上市
-        - 信用交易
-            - 融資融券: https://www.twse.com.tw/zh/trading/margin/mi-margn.html 
+        - 金流
+            - 融資: https://www.twse.com.tw/zh/trading/margin/mi-margn.html 
                 1. 總體市場(個股+ETF): 分類項目 選取 **全部** (張, 千元)
                 2. 個股: 分類項目 選取 **股票** (張)
                 3. ETF: 分類項目 選取 **ETF** (張)
-            - 借券賣出: https://www.twse.com.tw/zh/trading/margin/twt93u.html
+            - 融券,借券賣出: https://www.twse.com.tw/zh/trading/margin/twt93u.html
                 1. 個股 (股)
                 2. ETF (股)
                 3. 總體市場(個股+ETF): 總體市場為合計列，並非獨立項目 (股)
-        - 三大法人
-            - 金流
-                - 個股
-                    1. https://www.twse.com.tw/zh/trading/foreign/t86.html
-                        - 分類項目 選取 **全部(不含權證、牛熊證、可展延牛熊證)**
-                - 總體市場
-                    1. https://www.twse.com.tw/zh/trading/foreign/bfi82u.html
-                        - 選取 **日報表**
-            - 個股持股
-                1. https://www.twse.com.tw/zh/trading/foreign/mi-qfiis.html
-                    - 選取 **全部(不含權證)**
+            - 三大法人
+                1. 總體市場: https://www.twse.com.tw/zh/trading/foreign/bfi82u.html
+                    - 選取 **日報表**
+                2. 個股: https://www.twse.com.tw/zh/trading/foreign/t86.html
+                    - 分類項目 選取 **全部(不含權證、牛熊證、可展延牛熊證)**
+        - 持股比例
+            1. 外資及陸資: https://www.twse.com.tw/zh/trading/foreign/mi-qfiis.html
+                - 選取 **全部(不含權證)**
+            
     - 上櫃
 
 
@@ -102,55 +100,87 @@ https://www.twse.com.tw/zh/trading/margin/twt93u.html
         - 當日餘額
         - 次一營業日可限額
 
-## field格式
+# 三大法人
+
+- 外陸資買進股數
+- 外陸資賣出股數
+- 外陸資買賣超股數
+
+- 外陸資買進股數(不含外資自營商)
+- 外陸資賣出股數(不含外資自營商)
+- 外陸資買賣超股數(不含外資自營商)
+
+- 外資自營商買進股數
+- 外資自營商賣出股數
+- 外資自營商買賣超股數
+
+
+- 投信買進股數
+- 投信賣出股數
+- 投信買賣超股數
+
+
+- 自營商買進股數
+- 自營商賣出股數
+- 自營商買賣超股數
+
+- 自營商買進股數(自行買賣)
+- 自營商賣出股數(自行買賣)
+- 自營商買賣超股數(自行買賣)
+
+- 自營商買進股數(避險)
+- 自營商賣出股數(避險)
+- 自營商買賣超股數(避險)
 
 ## table格式
 ### Micro
 - CompanyInfo = DataTimestampFree + CompanyInfo
 - FinancialStatement = DataTimestamp + 
-- StockDaily = DataTimestamp + StockInfo + Technicals + (
------------------- from 融資融券彙總 (股票), 融資融券彙總 (ETF) -----------------------
-    融資買進,
-    融資賣出,
-    融資現償,
-    融資餘額,
------------------- from 信用額度總量管制餘額表 -----------------------
-    融券買進,
-    融券賣出,
-    融券現償,
-    融券餘額,
-    次一營業日限額,
+- StockDaily = DataTimestamp + StockInfo + Technicals + 
+    Margin + Short + ShortAdditional
+    ------------------ from 融資融券彙總 (股票), 融資融券彙總 (ETF) -----------------------
+        融資買進 margin_buy,
+        融資賣出 margin_sell,
+        融資現償 margin_cash_repayment,
+        融資餘額 margin_balance,
+    ------------------ from 信用額度總量管制餘額表 -----------------------
+        融券買進 short_cover,
+        融券賣出 short_sell,
+        融券現償 short_stock_repayment,
+        融券餘額 short_balance,
+        融券次日限額 short_next_day_limit,
 
-    借券賣出賣出,
-    借券賣出還券,
-    借券賣出調整,
-    借券賣出餘額,
-    次一營業日可限額,
-)
+        借券賣出賣出 slb_sell,
+        借券賣出還券 slb_return,
+        借券賣出調整 slb_adjustment,
+        借券賣出餘額 slb_balance,
+        借券賣出次日限額 slb_next_day_limit,
+
 
 ### Macro
-- MarketDaily = DataTimestamp + Technicals + (
------------------- from 信用交易統計 -----------------------
-    融資買進,
-    融資賣出,
-    融資現償,
-    融資餘額,
+- MarketDaily = DataTimestamp + Technicals + 
+    Margin + MarginAdditional + Short
+    ------------------ from 信用交易統計 -----------------------
+        融資買進,
+        融資賣出,
+        融資現償,
+        融資餘額,
 
-    融資金額買進,
-    融資金額賣出,
-    融資金額現償,
-    融資金額餘額,
------------------- from 信用額度總量管制餘額表 -----------------------
-    融券買進,
-    融券賣出,
-    融券現償,
-    融券餘額,
+        融資金額買進 margin_amount_buy,
+        融資金額賣出 margin_amount_sell,
+        融資金額現償 margin_amount_cash_repayment,
+        融資金額餘額 margin_amount_balance,
+    ------------------ from 信用額度總量管制餘額表 -----------------------
+        融券買進,
+        融券賣出,
+        融券現償,
+        融券餘額,
 
-    借券賣出賣出,
-    借券賣出還券,
-    借券賣出調整,
-    借券賣出餘額,
-    )
+        借券賣出賣出,
+        借券賣出還券,
+        借券賣出調整,
+        借券賣出餘額,
+
     - TWSEDaily
     - OTCDaily
 
@@ -185,6 +215,7 @@ https://www.twse.com.tw/zh/trading/margin/twt93u.html
     - 上市: https://openapi.twse.com.tw/v1/opendata/t187ap14_L
     - 上櫃: https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap14_O
 2. 依據股票代號查詢:
+    - 來源網站: https://ic.tpex.org.tw/index.php
     - 上市櫃共用
     - 如下
 ```
