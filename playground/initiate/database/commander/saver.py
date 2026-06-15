@@ -81,7 +81,7 @@ class Saver:
         table = self.item.table
         name = table.__name__
         add_new_columns = set(table.cols.values()) - set(row[1] for row in self.get_table_columns(table))
-        add_new_columns = [f'ALTER TABLE {name} ADD COLUMN {col} {col.sqltype};' for col in add_new_columns]
+        add_new_columns = [f'ALTER TABLE {name} ADD COLUMN {col} {col.sqltype};' for col in table.cols.values() if col in add_new_columns]
         add_additional_index = [f'CREATE INDEX IF NOT EXISTS idx_{n} ON {table.__name__} ({n});' for n in table.__additional_index__]     
         commands = add_new_columns + add_additional_index
         return commands, execute
