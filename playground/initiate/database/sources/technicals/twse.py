@@ -3,6 +3,7 @@ from ... import schema
 
 import json
 import pandas as pd
+import re
 
 class Stocks(Source):
     
@@ -28,15 +29,22 @@ class Stocks(Source):
         
     def format_dtype(self, df):
         cols = self.table.cols
+        
+        stock_info_cols= [cols['代號'], cols['名稱']]
+        volume_cols = [cols['交易股數'], cols['交易筆數'], cols['交易金額']]
+        price_cols = [cols['開盤價'], cols['最高價'], cols['最低價'], cols['收盤價']]
 
-        for name in [cols['代號'], cols['名稱']]:
+        for name in stock_info_cols:
             df[name] = df[name].str.replace(' ','').replace('*','')
 
-        for name in [cols['交易股數'], cols['交易筆數'], cols['交易金額']]:
+        for name in volume_cols:
             df[name] = df[name].str.replace(',','').astype(int)
 
-        for name in [cols['開盤價'], cols['最高價'], cols['最低價'], cols['收盤價']]:
-            df[name] = df[name].str.replace(',','').replace('--',pd.NA).astype(float)
+        for name in price_cols:
+            df[name] = df[name].map(lambda t: re.sub(r'[^0-9.]','',t)).replace('',pd.NA).astype(float)
+        
+        df = df.loc[~(df[volume_cols+price_cols] == 0).all(axis=1)]
+        
         return df
     
     def add_other_columns(self, df):

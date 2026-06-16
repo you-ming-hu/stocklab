@@ -52,13 +52,14 @@ class Source:
     
     def standardize(self, content, date):
         df = self.to_df(content)
-        df = self.keep_interest(df)
-        df = self.rename_columns(df)
-        df = self.format_dtype(df)
-        df = self.drop_incomplete(df)
-        if self.filename_is_data_date:
-            df = self.add_data_date(df, date)
-        df = self.add_other_columns(df)
+        if not df is None: 
+            df = self.keep_interest(df)
+            df = self.rename_columns(df)
+            df = self.format_dtype(df)
+            df = self.drop_incomplete(df)
+            if self.filename_is_data_date:
+                df = self.add_data_date(df, date)
+            df = self.add_other_columns(df)
         return df
 
     def get_df(self, file):
