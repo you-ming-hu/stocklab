@@ -135,12 +135,59 @@ stocks_stage_1 = STOCKS_STAGE_1(
     True
 )
 
-class STOCKS_STAGE_2(Source):
-    pass
+class STOCKS_STAGE_2(STOCKS_STAGE_1):
+    
+    def open(self, file):
+        content = pathlib.Path(file)
+        return content
+    
+    def check_empty(self, content):
+        return content.read_text('utf-8') == '\ufeff'
+    
+    def to_df(self, content):
+        soup = BeautifulSoup(content.read_text('utf-8'), 'html.parser')
+
+        tables = []
+        for table in soup.find_all("table"):
+            rows = []
+
+            for tr in table.find_all("tr"):
+                row = [
+                    td.get_text(strip=True)
+                    for td in tr.find_all(["td", "th"])
+                ]
+                rows.append(row)
+
+            tables.append(rows)
+
+        assert len(tables) == 3
+
+        head_col = [
+            '代號','名稱',
+            '收盤','漲跌','開盤','最高','最低','均價',
+            '成交股數','成交金額(元)','成交筆數',
+            '最後買價','最後賣價','發行股數','次日參考價','次日漲停價','次日跌停價'
+        ]
+        columns = tables[0][1]
+        assert columns == head_col
+
+        df = pd.DataFrame(columns=columns, data=tables[1])
+        df = df.loc[(df['代號']!='管理股票').cumprod() == 1]
+
+        return df
 
 stocks_stage_2 = STOCKS_STAGE_2(
     schema.tables.StockDaily,
     {
+        '代號': schema.tables.StockDaily.f_stock_info.代號,
+        '名稱': schema.tables.StockDaily.f_stock_info.名稱,
+        '收盤': schema.tables.StockDaily.f_techicals.收盤價,
+        '開盤': schema.tables.StockDaily.f_techicals.開盤價,
+        '最高': schema.tables.StockDaily.f_techicals.最高價,
+        '最低': schema.tables.StockDaily.f_techicals.最低價,
+        '成交股數': schema.tables.StockDaily.f_techicals.交易股數,
+        '成交金額(元)': schema.tables.StockDaily.f_techicals.交易金額,
+        '成交筆數': schema.tables.StockDaily.f_techicals.交易筆數
     },
     True
 )
