@@ -5,6 +5,7 @@ import pathlib
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
+import json
 
 class STOCKS_STAGE_1(Source):
     def open(self, file):
@@ -107,7 +108,7 @@ class STOCKS_STAGE_1(Source):
             df[name] = df[name].str.replace(' ','').replace('*','')
 
         for name in volume_cols:
-            df[name] = df[name].str.replace(',','').astype(int)
+            df[name] = df[name].str.replace(',','').replace('','0').astype(int)
 
         for name in price_cols:
             df[name] = df[name].map(lambda t: re.sub(r'[^0-9.]','',t)).replace('',pd.NA).astype(float)
@@ -177,6 +178,43 @@ class STOCKS_STAGE_2(STOCKS_STAGE_1):
         return df
 
 stocks_stage_2 = STOCKS_STAGE_2(
+    schema.tables.StockDaily,
+    {
+        '代號': schema.tables.StockDaily.f_stock_info.代號,
+        '名稱': schema.tables.StockDaily.f_stock_info.名稱,
+        '收盤': schema.tables.StockDaily.f_techicals.收盤價,
+        '開盤': schema.tables.StockDaily.f_techicals.開盤價,
+        '最高': schema.tables.StockDaily.f_techicals.最高價,
+        '最低': schema.tables.StockDaily.f_techicals.最低價,
+        '成交股數': schema.tables.StockDaily.f_techicals.交易股數,
+        '成交金額(元)': schema.tables.StockDaily.f_techicals.交易金額,
+        '成交筆數': schema.tables.StockDaily.f_techicals.交易筆數
+    },
+    True
+)
+
+class STOCKS_STAGE_3(STOCKS_STAGE_1):
+    
+    def open(self, file):
+        with open(file, encoding='utf-8') as f:
+            content = json.load(f)
+        assert content['date'] == file.stem
+        assert len(content['tables']) == 2
+        content = content['tables'][0]
+        assert content['title'] == '上櫃股票行情'
+        return content
+    
+    def check_empty(self, content):
+        return len(content['data']) == 0
+    
+    def to_df(self, content):
+        df = pd.DataFrame(
+            data=content['data'],
+            columns=content['fields'],
+        )
+        return df
+    
+stocks_stage_3 = STOCKS_STAGE_3(
     schema.tables.StockDaily,
     {
         '代號': schema.tables.StockDaily.f_stock_info.代號,
