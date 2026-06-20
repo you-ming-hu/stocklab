@@ -54,7 +54,7 @@ class STOCKS(TWSEScraper):
 class ETF(TWSEScraper):
 
     def create_request_info(self, date):
-        return super().create_request_info(date, '0099')
+        return super().create_request_info(date, '0099P')
 
 class MARKET(TWSEScraper):
     def create_request_info(self, date):
