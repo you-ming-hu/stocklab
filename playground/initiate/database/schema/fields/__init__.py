@@ -53,6 +53,7 @@ class Short(Field):
     借券賣出賣出股數 = 'slb_sell_shares', (int, sql.dtype.int)
     借券賣出還券股數 = 'slb_return_shares', (int, sql.dtype.int)
     借券賣出調整股數 = 'slb_adjustment_shares', (int, sql.dtype.int)
+    借券賣出不含賣出總異動股數 = 'slb_change_ex_sell_shares', (int, sql.dtype.int)
     借券賣出餘額股數 = 'slb_balance_shares', (int, sql.dtype.int)
 
 class ShortAdditional(Field):

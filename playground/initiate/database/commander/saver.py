@@ -86,9 +86,14 @@ class Saver:
         commands = add_new_columns + add_additional_index
         return commands, execute
 
-    def update_database(self):
+    def update_database(self, start_date=None, end_date=None):
         print(f'{self.item.table.__name__} start')
-        for file in sorted(self.item.path.iterdir()):
+        files = sorted(self.item.path.iterdir())
+        if not start_date is None:
+            files = [f for f in files if pd.Timestamp(f.stem) >= pd.Timestamp(start_date)]
+        if not end_date is None:
+            files = [f for f in files if pd.Timestamp(f.stem) <= pd.Timestamp(end_date)]
+        for file in files:
             print(f'processing: {file.stem}')
             df = self.item.get_df(file.name)
             if df is None:
