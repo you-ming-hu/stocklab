@@ -5,7 +5,7 @@ import json
 import pandas as pd
 import re
 
-class Stocks(Source):
+class STOCKS(Source):
     
     def open(self, file):
         with open(file, encoding="utf-8") as f:
@@ -51,7 +51,7 @@ class Stocks(Source):
         df[self.table.f_stock_info.市場別] = 'TWSE'
         return df
 
-stocks = Stocks(
+stocks = STOCKS(
     schema.tables.StockDaily,
     {
         '證券代號': schema.tables.StockDaily.f_stock_info.代號, 
