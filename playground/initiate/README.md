@@ -56,13 +56,11 @@
     - 上市
         - 金流
             - 融資: https://www.twse.com.tw/zh/trading/margin/mi-margn.html 
-                1. 總體市場(個股+ETF): 分類項目 選取 **全部** (張, 千元)
-                2. 個股: 分類項目 選取 **股票** (張)
-                3. ETF: 分類項目 選取 **ETF** (張)
+                1. 總體市場加總、個股: 分類項目 選取 **全部** (張, 千元)
+
             - 融券,借券賣出: https://www.twse.com.tw/zh/trading/margin/twt93u.html
                 1. 個股 (股)
-                2. ETF (股)
-                3. 總體市場(個股+ETF): 總體市場為合計列，並非獨立項目 (股)
+                2. 總體市場: 總體市場為合計列，並非獨立項目 (股)
             - 三大法人
                 1. 總體市場: https://www.twse.com.tw/zh/trading/foreign/bfi82u.html
                     - 選取 **日報表**
@@ -110,25 +108,6 @@ https://www.twse.com.tw/zh/trading/margin/mi-margn.html
         - 賣出
         - 現金(券)償還
         - 今日餘額
-
-
-## 借券賣出
-https://www.twse.com.tw/zh/trading/margin/twt93u.html		
-- 信用額度總量管制餘額表
-    - 融券
-        - 前日餘額
-        - 賣出
-        - 買進
-        - 現券
-        - 今日餘額
-        - 次一營業日限額
-    - 借券賣出
-        - 前日餘額
-        - 當日賣出
-        - 當日還券
-        - 當日調整
-        - 當日餘額
-        - 次一營業日可限額
 
 # 三大法人
 

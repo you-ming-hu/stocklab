@@ -4,13 +4,13 @@ import json
 
 from .. import Scraper
 
-class TWSEScraper(Scraper):
+class ALL(Scraper):
 
-    def create_request_info(self, date, option):
+    def create_request_info(self, date):
         url = 'https://www.twse.com.tw/exchangeReport/MI_MARGN'
         params = {
             "response": "json",
-            "selectType": option,
+            "selectType": 'ALL',
             "date": self.create_request_date(date),
             "_": self.create_cache_id()
         }
@@ -45,21 +45,5 @@ class TWSEScraper(Scraper):
     
     def create_cache_id(self):
         return str(int(time.time()*1000))
-    
-class STOCKS(TWSEScraper):
 
-    def create_request_info(self, date):
-        return super().create_request_info(date, 'STOCK')
-
-class ETF(TWSEScraper):
-
-    def create_request_info(self, date):
-        return super().create_request_info(date, '0099P')
-
-class MARKET(TWSEScraper):
-    def create_request_info(self, date):
-        return super().create_request_info(date, 'ALL')
-
-stocks = STOCKS('D', '.json')
-etf = ETF('D', '.json')
-market = MARKET('D', '.json')
+all = ALL('D', '.json')

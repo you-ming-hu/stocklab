@@ -2,7 +2,7 @@ import json
 
 from .. import Checker
 
-class TWSEChecker(Checker):
+class ALL(Checker):
     
     def read(self, path):
         with open(path, encoding='utf-8') as f:
@@ -11,16 +11,5 @@ class TWSEChecker(Checker):
     
     def standardize(self, c):
         return c
-    
-class STOCKS(TWSEChecker):
-    pass
 
-class ETF(TWSEChecker):
-    pass
-
-class MARKET(TWSEChecker):
-    pass
-
-stocks = STOCKS()
-etf = ETF()
-market = MARKET()
+all = ALL()
