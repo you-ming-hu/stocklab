@@ -33,8 +33,8 @@ class STOCKS_STAGE_1(Source):
         
         stock_info_cols= [cols['代號']]
         volume_cols = [
-            cols['融券賣出股數'], cols['融券買進股數'], cols['融券現償股數'], cols['融券餘額股數'],
-            cols['借券賣出賣出股數'], cols['借券賣出不含賣出總異動股數'], cols['借券賣出餘額股數']
+            cols['融券賣出股數'], cols['融券買進股數'], cols['融券現償股數'], cols['融券餘額股數'], cols['融券次日限額股數'],
+            cols['借券賣出賣出股數'], cols['借券賣出不含賣出總異動股數'], cols['借券賣出餘額股數'], cols['借券賣出次日限額股數']
         ]
 
         for name in stock_info_cols:
@@ -53,9 +53,11 @@ stocks_stage_1 = STOCKS_STAGE_1(
         '融券買進': schema.tables.StockDaily.f_short.融券買進股數,
         '融券現券': schema.tables.StockDaily.f_short.融券現償股數,
         '融券今日餘額': schema.tables.StockDaily.f_short.融券餘額股數,
+        '融券次一營業日限額': schema.tables.StockDaily.f_short_additional.融券次日限額股數,
         '借券賣出賣出': schema.tables.StockDaily.f_short.借券賣出賣出股數,
         '借券賣出庫存異動': schema.tables.StockDaily.f_short.借券賣出不含賣出總異動股數,
         '借券賣出今日餘額': schema.tables.StockDaily.f_short.借券賣出餘額股數,
+        '借券賣出可使用額度': schema.tables.StockDaily.f_short_additional.借券賣出次日限額股數
     },
     True
 )
@@ -80,8 +82,8 @@ class STOCKS_STAGE_2(STOCKS_STAGE_1):
         
         stock_info_cols= [cols['代號']]
         volume_cols = [
-            cols['融券賣出股數'], cols['融券買進股數'], cols['融券現償股數'], cols['融券餘額股數'],
-            cols['借券賣出賣出股數'], cols['借券賣出還券股數'], cols['借券賣出調整股數'], cols['借券賣出餘額股數']
+            cols['融券賣出股數'], cols['融券買進股數'], cols['融券現償股數'], cols['融券餘額股數'], cols['融券次日限額股數'],
+            cols['借券賣出賣出股數'], cols['借券賣出還券股數'], cols['借券賣出調整股數'], cols['借券賣出餘額股數'], cols['借券賣出次日限額股數']
         ]
 
         for name in stock_info_cols:
@@ -105,10 +107,12 @@ stocks_stage_2 = STOCKS_STAGE_2(
         '融券買進': schema.tables.StockDaily.f_short.融券買進股數,
         '融券現券': schema.tables.StockDaily.f_short.融券現償股數,
         '融券今日餘額': schema.tables.StockDaily.f_short.融券餘額股數,
+        '融券次一營業日限額': schema.tables.StockDaily.f_short_additional.融券次日限額股數,
         '借券賣出當日賣出': schema.tables.StockDaily.f_short.借券賣出賣出股數,
         '借券賣出當日還券': schema.tables.StockDaily.f_short.借券賣出還券股數,
         '借券賣出當日調整': schema.tables.StockDaily.f_short.借券賣出調整股數,
         '借券賣出當日餘額': schema.tables.StockDaily.f_short.借券賣出餘額股數,
+        '借券賣出次一營業日可限額': schema.tables.StockDaily.f_short_additional.借券賣出次日限額股數
     },
     True
 )
