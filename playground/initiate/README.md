@@ -1,4 +1,4 @@
-
+# Sources
 - 技術面-價量
     - 上市
         - 個股
@@ -11,7 +11,7 @@
                 - 後期交易量更新可以只依據此查詢進行，但前期資料應該要到**每日市場成交資訊查詢**
                 - API: 
                     - https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX
-                    - type=ALLBUT0999
+                    - type=ALLBUT0999 (ALLBUT0999NOTIND**每日收盤行情(全部(不含大盤、指數、權證、牛熊證、可展延牛熊證))**)
                     - response=json
                     - date=yyyymmdd
         - 總體市場
@@ -55,154 +55,112 @@
 - 籌碼面
     - 上市
         - 金流
-            - 融資: https://www.twse.com.tw/zh/trading/margin/mi-margn.html 
-                1. 總體市場加總、個股: 分類項目 選取 **全部** (張, 千元)
-
-            - 融券,借券賣出: https://www.twse.com.tw/zh/trading/margin/twt93u.html
-                1. 個股 (股)
-                2. 總體市場: 總體市場為合計列，並非獨立項目 (股)
+            - 融券,借券賣出
+                - https://www.twse.com.tw/zh/trading/margin/twt93u.html
+                - 個股 (股)
+                - 總體市場: 總體市場為合計列，並非獨立項目 (股)
+                - API:
+                    - https://www.twse.com.tw/exchangeReport/TWT93U
+                    - response = 'json'
+                    - date = 
+            - 融資,融券
+                - https://www.twse.com.tw/zh/trading/margin/mi-margn.html 
+                - 總體市場加總、個股: 分類項目 選取 **全部** (張, 千元)
+                - API:
+                    - https://www.twse.com.tw/exchangeReport/MI_MARGN
+                    - response = 'json',
+                    - selectType = 'ALL',
+                    - date = 
             - 三大法人
-                1. 總體市場: https://www.twse.com.tw/zh/trading/foreign/bfi82u.html
+                - 總體市場
+                    - https://www.twse.com.tw/zh/trading/foreign/bfi82u.html
                     - 選取 **日報表**
-                2. 個股: https://www.twse.com.tw/zh/trading/foreign/t86.html
+                    - API:
+                        - https://www.twse.com.tw/rwd/zh/fund/BFI82U
+                        - response = 'json'
+                        - type = 'day'
+                        - dayDate = 
+                - 個股
+                    - https://www.twse.com.tw/zh/trading/foreign/t86.html
                     - 分類項目 選取 **全部(不含權證、牛熊證、可展延牛熊證)**
+                    - API:
+                        - https://www.twse.com.tw/rwd/zh/fund/T86
+                        - response = json
+                        - selectType = 'ALLBUT0999'
+                        - date = 
         - 持股比例
-            1. 外資及陸資: https://www.twse.com.tw/zh/trading/foreign/mi-qfiis.html
+            - 外資及陸資
+                - https://www.twse.com.tw/zh/trading/foreign/mi-qfiis.html
                 - 選取 **全部(不含權證)**
+                - API:
+                    - https://www.twse.com.tw/rwd/zh/fund/MI_QFIIS
+                    - response = 'json'
+                    - selectType = 'ALLBUT0999'
+                    - date = 
             
     - 上櫃
 
 
-# 信用交易
-
-## 融資融券
-https://www.twse.com.tw/zh/trading/margin/mi-margn.html
-- 信用交易統計
-    - 融資(交易單位)
-        - 買進
-        - 賣出
-        - 現金(券)償還
-        - 前日餘額
-        - 今日餘額
-    - 融券(交易單位)
-        - 買進
-        - 賣出
-        - 現金(券)償還
-        - 前日餘額
-        - 今日餘額
-    - 融資金額(仟元)
-        - 買進
-        - 賣出
-        - 現金(券)償還
-        - 前日餘額
-        - 今日餘額
-
-- 融資融券彙總 (股票), 融資融券彙總 (ETF)
-    - 融資(交易單位)
-        - 買進
-        - 賣出
-        - 現金(券)償還
-        - 今日餘額
-    - 融券(交易單位)
-        - 買進
-        - 賣出
-        - 現金(券)償還
-        - 今日餘額
-
-# 三大法人
-
-- 外陸資買進股數
-- 外陸資賣出股數
-- 外陸資買賣超股數
-
-- 外陸資買進股數(不含外資自營商)
-- 外陸資賣出股數(不含外資自營商)
-- 外陸資買賣超股數(不含外資自營商)
-
-- 外資自營商買進股數
-- 外資自營商賣出股數
-- 外資自營商買賣超股數
-
-
-- 投信買進股數
-- 投信賣出股數
-- 投信買賣超股數
-
-
-- 自營商買進股數
-- 自營商賣出股數
-- 自營商買賣超股數
-
-- 自營商買進股數(自行買賣)
-- 自營商賣出股數(自行買賣)
-- 自營商買賣超股數(自行買賣)
-
-- 自營商買進股數(避險)
-- 自營商賣出股數(避險)
-- 自營商買賣超股數(避險)
-
-## table格式
-### Micro
-- CompanyInfo = DataTimestampFree + CompanyInfo
-- FinancialStatement = DataTimestamp + 
-- StockDaily = DataTimestamp + StockInfo + Technicals + 
-    Margin + Short + ShortAdditional
-    ------------------ from 融資融券彙總 (股票), 融資融券彙總 (ETF) -----------------------
-        融資買進 margin_buy,
-        融資賣出 margin_sell,
-        融資現償 margin_cash_repayment,
-        融資餘額 margin_balance,
-    ------------------ from 信用額度總量管制餘額表 -----------------------
-        融券買進 short_cover,
-        融券賣出 short_sell,
-        融券現償 short_stock_repayment,
-        融券餘額 short_balance,
-        融券次日限額 short_next_day_limit,
-
-        借券賣出賣出 slb_sell,
-        借券賣出還券 slb_return,
-        借券賣出調整 slb_adjustment,
-        借券賣出餘額 slb_balance,
-        借券賣出次日限額 slb_next_day_limit,
-
-
-### Macro
-- MarketDaily = DataTimestamp + Technicals + 
-    Margin + MarginAdditional + Short
-    ------------------ from 信用交易統計 -----------------------
-        融資買進,
-        融資賣出,
-        融資現償,
-        融資餘額,
-
-        融資金額買進 margin_amount_buy,
-        融資金額賣出 margin_amount_sell,
-        融資金額現償 margin_amount_cash_repayment,
-        融資金額餘額 margin_amount_balance,
-    ------------------ from 信用額度總量管制餘額表 -----------------------
-        融券買進,
-        融券賣出,
-        融券現償,
-        融券餘額,
-
-        借券賣出賣出,
-        借券賣出還券,
-        借券賣出調整,
-        借券賣出餘額,
-
-    - TWSEDaily
-    - OTCDaily
-
-
-
-
-
-
-
-
-
-
-
+# Schema
+    - micro
+        - StockDaily
+                - fields.DataTimestamp
+                    - 添加日期 - auto
+                    - 資料日期 - 
+                - fields.StockInfo
+                    - 代號 - key
+                    - 名稱 - 
+                    - 市場別 - 
+                - fields.Technicals
+                    - 開盤價
+                    - 最高價
+                    - 最低價
+                    - 收盤價
+                    - 交易股數
+                    - 交易金額
+                    - 交易筆數
+                - fields.Margin
+                    - 融資買進股數
+                    - 融資賣出股數
+                    - 融資現償股數
+                    - 融資餘額股數
+                - fields.Short
+                    - 融券買進股數
+                    - 融券賣出股數
+                    - 融券現償股數
+                    - 融券餘額股數
+                    - 借券賣出賣出股數
+                    - 借券賣出還券股數
+                    - 借券賣出調整股數
+                    - 借券賣出不含賣出總異動股數
+                    - 借券賣出餘額股數
+                - fields.ShortAdditional
+                    - 融券次日限額股數
+                    - 借券賣出次日限額股數
+                - fields.InstitutionShareFlow
+                    - 外陸資_不含外資自營商_買進股數
+                    - 外陸資_不含外資自營商_賣出股數
+                    - 外資自營商買進股數
+                    - 外資自營商賣出股數
+                    - 外陸資買進股數
+                    - 外陸資賣出股數
+                    - 投信買進股數
+                    - 投信賣出股數
+                    - 自營商_自行買賣_買進股數
+                    - 自營商_自行買賣_賣出股數
+                    - 自營商_避險_買進股數
+                    - 自營商_避險_賣出股數
+                    - 自營商買進股數
+                    - 自營商賣出股數
+                - fields.Ownership
+                    - 總發行股數
+                    - 外陸資持有股數
+                    - 外陸資投資上限比率
+        - CompanyInfo
+        - ShareholdingDistribution
+    - macro
+        - TWSEDaily
+        - OTCDaily
 
 
 
