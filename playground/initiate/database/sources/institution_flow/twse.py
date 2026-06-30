@@ -152,39 +152,174 @@ stocks_stage_3 = STOCKS_STAGE_3(
     True
 )
 
+class MARKET_SHARE_STAGE_1(STOCKS_STAGE_1):
+    def format_dtype(self, df):
+        for name in df.columns:
+            df[name] = df[name].str.replace(',','').astype(int)
+        df = df.sum(axis=0).to_frame().T
+        return df
+    
+market_share_stage_1 = MARKET_SHARE_STAGE_1(
+    schema.tables.TWSEDaily,
+    {
+        '外資買進股數': schema.tables.TWSEDaily.f_institution_share_flow.外陸資買進股數,
+        '外資賣出股數': schema.tables.TWSEDaily.f_institution_share_flow.外陸資賣出股數,
+        '投信買進股數': schema.tables.TWSEDaily.f_institution_share_flow.投信買進股數,
+        '投信賣出股數': schema.tables.TWSEDaily.f_institution_share_flow.投信賣出股數,
+        '自營商買進股數': schema.tables.TWSEDaily.f_institution_share_flow.自營商買進股數,
+        '自營商賣出股數': schema.tables.TWSEDaily.f_institution_share_flow.自營商賣出股數
+    },
+    True
+)
+    
+class MARKET_SHARE_STAGE_2(MARKET_SHARE_STAGE_1, STOCKS_STAGE_2):
+    pass
 
-# class MARKET(STOCKS):
-#     def to_df(self, content):
-#         for table in content['tables']:
-#             if 'title' in table:
-#                 if '信用交易統計' in table['title']:
-#                     break
-#         df = pd.DataFrame(columns=table['fields'], data=table['data']).set_index('項目')
-#         rearrange = {}
-#         for item, values in df.iterrows():
-#             for cate, value in values.items():
-#                 rearrange[item+cate] = value
-#         assert len(rearrange) == 15
-#         df = pd.Series(rearrange).to_frame().T
-#         return df
+market_share_stage_2 = MARKET_SHARE_STAGE_2(
+    schema.tables.TWSEDaily,
+    {
+        '外資買進股數': schema.tables.TWSEDaily.f_institution_share_flow.外陸資買進股數,
+        '外資賣出股數': schema.tables.TWSEDaily.f_institution_share_flow.外陸資賣出股數,
+        '投信買進股數': schema.tables.TWSEDaily.f_institution_share_flow.投信買進股數,
+        '投信賣出股數': schema.tables.TWSEDaily.f_institution_share_flow.投信賣出股數,
+        '自營商買進股數(自行買賣)': schema.tables.TWSEDaily.f_institution_share_flow.自營商_自行買賣_買進股數,
+        '自營商賣出股數(自行買賣)': schema.tables.TWSEDaily.f_institution_share_flow.自營商_自行買賣_賣出股數,
+        '自營商買進股數(避險)': schema.tables.TWSEDaily.f_institution_share_flow.自營商_避險_買進股數,
+        '自營商賣出股數(避險)': schema.tables.TWSEDaily.f_institution_share_flow.自營商_避險_賣出股數,
+        
+    },
+    True
+)
+
+class MARKET_SHARE_STAGE_3(MARKET_SHARE_STAGE_1, STOCKS_STAGE_3):
+    pass
+
+market_share_stage_3 = MARKET_SHARE_STAGE_3(
+    schema.tables.TWSEDaily,
+    {   
+        '外陸資買進股數(不含外資自營商)': schema.tables.TWSEDaily.f_institution_share_flow.外陸資_不含外資自營商_買進股數,
+        '外陸資賣出股數(不含外資自營商)': schema.tables.TWSEDaily.f_institution_share_flow.外陸資_不含外資自營商_賣出股數,
+        '外資自營商買進股數': schema.tables.TWSEDaily.f_institution_share_flow.外資自營商買進股數,
+        '外資自營商賣出股數': schema.tables.TWSEDaily.f_institution_share_flow.外資自營商賣出股數,
+        '投信買進股數': schema.tables.TWSEDaily.f_institution_share_flow.投信買進股數,
+        '投信賣出股數': schema.tables.TWSEDaily.f_institution_share_flow.投信賣出股數,
+        '自營商買進股數(自行買賣)': schema.tables.TWSEDaily.f_institution_share_flow.自營商_自行買賣_買進股數,
+        '自營商賣出股數(自行買賣)': schema.tables.TWSEDaily.f_institution_share_flow.自營商_自行買賣_賣出股數,
+        '自營商買進股數(避險)': schema.tables.TWSEDaily.f_institution_share_flow.自營商_避險_買進股數,
+        '自營商賣出股數(避險)': schema.tables.TWSEDaily.f_institution_share_flow.自營商_避險_賣出股數,
+    },
+    True
+)
+
+class MARKET_FUND_STAGE_1(STOCKS_STAGE_1):
+    def to_df(self, content):
+        df = pd.DataFrame(columns=content['fields'], data=content['data']).set_index('單位名稱')
+        rearrange = {}
+        for item, values in df.iterrows():
+            for cate, value in values.items():
+                rearrange[item+cate] = value
+        assert len(rearrange) == 12
+        df = pd.Series(rearrange).to_frame().T
+        return df
+
+    def format_dtype(self, df):
+        for name in df.columns:
+            df[name] = df[name].str.replace(',','').astype(int)
+        return df
+
+market_fund_stage_1 = MARKET_FUND_STAGE_1(
+    schema.tables.TWSEDaily,
+    {   
+        '自營商買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商買進金額,
+        '自營商賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商賣出金額,
+        '投信買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信買進金額,
+        '投信賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信賣出金額,
+        '外資買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資買進金額,
+        '外資賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資賣出金額,
+    },
+    True
+)
+
+class MARKET_FUND_STAGE_2(MARKET_FUND_STAGE_1):
+    pass
+
+market_fund_stage_2 = MARKET_FUND_STAGE_2(
+    schema.tables.TWSEDaily,
+    {   
+        '自營商買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商買進金額,
+        '自營商賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商賣出金額,
+        '投信買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信買進金額,
+        '投信賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信賣出金額,
+        '外資及陸資買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資買進金額,
+        '外資及陸資賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資賣出金額,
+    },
+    True
+)
+
+class MARKET_FUND_STAGE_3(MARKET_FUND_STAGE_1):
+    def to_df(self, content):
+        df = pd.DataFrame(columns=content['fields'], data=content['data']).set_index('單位名稱')
+        rearrange = {}
+        for item, values in df.iterrows():
+            for cate, value in values.items():
+                rearrange[item+cate] = value
+        assert len(rearrange) == 15
+        df = pd.Series(rearrange).to_frame().T
+        return df
     
-#     def format_dtype(self, df):
-#         for name in df.columns:
-#             df[name] = df[name].str.replace(',','').astype(int) * 1000
-#         return df
+    def add_other_columns(self, df):
+        cols = self.table.cols
+        df[cols['自營商買進金額']] = df[cols['自營商_自行買賣_買進金額']] + df[cols['自營商_避險_買進金額']]
+        df[cols['自營商賣出金額']] = df[cols['自營商_自行買賣_賣出金額']] + df[cols['自營商_避險_賣出金額']]
+        return df
+
+market_fund_stage_3 = MARKET_FUND_STAGE_3(
+    schema.tables.TWSEDaily,
+    {   
+        '自營商(自行買賣)買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_自行買賣_買進金額,
+        '自營商(自行買賣)賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_自行買賣_賣出金額,
+        '自營商(避險)買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_避險_買進金額,
+        '自營商(避險)賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_避險_賣出金額,
+        '投信買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信買進金額,
+        '投信賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信賣出金額,
+        '外資及陸資買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資買進金額,
+        '外資及陸資賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資賣出金額,
+    },
+    True
+)
+
+class MARKET_FUND_STAGE_4(MARKET_FUND_STAGE_1):
+    def to_df(self, content):
+        df = pd.DataFrame(columns=content['fields'], data=content['data']).set_index('單位名稱')
+        rearrange = {}
+        for item, values in df.iterrows():
+            for cate, value in values.items():
+                rearrange[item+cate] = value
+        assert len(rearrange) == 18
+        df = pd.Series(rearrange).to_frame().T
+        return df
     
-    
-# market = MARKET(
-#     schema.tables.TWSEDaily,
-#     {
-#         '融資(交易單位)買進': schema.tables.TWSEDaily.f_margin.融資買進股數,
-#         '融資(交易單位)賣出': schema.tables.TWSEDaily.f_margin.融資賣出股數,
-#         '融資(交易單位)現金(券)償還': schema.tables.TWSEDaily.f_margin.融資現償股數,
-#         '融資(交易單位)今日餘額': schema.tables.TWSEDaily.f_margin.融資餘額股數,
-#         '融資金額(仟元)買進': schema.tables.TWSEDaily.f_margin_additional.融資買進金額,
-#         '融資金額(仟元)賣出': schema.tables.TWSEDaily.f_margin_additional.融資賣出金額,
-#         '融資金額(仟元)現金(券)償還': schema.tables.TWSEDaily.f_margin_additional.融資現償金額,
-#         '融資金額(仟元)今日餘額': schema.tables.TWSEDaily.f_margin_additional.融資餘額金額
-#     },
-#     True
-# )
+    def add_other_columns(self, df):
+        cols = self.table.cols
+        df[cols['自營商買進金額']] = df[cols['自營商_自行買賣_買進金額']] + df[cols['自營商_避險_買進金額']]
+        df[cols['自營商賣出金額']] = df[cols['自營商_自行買賣_賣出金額']] + df[cols['自營商_避險_賣出金額']]
+        df[cols['外陸資買進金額']] = df[cols['外陸資_不含外資自營商_買進金額']] + df[cols['外資自營商買進金額']]
+        df[cols['外陸資賣出金額']] = df[cols['外陸資_不含外資自營商_賣出金額']] + df[cols['外資自營商賣出金額']]
+        return df
+
+market_fund_stage_4 = MARKET_FUND_STAGE_4(
+    schema.tables.TWSEDaily,
+    {   
+        '自營商(自行買賣)買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_自行買賣_買進金額,
+        '自營商(自行買賣)賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_自行買賣_賣出金額,
+        '自營商(避險)買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_避險_買進金額,
+        '自營商(避險)賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_避險_賣出金額,
+        '投信買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信買進金額,
+        '投信賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信賣出金額,
+        '外資及陸資(不含外資自營商)買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資_不含外資自營商_買進金額,
+        '外資及陸資(不含外資自營商)賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資_不含外資自營商_賣出金額,
+        '外資自營商買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.外資自營商買進金額,
+        '外資自營商賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.外資自營商賣出金額,
+    },
+    True
+)
