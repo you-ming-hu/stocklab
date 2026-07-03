@@ -1,104 +1,4 @@
 # Sources
-- 技術面-價量
-    - 上市
-        - 個股
-            - 開高低收 交易量
-                - https://www.twse.com.tw/zh/trading/historical/mi-index.html
-                - 分類項目 選取 **每日收盤行情(全部(不含權證、牛熊證、可展延牛熊證))**
-                - 這個選項可以保留大盤資訊 並且 移除不是標的的項目
-                - 但是早期資料內容並不包含指數點數，只有交易量
-                    - 但這邊只能取得收盤價，沒有完整開高低收
-                - 後期交易量更新可以只依據此查詢進行，但前期資料應該要到**每日市場成交資訊查詢**
-                - API: 
-                    - https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX
-                    - type=ALLBUT0999 (ALLBUT0999NOTIND**每日收盤行情(全部(不含大盤、指數、權證、牛熊證、可展延牛熊證))**)
-                    - response=json
-                    - date=yyyymmdd
-        - 總體市場
-            - 交易量
-                - https://www.twse.com.tw/zh/trading/historical/fmtqik.html
-                - API:
-                    - https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK
-                    - response=json
-                    - date=yyyymmdd
-            - 開高低收
-                - https://www.twse.com.tw/zh/indices/taiex/mi-5min-hist.html
-                - API:
-                    - https://www.twse.com.tw/indicesReport/MI_5MINS_HIST
-                    - response=json
-                    - date=yyyymmdd
-                
-    - 上櫃
-        - 個股
-            1. 民國92年8月至95年12月資訊
-                - https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES/param_3104.html
-                - API: 
-                    - https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES
-                    - '/RSTA3104_' + date + '.HTML'
-            2. 民國96年1月2日至96年4月20日資訊
-                - https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing_hist96.html
-                - API:
-                    - https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotesHis
-                    - id = ''
-                    - response = 'json'
-                    - date = 
-            3. 民國96年1月起開始
-                - https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html
-                - API:
-                    - 'https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotes'
-                    - id = ''
-                    - response = 'json'
-                    - date = 
-        - 總體市場
-            1. Not start yet
-
-- 籌碼面
-    - 上市
-        - 金流
-            - 融券,借券賣出
-                - https://www.twse.com.tw/zh/trading/margin/twt93u.html
-                - 個股 (股)
-                - 總體市場: 總體市場為合計列，並非獨立項目 (股)
-                - API:
-                    - https://www.twse.com.tw/exchangeReport/TWT93U
-                    - response = 'json'
-                    - date = 
-            - 融資,融券
-                - https://www.twse.com.tw/zh/trading/margin/mi-margn.html 
-                - 總體市場加總、個股: 分類項目 選取 **全部** (張, 千元)
-                - API:
-                    - https://www.twse.com.tw/exchangeReport/MI_MARGN
-                    - response = 'json',
-                    - selectType = 'ALL',
-                    - date = 
-            - 三大法人
-                - 總體市場
-                    - https://www.twse.com.tw/zh/trading/foreign/bfi82u.html
-                    - 選取 **日報表**
-                    - API:
-                        - https://www.twse.com.tw/rwd/zh/fund/BFI82U
-                        - response = 'json'
-                        - type = 'day'
-                        - dayDate = 
-                - 個股
-                    - https://www.twse.com.tw/zh/trading/foreign/t86.html
-                    - 分類項目 選取 **全部(不含權證、牛熊證、可展延牛熊證)**
-                    - API:
-                        - https://www.twse.com.tw/rwd/zh/fund/T86
-                        - response = json
-                        - selectType = 'ALLBUT0999'
-                        - date = 
-        - 持股比例
-            - 外資及陸資
-                - https://www.twse.com.tw/zh/trading/foreign/mi-qfiis.html
-                - 選取 **全部(不含權證)**
-                - API:
-                    - https://www.twse.com.tw/rwd/zh/fund/MI_QFIIS
-                    - response = 'json'
-                    - selectType = 'ALLBUT0999'
-                    - date = 
-            
-    - 上櫃
 
 
 # Schema
@@ -206,3 +106,140 @@ table = soup.find('body').find('center').find('div', 'main-panel').find('div', '
 ```
 
 
+- 技術分析
+    - TWSE
+        - 總體
+            - 開高低收
+                - Website
+                    - 發行量加權股價指數歷史資料
+                    - https://www.twse.com.tw/zh/indices/taiex/mi-5min-hist.html
+                - API
+                    - https://www.twse.com.tw/indicesReport/MI_5MINS_HIST
+                    - response='json'
+                    - date='yyyymmdd'
+            - 量（元股筆）
+                - Website
+                    - 每日市場成交資訊
+                    - https://www.twse.com.tw/zh/trading/historical/fmtqik.html
+                - API
+                    - https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK
+                    - response='json'
+                    - date='yyyymmdd'
+        - 個股
+            - 開高低收+量（元股筆）
+                - Website
+                    - 每日收盤行情
+                    - 選取 **全部(不含大盤、指數、權證、牛熊證、可展延牛熊證)**
+                    - https://www.twse.com.tw/zh/trading/historical/mi-index.html
+                - API
+                    - https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX
+                    - type='ALLBUT0999NOTIND'
+                    - response='json'
+                    - date='yyyymmdd'
+    - OTC
+        - 總體
+        - 個股
+            - 開高低收+量（元股筆）民國92年8月至95年12月資訊
+                - Website
+                    - 上櫃股票行情
+                    - https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES/param_3104.html
+                - API
+                    - https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES
+                    - '/RSTA3104_' + date + '.HTML'
+            - 開高低收+量（元股筆）民國96年1月2日至96年4月20日資訊
+                - Website
+                    - 上櫃股票行情
+                    - https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing_hist96.html
+                - API
+                    - https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotesHis
+                    - response='json'
+                    - date='yyyymmdd'
+            - 開高低收+量（元股筆）民國96年1月起開始
+                - Website
+                    - 上櫃股票行情
+                    - https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html
+                - API
+                    - https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotes'
+                    - response='json'
+                    - date='yyyymmdd'
+- 融資融券
+    - TWSE
+        - 總體個股合併
+            - 總體（融資融券張+融資千元）+ 個股（融資融券張）
+                - Website
+                    - 融資融券餘額
+                    - 選取 **全部**
+                    - https://www.twse.com.tw/zh/trading/margin/mi-margn.html 
+                - API
+                    - https://www.twse.com.tw/exchangeReport/MI_MARGN
+                    - response='json',
+                    - selectType='ALL',
+                    - date='yyyymmdd'
+    - OTC
+        - 總體
+        - 個股
+- 融券借券賣出
+    - TWSE
+        - 總體
+            - 無資料，但可由個股加總獲得
+        - 個股
+            - 融券借券賣出股
+                - Website
+                    - 融券借券賣出餘額
+                    - https://www.twse.com.tw/zh/trading/margin/twt93u.html
+                - API
+                    - https://www.twse.com.tw/exchangeReport/TWT93U
+                    - response='json'
+                    - date='yyyymmdd'
+            - 融券借券賣出元 **NEW!**
+                - Website
+                    - 當日融券賣出與借券賣出成交量值
+                    - https://www.twse.com.tw/zh/trading/historical/twtasu.html
+                - API
+    - OTC
+        - 總體
+        - 個股
+- 三大法人
+    - TWSE
+        - 總體
+            - 金額 元
+                - Website
+                    - 三大法人買賣金額統計表
+                    - 選取 **日報表**
+                    - https://www.twse.com.tw/zh/trading/foreign/bfi82u.html
+                - API
+                    - https://www.twse.com.tw/rwd/zh/fund/BFI82U
+                    - response='json'
+                    - type='day'
+                    - dayDate='yyyymmdd' 
+        - 個股
+            - 交易量 股
+                - Website
+                    - 三大法人買賣超日報
+                    - 選取 **全部(不含權證、牛熊證、可展延牛熊證)**
+                    - https://www.twse.com.tw/zh/trading/foreign/t86.html
+                - API:
+                    - https://www.twse.com.tw/rwd/zh/fund/T86
+                    - response='json'
+                    - selectType='ALLBUT0999'
+                    - date='yyyymmdd'
+    - OTC
+        - 總體
+        - 個股
+- 外資持股
+    - TWSE
+        - 個股
+            - 持股量 股
+                - Website
+                    - 外資及陸資投資持股統計
+                    - 選取 **全部(不含權證)**
+                    - https://www.twse.com.tw/zh/trading/foreign/mi-qfiis.html
+                - API:
+                    - https://www.twse.com.tw/rwd/zh/fund/MI_QFIIS
+                    - response='json'
+                    - selectType='ALLBUT0999'
+                    - date='yyyymmdd'
+    - OTC
+        - 個股
+- 股權分散表
+    - BOTH
