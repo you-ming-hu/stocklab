@@ -1,16 +1,23 @@
 from .. import fields
 from . import base
 
-class MarketDaily(base.DataTimestampTable):
-    # 技術面
-    f_techicals = fields.Technicals
-    # 籌碼面 - 融資券
-    f_margin = fields.Margin
-    f_margin_additional = fields.MarginAdditional
-    f_short = fields.Short
-    # 籌碼面 - 三大法人
-    f_institution_share_flow = fields.InstitutionShareFlow
-    f_institution_fund_flow = fields.InstitutionFundFlow
+class MarketDaily(base.Table):
+    f_techical_price = fields.TechnicalPrice
+    f_technical_volume = fields.TechnicalVolume
+    
+    f_margin_shares = fields.MarginShares
+    f_margin_amount = fields.MarginAmount
+    f_short_shares = fields.ShortShares
+    f_short_amount = fields.ShortAmount
+    f_slb_shares = fields.SLBShares
+    f_slb_amount = fields.SLBAmount
+
+    f_foreign_flow_shares = fields.ForeignFlowShares
+    f_foreign_flow_amount = fields.ForeignFlowAmount
+    f_trust_flow_shares = fields.TrustFlowShares
+    f_trust_flow_amount = fields.TrustFlowAmount
+    f_dealer_flow_shares = fields.DealerFlowShares
+    f_dealer_flow_amount= fields.DealerFlowAmount
     
 class TWSEDaily(MarketDaily):
     __primary_keys__ = [

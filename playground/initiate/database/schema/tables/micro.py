@@ -1,7 +1,7 @@
 from .. import fields
 from . import base
 
-class StockDaily(base.DataTimestampTable):
+class StockDaily(base.Table):
     __primary_keys__ = [
         fields.CompanyInfo.代號,
         fields.DataTimestamp.資料日期
@@ -9,22 +9,30 @@ class StockDaily(base.DataTimestampTable):
     __additional_index__ = [
         fields.DataTimestamp.資料日期
     ]
-    # 個股資訊
+    
     f_stock_info = fields.StockInfo
-    # 技術面
-    f_techicals = fields.Technicals
-    # 籌碼面 - 融資券
-    f_margin = fields.Margin
-    f_short = fields.Short
-    f_short_additional = fields.ShortAdditional
-    # 籌碼面 - 三大法人
-    f_institution_share_flow = fields.InstitutionShareFlow
-    # 籌碼面 - 持股比例
-    f_ownership = fields.Ownership
+    
+    f_techical_price = fields.TechnicalPrice
+    f_technical_volume = fields.TechnicalVolume
+    
+    f_margin_shares = fields.MarginShares
+    f_short_shares = fields.ShortShares
+    f_short_amount = fields.ShortAmount
+    f_short_limit = fields.ShortLimit
+    f_slb_shares = fields.SLBShares
+    f_slb_amount = fields.SLBAmount
+    f_slb_limit = fields.SLBLimit
 
-class CompanyInfo(base.UpdateTimestampTable):
+    f_foreign_flow_shares = fields.ForeignFlowShares
+    f_trust_flow_shares = fields.TrustFlowShares
+    f_dealer_flow_shares = fields.DealerFlowShares
+    
+    f_outstanding_shares = fields.OutstandingShares
+    f_foreign_shareholding = fields.ForeignShareholding
+
+class CompanyInfo(base.Table):
     __primary_keys__ = [
-        fields.UpdateTimestamp.更新日期,
+        fields.DataTimestamp.資料日期,
         fields.CompanyInfo.產業別,
         fields.CompanyInfo.題材,
         fields.CompanyInfo.市場別,
@@ -35,7 +43,7 @@ class CompanyInfo(base.UpdateTimestampTable):
     ]
     f_company_info = fields.CompanyInfo
 
-class ShareholdingDistribution(base.DataTimestampTable):
+class ShareholdingDistribution(base.Table):
     __primary_keys__ = [
         fields.CompanyInfo.代號,
         fields.DataTimestamp.資料日期
@@ -44,5 +52,5 @@ class ShareholdingDistribution(base.DataTimestampTable):
     ]
     f_shareholding_distribution = fields.ShareholdingDistribution
 
-class FinancialStatement(base.DataTimestampTable):
+class FinancialStatement(base.Table):
     pass
