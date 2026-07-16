@@ -1,12 +1,12 @@
 from .utils import Field as F
 from .utils import FieldGroup as FG
 
-class OutstandingShares(FG):
+class StockInfo(FG):
+    代號 = F('id', str)
+    名稱 = F('name', str)
+    市場別 = F('market', str)
+    交易中 = F('active', bool, False)
     總發行股數 = F('total_outstanding_shares', int)
-
-class ForeignShareholding(FG):
-    外陸資持有股數 = F('foreign_holding_shares', int)
-    外陸資投資上限比率 = F('foreign_holding_shares_limit_ratio', float)
 
 class ShareholdingDistribution(FG):
     零股_人數 = F('below_1_shareholders', int)

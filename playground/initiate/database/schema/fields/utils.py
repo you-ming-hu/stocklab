@@ -29,7 +29,7 @@ class Field(str):
             obj.default = None
         return obj
     
-class MetaFieldGroup(type):
+class FieldGroupMeta(type):
     def __new__(mcls, name, bases, namespace:dict):
         items = {}
         for k, v in namespace.items():
@@ -39,5 +39,22 @@ class MetaFieldGroup(type):
         cls = super().__new__(mcls, name, bases, namespace)
         return cls
     
-class FieldGroup(metaclass=MetaFieldGroup):
+class FieldGroup(metaclass=FieldGroupMeta):
     pass
+
+class DisabledMeta(FieldGroupMeta):
+    def __getattribute__(cls, name):
+        if name in {
+            "__name__", "__qualname__", "__module__",
+            "__doc__", "__class__"
+        }:  
+            return super().__getattribute__(name)
+        else:
+            raise RuntimeError(f"{cls.__name__} 尚未啟用")
+
+def disabled(cls):
+    return DisabledMeta(
+        cls.__name__,
+        cls.__bases__,
+        dict(cls.__dict__)
+    )

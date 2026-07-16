@@ -12,23 +12,30 @@ class StockDaily(base.Table):
     
     f_stock_info = fields.StockInfo
     
-    f_techical_price = fields.TechnicalPrice
-    f_technical_volume = fields.TechnicalVolume
+    f_techical_price = fields.Price
+    f_technical_volume = fields.Volume
     
-    f_margin_shares = fields.MarginShares
-    f_short_shares = fields.ShortShares
-    f_short_amount = fields.ShortAmount
-    f_short_limit = fields.ShortLimit
-    f_slb_shares = fields.SLBShares
-    f_slb_amount = fields.SLBAmount
-    f_slb_limit = fields.SLBLimit
+    f_margin_flow_volume = fields.positions.margin.FlowVolume
+    f_margin_balance_volume = fields.positions.margin.BalanceVolume
+    f_margin_limit = fields.positions.margin.Limit
 
-    f_foreign_flow_shares = fields.ForeignFlowShares
-    f_trust_flow_shares = fields.TrustFlowShares
-    f_dealer_flow_shares = fields.DealerFlowShares
+    f_short_flow_volume = fields.positions.short.FlowVolume
+    f_short_balance_volume = fields.positions.short.BalanceVolume
+    f_short_flow_value = fields.positions.short.FlowValue
+    f_short_limit = fields.positions.short.Limit
     
-    f_outstanding_shares = fields.OutstandingShares
-    f_foreign_shareholding = fields.ForeignShareholding
+    f_sbl_flow_volume = fields.positions.shortSBL.FlowVolume
+    f_sbl_balance_volume = fields.positions.shortSBL.BalanceVolume
+    f_sbl_flow_value = fields.positions.shortSBL.FlowValue
+    f_sbl_limit = fields.positions.shortSBL.Limit
+
+    f_foreign_flow_volume = fields.participants.foreign.FlowVolume
+    f_foreign_balance_volume = fields.participants.foreign.BalanceVolume
+    f_foreign_limit = fields.participants.foreign.Limit
+
+    f_trust_flow_volume = fields.participants.trust.FlowVolume
+
+    f_dealer_flow_volume = fields.participants.dealer.FlowVolume
 
 class CompanyInfo(base.Table):
     __primary_keys__ = [
