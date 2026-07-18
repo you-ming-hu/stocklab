@@ -1,0 +1,50 @@
+from ....base import Source
+from ..... import schema
+
+import json
+import pandas as pd
+
+class VOLUME(Source):
+    def open(self, file):
+        with open(file, encoding="utf-8") as f:
+            content = json.load(f)
+        return content
+    
+    def check_empty(self, content):
+        return content['stat'] != 'OK'
+    
+    def to_df(self, content):
+        df = pd.DataFrame(
+            data=content['data'],
+            columns=content['fields'],
+        )
+        return df
+        
+    def format_dtype(self, df):
+        cols = self.table.cols
+        
+        date_col = cols['資料日期']
+        ymd = df[date_col].str.split('/', expand=True).astype(int)
+        ymd[0] = ymd[0] + 1911
+        ymd = ymd.apply(lambda cols: pd.Timestamp(f'{cols[0]}{cols[1]:0>2}{cols[2]:0>2}'),axis=1)
+        df[date_col] = ymd
+        
+        for name in [cols['交易股數'], cols['交易筆數'], cols['交易金額']]:
+            df[name] = df[name].str.replace(',','').astype(int)
+
+        for name in [cols['收盤價']]:
+            df[name] = df[name].str.replace(',','').astype(float)
+
+        return df
+
+volume = VOLUME(
+    schema.tables.TWSEDaily,
+    {
+        '日期': schema.tables.TWSEDaily.f_datatimestamp.資料日期,
+        '發行量加權股價指數': schema.tables.TWSEDaily.f_techicals.收盤價,
+        '成交股數': schema.tables.TWSEDaily.f_techicals.交易股數,
+        '成交金額': schema.tables.TWSEDaily.f_techicals.交易金額,
+        '成交筆數': schema.tables.TWSEDaily.f_techicals.交易筆數
+    },
+    False
+)

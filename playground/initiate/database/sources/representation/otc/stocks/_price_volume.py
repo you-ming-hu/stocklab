@@ -1,5 +1,5 @@
-from ..base import Source
-from ... import schema
+from ....base import Source
+from ..... import schema
 
 import pathlib
 from bs4 import BeautifulSoup
@@ -7,7 +7,7 @@ import re
 import pandas as pd
 import json
 
-class STOCKS_STAGE_1(Source):
+class PRICE_VOLUME_STAGE_1(Source):
     def open(self, file):
         content = pathlib.Path(file).read_text('utf-8')
         return content, file
@@ -120,7 +120,7 @@ class STOCKS_STAGE_1(Source):
         df[self.table.f_stock_info.市場別] = 'OTC'
         return df
 
-stocks_stage_1 = STOCKS_STAGE_1(
+price_volume_stage_1 = PRICE_VOLUME_STAGE_1(
     schema.tables.StockDaily,
     {
         '代號': schema.tables.StockDaily.f_stock_info.代號,
@@ -136,7 +136,7 @@ stocks_stage_1 = STOCKS_STAGE_1(
     True
 )
 
-class STOCKS_STAGE_2(STOCKS_STAGE_1):
+class PRICE_VOLUME_STAGE_2(PRICE_VOLUME_STAGE_1):
     
     def open(self, file):
         content = pathlib.Path(file)
@@ -177,7 +177,7 @@ class STOCKS_STAGE_2(STOCKS_STAGE_1):
 
         return df
 
-stocks_stage_2 = STOCKS_STAGE_2(
+price_volume_stage_2 = PRICE_VOLUME_STAGE_2(
     schema.tables.StockDaily,
     {
         '代號': schema.tables.StockDaily.f_stock_info.代號,
@@ -193,7 +193,7 @@ stocks_stage_2 = STOCKS_STAGE_2(
     True
 )
 
-class STOCKS_STAGE_3(STOCKS_STAGE_1):
+class PRICE_VOLUME_STAGE_3(PRICE_VOLUME_STAGE_1):
     
     def open(self, file):
         with open(file, encoding='utf-8') as f:
@@ -214,7 +214,7 @@ class STOCKS_STAGE_3(STOCKS_STAGE_1):
         )
         return df
     
-stocks_stage_3 = STOCKS_STAGE_3(
+price_volume_stage_3 = PRICE_VOLUME_STAGE_3(
     schema.tables.StockDaily,
     {
         '代號': schema.tables.StockDaily.f_stock_info.代號,
