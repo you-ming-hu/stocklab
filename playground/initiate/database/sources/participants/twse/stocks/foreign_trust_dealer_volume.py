@@ -1,10 +1,10 @@
-from ..base import Source
-from ... import schema
+from ....base import Source
+from ..... import schema
 
 import json
 import pandas as pd
 
-class STOCKS_STAGE_1(Source):
+class VERSION_0(Source):
     
     def open(self, file):
         with open(file, encoding="utf-8") as f:
@@ -37,7 +37,7 @@ class STOCKS_STAGE_1(Source):
 
         return df
 
-stocks_stage_1 = STOCKS_STAGE_1(
+version_0 = VERSION_0(
     schema.tables.StockDaily,
     {
         '證券代號': schema.tables.StockDaily.f_stock_info.代號,
@@ -51,7 +51,7 @@ stocks_stage_1 = STOCKS_STAGE_1(
     True
 )
 
-class STOCKS_STAGE_2(STOCKS_STAGE_1):
+class VERSION_1(VERSION_0):
     def to_df(self, content):
         df = pd.DataFrame(columns=content['fields'], data=content['data'])
         assert len(df.columns) == 16
@@ -83,7 +83,7 @@ class STOCKS_STAGE_2(STOCKS_STAGE_1):
         df[cols['自營商賣出股數']] = df[cols['自營商_自行買賣_賣出股數']] + df[cols['自營商_避險_賣出股數']]
         return df
 
-stocks_stage_2 = STOCKS_STAGE_2(
+version_1 = VERSION_1(
     schema.tables.StockDaily,
     {
         '證券代號': schema.tables.StockDaily.f_stock_info.代號,
@@ -100,7 +100,7 @@ stocks_stage_2 = STOCKS_STAGE_2(
     True
 )
 
-class STOCKS_STAGE_3(STOCKS_STAGE_1):
+class VERSION_2(VERSION_0):
     def to_df(self, content):
         df = pd.DataFrame(columns=content['fields'], data=content['data'])
         assert len(df.columns) == 19
@@ -134,7 +134,7 @@ class STOCKS_STAGE_3(STOCKS_STAGE_1):
         df[cols['自營商賣出股數']] = df[cols['自營商_自行買賣_賣出股數']] + df[cols['自營商_避險_賣出股數']]
         return df
 
-stocks_stage_3 = STOCKS_STAGE_3(
+version_2 = VERSION_2(
     schema.tables.StockDaily,
     {   
         '證券代號': schema.tables.StockDaily.f_stock_info.代號,
