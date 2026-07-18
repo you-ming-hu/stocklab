@@ -5,7 +5,7 @@ import json
 import pandas as pd
 import re
 
-class PRICE_VOLUME(Source):
+class VERSION_0(Source):
     
     def open(self, file):
         with open(file, encoding="utf-8") as f:
@@ -51,7 +51,7 @@ class PRICE_VOLUME(Source):
         df[self.table.f_stock_info.市場別] = 'TWSE'
         return df
 
-price_volume = PRICE_VOLUME(
+version_0 = VERSION_0(
     schema.tables.StockDaily,
     {
         '證券代號': schema.tables.StockDaily.f_stock_info.代號, 

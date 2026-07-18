@@ -7,7 +7,7 @@ import re
 import pandas as pd
 import json
 
-class PRICE_VOLUME_STAGE_1(Source):
+class VERSION_0(Source):
     def open(self, file):
         content = pathlib.Path(file).read_text('utf-8')
         return content, file
@@ -120,7 +120,7 @@ class PRICE_VOLUME_STAGE_1(Source):
         df[self.table.f_stock_info.市場別] = 'OTC'
         return df
 
-price_volume_stage_1 = PRICE_VOLUME_STAGE_1(
+version_0 = VERSION_0(
     schema.tables.StockDaily,
     {
         '代號': schema.tables.StockDaily.f_stock_info.代號,
@@ -136,7 +136,7 @@ price_volume_stage_1 = PRICE_VOLUME_STAGE_1(
     True
 )
 
-class PRICE_VOLUME_STAGE_2(PRICE_VOLUME_STAGE_1):
+class VERSION_1(VERSION_0):
     
     def open(self, file):
         content = pathlib.Path(file)
@@ -177,7 +177,7 @@ class PRICE_VOLUME_STAGE_2(PRICE_VOLUME_STAGE_1):
 
         return df
 
-price_volume_stage_2 = PRICE_VOLUME_STAGE_2(
+version_1 = VERSION_1(
     schema.tables.StockDaily,
     {
         '代號': schema.tables.StockDaily.f_stock_info.代號,
@@ -193,7 +193,7 @@ price_volume_stage_2 = PRICE_VOLUME_STAGE_2(
     True
 )
 
-class PRICE_VOLUME_STAGE_3(PRICE_VOLUME_STAGE_1):
+class VERSION_2(VERSION_0):
     
     def open(self, file):
         with open(file, encoding='utf-8') as f:
@@ -214,7 +214,7 @@ class PRICE_VOLUME_STAGE_3(PRICE_VOLUME_STAGE_1):
         )
         return df
     
-price_volume_stage_3 = PRICE_VOLUME_STAGE_3(
+version_2 = VERSION_2(
     schema.tables.StockDaily,
     {
         '代號': schema.tables.StockDaily.f_stock_info.代號,
