@@ -1,1 +1,1 @@
-from ._all import all
+from . import all

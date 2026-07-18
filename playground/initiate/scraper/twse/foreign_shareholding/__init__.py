@@ -1,1 +1,1 @@
-from ._stocks import stocks
+from . import stocks
