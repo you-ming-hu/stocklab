@@ -1,6 +1,6 @@
 from ..... import schema
 
-from ...base import MARGIN
+from ..base import MARGIN
 
 import pandas as pd
 

@@ -1,6 +1,6 @@
 from ..... import schema
 
-from ...base import SUM
+from ..base import SUM
 
 from ..stocks import short_sbl_volume as base
 
