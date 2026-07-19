@@ -3,8 +3,8 @@ from . import base
 
 class MarketDaily(base.Table):
 
-    f_techical_price = fields.Price
-    f_technical_volume = fields.Volume
+    f_techicals_price = fields.technicals.Price
+    f_technicals_volume = fields.technicals.Volume
     
     f_margin_flow_volume = fields.positions.margin.FlowVolume
     f_margin_balance_volume = fields.positions.margin.BalanceVolume
@@ -31,7 +31,7 @@ class MarketDaily(base.Table):
     
 class TWSEDaily(MarketDaily):
     __primary_keys__ = [
-        fields.DataTimestamp.資料日期
+        fields.base.DataTimestamp.資料日期
     ]
     __additional_index__ = [
         
@@ -39,7 +39,7 @@ class TWSEDaily(MarketDaily):
 
 class OTCDaily(MarketDaily):
     __primary_keys__ = [
-        fields.DataTimestamp.資料日期
+        fields.base.DataTimestamp.資料日期
     ]
     __additional_index__ = [
         

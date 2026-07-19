@@ -3,17 +3,17 @@ from . import base
 
 class StockDaily(base.Table):
     __primary_keys__ = [
-        fields.CompanyInfo.代號,
-        fields.DataTimestamp.資料日期
+        fields.stock.Info.代號,
+        fields.base.DataTimestamp.資料日期
     ]
     __additional_index__ = [
-        fields.DataTimestamp.資料日期
+        fields.base.DataTimestamp.資料日期
     ]
     
-    f_stock_info = fields.StockInfo
+    f_stock_info = fields.stock.Info
     
-    f_techical_price = fields.Price
-    f_technical_volume = fields.Volume
+    f_techicals_price = fields.technicals.Price
+    f_technicals_volume = fields.technicals.Volume
     
     f_margin_flow_volume = fields.positions.margin.FlowVolume
     f_margin_balance_volume = fields.positions.margin.BalanceVolume
@@ -39,25 +39,25 @@ class StockDaily(base.Table):
 
 class CompanyInfo(base.Table):
     __primary_keys__ = [
-        fields.DataTimestamp.資料日期,
-        fields.CompanyInfo.產業別,
-        fields.CompanyInfo.題材,
-        fields.CompanyInfo.市場別,
-        fields.CompanyInfo.代號
+        fields.base.DataTimestamp.資料日期,
+        fields.company.Info.產業別,
+        fields.company.Info.題材,
+        fields.company.Info.市場別,
+        fields.company.Info.代號
     ]
     __additional_index__ = [
-        fields.CompanyInfo.名稱
+        fields.company.Info.名稱
     ]
-    f_company_info = fields.CompanyInfo
+    f_company_info = fields.company.Info
 
 class ShareholdingDistribution(base.Table):
     __primary_keys__ = [
-        fields.CompanyInfo.代號,
-        fields.DataTimestamp.資料日期
+        fields.company.Info.代號,
+        fields.base.DataTimestamp.資料日期
     ]
     __additional_index__ = [
     ]
-    f_shareholding_distribution = fields.ShareholdingDistribution
+    f_shareholding_distribution = fields.stock.ShareholdingDistribution
 
 class FinancialStatement(base.Table):
     pass
