@@ -1,10 +1,10 @@
 from ..... import schema
 
-from ..stocks import margin_volume as base
+from ...base import MARGIN
 
 import pandas as pd
 
-class VERSION_0(base.VERSION_0):
+class VERSION_0(MARGIN):
     def to_df(self, content):
         for table in content['tables']:
             if 'title' in table:
@@ -24,7 +24,7 @@ class VERSION_0(base.VERSION_0):
             df[name] = df[name].str.replace(',','').astype(int) * 1000
         return df
 
-market = VERSION_0(
+version_0 = VERSION_0(
     schema.tables.TWSEDaily,
     {
         '融資(交易單位)買進': schema.tables.TWSEDaily.f_margin_flow_volume.融資_買進_股數,

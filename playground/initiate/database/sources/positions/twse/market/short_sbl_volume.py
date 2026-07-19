@@ -1,14 +1,11 @@
 from ..... import schema
 
+from ...base import SUM
+
 from ..stocks import short_sbl_volume as base
 
-class VERSION_0(base.VERSION_0):
-    
-    def format_dtype(self, df):
-        for name in df.columns:
-            df[name] = df[name].str.replace(',','').astype(int)
-        df = df.sum(axis=0).to_frame().T
-        return df
+class VERSION_0(SUM, base.VERSION_0):
+    pass
     
 version_0 = VERSION_0(
     schema.tables.TWSEDaily,
@@ -24,13 +21,8 @@ version_0 = VERSION_0(
     True
 )
 
-class VERSION_1(base.VERSION_1):
-    
-    def format_dtype(self, df):
-        for name in df.columns:
-            df[name] = df[name].str.replace(',','').astype(int)
-        df = df.sum(axis=0).to_frame().T
-        return df
+class VERSION_1(SUM, base.VERSION_1):
+    pass
     
 version_1 = VERSION_1(
     schema.tables.TWSEDaily,

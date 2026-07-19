@@ -1,19 +1,10 @@
-from ....base import Source
 from ..... import schema
 
-import json
+from ...base import MARGIN
+
 import pandas as pd
 
-class VERSION_0(Source):
-    
-    def open(self, file):
-        with open(file, encoding="utf-8") as f:
-            content = json.load(f)
-        return content
-    
-    def check_empty(self, content):
-        return content['stat'] == '很抱歉，沒有符合條件的資料'
-    
+class VERSION_0(MARGIN):
     def to_df(self, content):
         for table in content['tables']:
             if 'title' in table:
@@ -33,11 +24,16 @@ class VERSION_0(Source):
         return df
         
     def format_dtype(self, df):
-        cols = self.table.cols
-        
-        stock_info_cols= [cols['代號']]
+        stock_info_cols= [
+            schema.tables.StockDaily.f_stock_info.代號,
+        ]
+
         volume_cols = [
-            cols['融資買進股數'], cols['融資賣出股數'], cols['融資現償股數'], cols['融資餘額股數']
+            schema.tables.StockDaily.f_margin_flow_volume.融資_買進_股數,
+            schema.tables.StockDaily.f_margin_flow_volume.融資_賣出_股數,
+            schema.tables.StockDaily.f_margin_flow_volume.融資_現償_股數,
+            schema.tables.StockDaily.f_margin_balance_volume.融資_餘額_股數,
+            schema.tables.StockDaily.f_margin_limit.融資_次日限額_股數
         ]
 
         for name in stock_info_cols:
@@ -56,6 +52,7 @@ version_0 = VERSION_0(
         '融資賣出': schema.tables.StockDaily.f_margin_flow_volume.融資_賣出_股數,
         '融資現金償還': schema.tables.StockDaily.f_margin_flow_volume.融資_現償_股數,
         '融資今日餘額': schema.tables.StockDaily.f_margin_balance_volume.融資_餘額_股數,
+        '融資次一營業日限額': schema.tables.StockDaily.f_margin_limit.融資_次日限額_股數
     },
     True
 )
