@@ -24,7 +24,6 @@ class VERSION_0(SHORT_SBL):
             schema.tables.StockDaily.f_sbl_limit.借券賣出_次日限額_股數
         ]
         df = super().format_dtype(df, stock_info_cols, volume_cols)
-
         return df
 
 version_0 = VERSION_0(
@@ -54,7 +53,6 @@ class VERSION_1(SHORT_SBL):
         stock_info_cols = [
             schema.tables.StockDaily.f_stock_info.代號,
         ]
-
         volume_cols = [
             schema.tables.StockDaily.f_short_flow_volume.融券_賣出_股數,
             schema.tables.StockDaily.f_short_flow_volume.融券_買進_股數,
@@ -67,7 +65,6 @@ class VERSION_1(SHORT_SBL):
             schema.tables.StockDaily.f_sbl_balance_volume.借券賣出_餘額_股數,
             schema.tables.StockDaily.f_sbl_limit.借券賣出_次日限額_股數
         ]
-
         df = super().format_dtype(df, stock_info_cols, volume_cols)
         return df
     
