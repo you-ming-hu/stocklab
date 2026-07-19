@@ -1,0 +1,2 @@
+class FOREIGN_TRUST_DEALER_PAGE:
+    pass
