@@ -1,6 +1,6 @@
 from ..... import schema
 
-from ..stocks import foreign_trust_dealer_volume as base
+from ..stocks import foreign_trust_dealer_flow_volume as base
 
 import pandas as pd
 
