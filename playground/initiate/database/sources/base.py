@@ -1,8 +1,8 @@
+from ..schema.tables.base import Table
+
 import pathlib
 import pandas as pd
 import pydantic
-
-from ..schema.tables.base import Table
 
 class Source:
     def __init__(self, table: Table, mapping: dict, filename_is_data_date=True):
