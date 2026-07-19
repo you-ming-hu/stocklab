@@ -1,4 +1,4 @@
-from ....base import Source
+from ...base import STOCKS
 from ..... import schema
 
 import pathlib
@@ -7,7 +7,9 @@ import re
 import pandas as pd
 import json
 
-class VERSION_0(Source):
+class VERSION_0(STOCKS):
+    market_type = 'OTC'
+
     def open(self, file):
         content = pathlib.Path(file).read_text('utf-8')
         return content, file
@@ -98,11 +100,21 @@ class VERSION_0(Source):
         return complete_df
         
     def format_dtype(self, df):
-        cols = self.table.cols
-
-        stock_info_cols= [cols['代號'], cols['名稱']]
-        volume_cols = [cols['交易股數'], cols['交易筆數'], cols['交易金額']]
-        price_cols = [cols['開盤價'], cols['最高價'], cols['最低價'], cols['收盤價']]
+        stock_info_cols= [
+            schema.tables.StockDaily.f_stock_info.代號,
+            schema.tables.StockDaily.f_stock_info.名稱
+        ]
+        volume_cols = [
+            schema.tables.StockDaily.f_technicals_volume.交易股數,
+            schema.tables.StockDaily.f_technicals_volume.交易筆數,
+            schema.tables.StockDaily.f_technicals_volume.交易金額
+        ]
+        price_cols = [
+            schema.tables.StockDaily.f_technicals_price.開盤價,
+            schema.tables.StockDaily.f_technicals_price.最高價,
+            schema.tables.StockDaily.f_technicals_price.最低價,
+            schema.tables.StockDaily.f_technicals_price.收盤價,
+        ]
 
         for name in stock_info_cols:
             df[name] = df[name].str.replace(' ','').replace('*','')
@@ -115,23 +127,19 @@ class VERSION_0(Source):
         
         df = df.loc[~(df[volume_cols+price_cols] == 0).all(axis=1)]
         return df
-    
-    def add_other_columns(self, df):
-        df[self.table.f_stock_info.市場別] = 'OTC'
-        return df
 
 version_0 = VERSION_0(
     schema.tables.StockDaily,
     {
         '代號': schema.tables.StockDaily.f_stock_info.代號,
         '證券名稱': schema.tables.StockDaily.f_stock_info.名稱,
-        '開盤價': schema.tables.StockDaily.f_techicals.開盤價,
-        '最高價': schema.tables.StockDaily.f_techicals.最高價,
-        '最低價': schema.tables.StockDaily.f_techicals.最低價,
-        '收盤價': schema.tables.StockDaily.f_techicals.收盤價,
-        '成交股數': schema.tables.StockDaily.f_techicals.交易股數,
-        '成交金額': schema.tables.StockDaily.f_techicals.交易金額,
-        '成交筆數': schema.tables.StockDaily.f_techicals.交易筆數
+        '開盤價': schema.tables.StockDaily.f_technicals_price.開盤價,
+        '最高價': schema.tables.StockDaily.f_technicals_price.最高價,
+        '最低價': schema.tables.StockDaily.f_technicals_price.最低價,
+        '收盤價': schema.tables.StockDaily.f_technicals_price.收盤價,
+        '成交股數': schema.tables.StockDaily.f_technicals_volume.交易股數,
+        '成交金額': schema.tables.StockDaily.f_technicals_volume.交易金額,
+        '成交筆數': schema.tables.StockDaily.f_technicals_volume.交易筆數
     },
     True
 )
@@ -182,13 +190,13 @@ version_1 = VERSION_1(
     {
         '代號': schema.tables.StockDaily.f_stock_info.代號,
         '名稱': schema.tables.StockDaily.f_stock_info.名稱,
-        '收盤': schema.tables.StockDaily.f_techicals.收盤價,
-        '開盤': schema.tables.StockDaily.f_techicals.開盤價,
-        '最高': schema.tables.StockDaily.f_techicals.最高價,
-        '最低': schema.tables.StockDaily.f_techicals.最低價,
-        '成交股數': schema.tables.StockDaily.f_techicals.交易股數,
-        '成交金額(元)': schema.tables.StockDaily.f_techicals.交易金額,
-        '成交筆數': schema.tables.StockDaily.f_techicals.交易筆數
+        '收盤': schema.tables.StockDaily.f_technicals_price.收盤價,
+        '開盤': schema.tables.StockDaily.f_technicals_price.開盤價,
+        '最高': schema.tables.StockDaily.f_technicals_price.最高價,
+        '最低': schema.tables.StockDaily.f_technicals_price.最低價,
+        '成交股數': schema.tables.StockDaily.f_technicals_volume.交易股數,
+        '成交金額(元)': schema.tables.StockDaily.f_technicals_volume.交易金額,
+        '成交筆數': schema.tables.StockDaily.f_technicals_volume.交易筆數
     },
     True
 )
@@ -219,13 +227,13 @@ version_2 = VERSION_2(
     {
         '代號': schema.tables.StockDaily.f_stock_info.代號,
         '名稱': schema.tables.StockDaily.f_stock_info.名稱,
-        '收盤': schema.tables.StockDaily.f_techicals.收盤價,
-        '開盤': schema.tables.StockDaily.f_techicals.開盤價,
-        '最高': schema.tables.StockDaily.f_techicals.最高價,
-        '最低': schema.tables.StockDaily.f_techicals.最低價,
-        '成交股數': schema.tables.StockDaily.f_techicals.交易股數,
-        '成交金額(元)': schema.tables.StockDaily.f_techicals.交易金額,
-        '成交筆數': schema.tables.StockDaily.f_techicals.交易筆數
+        '收盤': schema.tables.StockDaily.f_technicals_price.收盤價,
+        '開盤': schema.tables.StockDaily.f_technicals_price.開盤價,
+        '最高': schema.tables.StockDaily.f_technicals_price.最高價,
+        '最低': schema.tables.StockDaily.f_technicals_price.最低價,
+        '成交股數': schema.tables.StockDaily.f_technicals_volume.交易股數,
+        '成交金額(元)': schema.tables.StockDaily.f_technicals_volume.交易金額,
+        '成交筆數': schema.tables.StockDaily.f_technicals_volume.交易筆數
     },
     True
 )

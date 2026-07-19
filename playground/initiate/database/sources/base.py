@@ -54,9 +54,9 @@ class Source:
         df = self.to_df(content)
         if not df is None: 
             df = self.keep_interest(df)
+            df = self.rename_columns(df)
             df = self.format_dtype(df)
             df = self.drop_incomplete(df)
-            df = self.rename_columns(df)
             df = self.add_data_date(df, date)
             df = self.add_other_columns(df)
         return df

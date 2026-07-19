@@ -1,11 +1,11 @@
-from ...base import STOCK
+from ...base import STOCKS
 from ..... import schema
 
 import json
 import pandas as pd
 import re
 
-class VERSION_0(STOCK):
+class VERSION_0(STOCKS):
     market_type = 'TWSE'
     
     def open(self, file):
@@ -29,9 +29,21 @@ class VERSION_0(STOCK):
         return df
         
     def format_dtype(self, df):
-        stock_info_cols= ['證券代號','證券名稱']
-        volume_cols = ['成交股數','成交筆數','成交金額']
-        price_cols = ['開盤價','最高價','最低價','收盤價']
+        stock_info_cols= [
+            schema.tables.StockDaily.f_stock_info.代號,
+            schema.tables.StockDaily.f_stock_info.名稱
+        ]
+        volume_cols = [
+            schema.tables.StockDaily.f_technicals_volume.交易股數,
+            schema.tables.StockDaily.f_technicals_volume.交易筆數,
+            schema.tables.StockDaily.f_technicals_volume.交易金額
+        ]
+        price_cols = [
+            schema.tables.StockDaily.f_technicals_price.開盤價,
+            schema.tables.StockDaily.f_technicals_price.最高價,
+            schema.tables.StockDaily.f_technicals_price.最低價,
+            schema.tables.StockDaily.f_technicals_price.收盤價,
+        ]
 
         for name in stock_info_cols:
             df[name] = df[name].str.replace(' ','').replace('*','')
