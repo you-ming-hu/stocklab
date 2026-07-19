@@ -37,10 +37,10 @@ version_0 = VERSION_0(
     schema.tables.TWSEDaily,
     {
         '日期': schema.tables.TWSEDaily.f_datatimestamp.資料日期,
-        '開盤指數': schema.tables.TWSEDaily.f_techicals.開盤價,
-        '最高指數': schema.tables.TWSEDaily.f_techicals.最高價,
-        '最低指數': schema.tables.TWSEDaily.f_techicals.最低價,
-        '收盤指數': schema.tables.TWSEDaily.f_techicals.收盤價
+        '開盤指數': schema.tables.TWSEDaily.f_technicals_price.開盤價,
+        '最高指數': schema.tables.TWSEDaily.f_technicals_price.最高價,
+        '最低指數': schema.tables.TWSEDaily.f_technicals_price.最低價,
+        '收盤指數': schema.tables.TWSEDaily.f_technicals_price.收盤價
     },
     False
 )

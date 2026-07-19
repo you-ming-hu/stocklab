@@ -41,10 +41,10 @@ version_0 = VERSION_0(
     schema.tables.TWSEDaily,
     {
         '日期': schema.tables.TWSEDaily.f_datatimestamp.資料日期,
-        '發行量加權股價指數': schema.tables.TWSEDaily.f_techicals.收盤價,
-        '成交股數': schema.tables.TWSEDaily.f_techicals.交易股數,
-        '成交金額': schema.tables.TWSEDaily.f_techicals.交易金額,
-        '成交筆數': schema.tables.TWSEDaily.f_techicals.交易筆數
+        '發行量加權股價指數': schema.tables.TWSEDaily.f_technicals_price.收盤價,
+        '成交股數': schema.tables.TWSEDaily.f_technicals_volume.交易股數,
+        '成交金額': schema.tables.TWSEDaily.f_technicals_volume.交易金額,
+        '成交筆數': schema.tables.TWSEDaily.f_technicals_volume.交易筆數
     },
     False
 )
