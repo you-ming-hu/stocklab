@@ -21,15 +21,13 @@ class VERSION_0(Source):
         return df
         
     def format_dtype(self, df):
-        cols = self.table.cols
-        
-        date_col = cols['資料日期']
+        date_col = '日期'
         ymd = df[date_col].str.split('/', expand=True).astype(int)
         ymd[0] = ymd[0] + 1911
         ymd = ymd.apply(lambda cols: pd.Timestamp(f'{cols[0]}{cols[1]:0>2}{cols[2]:0>2}'),axis=1)
         df[date_col] = ymd
 
-        for name in [cols['開盤價'], cols['最高價'], cols['最低價'], cols['收盤價']]:
+        for name in ['開盤指數','最高指數','最低指數','收盤指數']:
             df[name] = df[name].str.replace(',','').astype(float)
         return df
 
