@@ -27,14 +27,14 @@ class VERSION_0(base.VERSION_0):
 market = VERSION_0(
     schema.tables.TWSEDaily,
     {
-        '融資(交易單位)買進': schema.tables.TWSEDaily.f_margin.融資買進股數,
-        '融資(交易單位)賣出': schema.tables.TWSEDaily.f_margin.融資賣出股數,
-        '融資(交易單位)現金(券)償還': schema.tables.TWSEDaily.f_margin.融資現償股數,
-        '融資(交易單位)今日餘額': schema.tables.TWSEDaily.f_margin.融資餘額股數,
-        '融資金額(仟元)買進': schema.tables.TWSEDaily.f_margin_additional.融資買進金額,
-        '融資金額(仟元)賣出': schema.tables.TWSEDaily.f_margin_additional.融資賣出金額,
-        '融資金額(仟元)現金(券)償還': schema.tables.TWSEDaily.f_margin_additional.融資現償金額,
-        '融資金額(仟元)今日餘額': schema.tables.TWSEDaily.f_margin_additional.融資餘額金額
+        '融資(交易單位)買進': schema.tables.TWSEDaily.f_margin_flow_volume.融資_買進_股數,
+        '融資(交易單位)賣出': schema.tables.TWSEDaily.f_margin_flow_volume.融資_賣出_股數,
+        '融資(交易單位)現金(券)償還': schema.tables.TWSEDaily.f_margin_flow_volume.融資_現償_股數,
+        '融資(交易單位)今日餘額': schema.tables.TWSEDaily.f_margin_balance_volume.融資_餘額_股數,
+        '融資金額(仟元)買進': schema.tables.TWSEDaily.f_margin_flow_value.融資_買進_金額,
+        '融資金額(仟元)賣出': schema.tables.TWSEDaily.f_margin_flow_value.融資_賣出_金額,
+        '融資金額(仟元)現金(券)償還': schema.tables.TWSEDaily.f_margin_flow_value.融資_現償_金額,
+        '融資金額(仟元)今日餘額': schema.tables.TWSEDaily.f_margin_balance_value.融資_餘額_金額
     },
     True
 )

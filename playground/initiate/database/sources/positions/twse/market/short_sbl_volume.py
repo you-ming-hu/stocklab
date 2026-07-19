@@ -13,13 +13,13 @@ class VERSION_0(base.VERSION_0):
 version_0 = VERSION_0(
     schema.tables.TWSEDaily,
     {
-        '融券賣出': schema.tables.TWSEDaily.f_short.融券賣出股數,
-        '融券買進': schema.tables.TWSEDaily.f_short.融券買進股數,
-        '融券現券': schema.tables.TWSEDaily.f_short.融券現償股數,
-        '融券今日餘額': schema.tables.TWSEDaily.f_short.融券餘額股數,
-        '借券賣出賣出': schema.tables.TWSEDaily.f_short.借券賣出賣出股數,
-        '借券賣出庫存異動': schema.tables.TWSEDaily.f_short.借券賣出不含賣出總異動股數,
-        '借券賣出今日餘額': schema.tables.TWSEDaily.f_short.借券賣出餘額股數,
+        '融券賣出': schema.tables.TWSEDaily.f_short_flow_volume.融券_賣出_股數,
+        '融券買進': schema.tables.TWSEDaily.f_short_flow_volume.融券_買進_股數,
+        '融券現券': schema.tables.TWSEDaily.f_short_flow_volume.融券_現償_股數,
+        '融券今日餘額': schema.tables.TWSEDaily.f_short_balance_volume.融券_餘額_股數,
+        '借券賣出賣出': schema.tables.TWSEDaily.f_sbl_flow_volume.借券賣出_賣出_股數,
+        '借券賣出庫存異動': schema.tables.TWSEDaily.f_sbl_flow_volume.借券賣出_不含賣出_總異動_股數,
+        '借券賣出今日餘額': schema.tables.TWSEDaily.f_sbl_balance_volume.借券賣出_餘額_股數,
     },
     True
 )
@@ -35,14 +35,14 @@ class VERSION_1(base.VERSION_1):
 version_1 = VERSION_1(
     schema.tables.TWSEDaily,
     {
-        '融券賣出': schema.tables.TWSEDaily.f_short.融券賣出股數,
-        '融券買進': schema.tables.TWSEDaily.f_short.融券買進股數,
-        '融券現券': schema.tables.TWSEDaily.f_short.融券現償股數,
-        '融券今日餘額': schema.tables.TWSEDaily.f_short.融券餘額股數,
-        '借券賣出當日賣出': schema.tables.TWSEDaily.f_short.借券賣出賣出股數,
-        '借券賣出當日還券': schema.tables.TWSEDaily.f_short.借券賣出還券股數,
-        '借券賣出當日調整': schema.tables.TWSEDaily.f_short.借券賣出調整股數,
-        '借券賣出當日餘額': schema.tables.TWSEDaily.f_short.借券賣出餘額股數,
+        '融券賣出': schema.tables.TWSEDaily.f_short_flow_volume.融券_賣出_股數,
+        '融券買進': schema.tables.TWSEDaily.f_short_flow_volume.融券_買進_股數,
+        '融券現券': schema.tables.TWSEDaily.f_short_flow_volume.融券_現償_股數,
+        '融券今日餘額': schema.tables.TWSEDaily.f_short_balance_volume.融券_餘額_股數,
+        '借券賣出當日賣出': schema.tables.TWSEDaily.f_sbl_flow_volume.借券賣出_賣出_股數,
+        '借券賣出當日還券': schema.tables.TWSEDaily.f_sbl_flow_volume.借券賣出_還券_股數,
+        '借券賣出當日調整': schema.tables.TWSEDaily.f_sbl_flow_volume.借券賣出_調整_股數,
+        '借券賣出當日餘額': schema.tables.TWSEDaily.f_sbl_balance_volume.借券賣出_餘額_股數,
     },
     True
 )

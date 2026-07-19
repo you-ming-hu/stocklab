@@ -41,12 +41,12 @@ version_0 = VERSION_0(
     schema.tables.StockDaily,
     {
         '證券代號': schema.tables.StockDaily.f_stock_info.代號,
-        '外資買進股數': schema.tables.StockDaily.f_institution_share_flow.外陸資買進股數,
-        '外資賣出股數': schema.tables.StockDaily.f_institution_share_flow.外陸資賣出股數,
-        '投信買進股數': schema.tables.StockDaily.f_institution_share_flow.投信買進股數,
-        '投信賣出股數': schema.tables.StockDaily.f_institution_share_flow.投信賣出股數,
-        '自營商買進股數': schema.tables.StockDaily.f_institution_share_flow.自營商買進股數,
-        '自營商賣出股數': schema.tables.StockDaily.f_institution_share_flow.自營商賣出股數
+        '外資買進股數': schema.tables.StockDaily.f_foreign_flow_volume.外陸資_買進_股數,
+        '外資賣出股數': schema.tables.StockDaily.f_foreign_flow_volume.外陸資_賣出_股數,
+        '投信買進股數': schema.tables.StockDaily.f_trust_flow_volume.投信_買進_股數,
+        '投信賣出股數': schema.tables.StockDaily.f_trust_flow_volume.投信_賣出_股數,
+        '自營商買進股數': schema.tables.StockDaily.f_dealer_flow_volume.自營商_買進_股數,
+        '自營商賣出股數': schema.tables.StockDaily.f_dealer_flow_volume.自營商_賣出_股數
     },
     True
 )
@@ -87,15 +87,14 @@ version_1 = VERSION_1(
     schema.tables.StockDaily,
     {
         '證券代號': schema.tables.StockDaily.f_stock_info.代號,
-        '外資買進股數': schema.tables.StockDaily.f_institution_share_flow.外陸資買進股數,
-        '外資賣出股數': schema.tables.StockDaily.f_institution_share_flow.外陸資賣出股數,
-        '投信買進股數': schema.tables.StockDaily.f_institution_share_flow.投信買進股數,
-        '投信賣出股數': schema.tables.StockDaily.f_institution_share_flow.投信賣出股數,
-        '自營商買進股數(自行買賣)': schema.tables.StockDaily.f_institution_share_flow.自營商_自行買賣_買進股數,
-        '自營商賣出股數(自行買賣)': schema.tables.StockDaily.f_institution_share_flow.自營商_自行買賣_賣出股數,
-        '自營商買進股數(避險)': schema.tables.StockDaily.f_institution_share_flow.自營商_避險_買進股數,
-        '自營商賣出股數(避險)': schema.tables.StockDaily.f_institution_share_flow.自營商_避險_賣出股數,
-        
+        '外資買進股數': schema.tables.StockDaily.f_foreign_flow_volume.外陸資_買進_股數,
+        '外資賣出股數': schema.tables.StockDaily.f_foreign_flow_volume.外陸資_賣出_股數,
+        '投信買進股數': schema.tables.StockDaily.f_trust_flow_volume.投信_買進_股數,
+        '投信賣出股數': schema.tables.StockDaily.f_trust_flow_volume.投信_賣出_股數,
+        '自營商買進股數(自行買賣)': schema.tables.StockDaily.f_dealer_flow_volume.自營商_自行買賣_買進_股數,
+        '自營商賣出股數(自行買賣)': schema.tables.StockDaily.f_dealer_flow_volume.自營商_自行買賣_賣出_股數,
+        '自營商買進股數(避險)': schema.tables.StockDaily.f_dealer_flow_volume.自營商_避險_買進_股數,
+        '自營商賣出股數(避險)': schema.tables.StockDaily.f_dealer_flow_volume.自營商_避險_賣出_股數,
     },
     True
 )
@@ -138,16 +137,16 @@ version_2 = VERSION_2(
     schema.tables.StockDaily,
     {   
         '證券代號': schema.tables.StockDaily.f_stock_info.代號,
-        '外陸資買進股數(不含外資自營商)': schema.tables.StockDaily.f_institution_share_flow.外陸資_不含外資自營商_買進股數,
-        '外陸資賣出股數(不含外資自營商)': schema.tables.StockDaily.f_institution_share_flow.外陸資_不含外資自營商_賣出股數,
-        '外資自營商買進股數': schema.tables.StockDaily.f_institution_share_flow.外資自營商買進股數,
-        '外資自營商賣出股數': schema.tables.StockDaily.f_institution_share_flow.外資自營商賣出股數,
-        '投信買進股數': schema.tables.StockDaily.f_institution_share_flow.投信買進股數,
-        '投信賣出股數': schema.tables.StockDaily.f_institution_share_flow.投信賣出股數,
-        '自營商買進股數(自行買賣)': schema.tables.StockDaily.f_institution_share_flow.自營商_自行買賣_買進股數,
-        '自營商賣出股數(自行買賣)': schema.tables.StockDaily.f_institution_share_flow.自營商_自行買賣_賣出股數,
-        '自營商買進股數(避險)': schema.tables.StockDaily.f_institution_share_flow.自營商_避險_買進股數,
-        '自營商賣出股數(避險)': schema.tables.StockDaily.f_institution_share_flow.自營商_避險_賣出股數,
+        '外陸資買進股數(不含外資自營商)': schema.tables.StockDaily.f_foreign_flow_volume.外陸資_不含外資自營商_買進_股數,
+        '外陸資賣出股數(不含外資自營商)': schema.tables.StockDaily.f_foreign_flow_volume.外陸資_不含外資自營商_賣出_股數,
+        '外資自營商買進股數': schema.tables.StockDaily.f_foreign_flow_volume.外資自營商_買進_股數,
+        '外資自營商賣出股數': schema.tables.StockDaily.f_foreign_flow_volume.外資自營商_賣出_股數,
+        '投信買進股數': schema.tables.StockDaily.f_trust_flow_volume.投信_買進_股數,
+        '投信賣出股數': schema.tables.StockDaily.f_trust_flow_volume.投信_賣出_股數,
+        '自營商買進股數(自行買賣)': schema.tables.StockDaily.f_dealer_flow_volume.自營商_自行買賣_買進_股數,
+        '自營商賣出股數(自行買賣)': schema.tables.StockDaily.f_dealer_flow_volume.自營商_自行買賣_賣出_股數,
+        '自營商買進股數(避險)': schema.tables.StockDaily.f_dealer_flow_volume.自營商_避險_買進_股數,
+        '自營商賣出股數(避險)': schema.tables.StockDaily.f_dealer_flow_volume.自營商_避險_賣出_股數,
     },
     True
 )

@@ -23,12 +23,12 @@ class VERSION_0(base.VERSION_0):
 version_0 = VERSION_0(
     schema.tables.TWSEDaily,
     {   
-        '自營商買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商買進金額,
-        '自營商賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商賣出金額,
-        '投信買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信買進金額,
-        '投信賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信賣出金額,
-        '外資買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資買進金額,
-        '外資賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資賣出金額,
+        '外資買進金額': schema.tables.TWSEDaily.f_foreign_flow_value.外陸資_買進_金額,
+        '外資賣出金額': schema.tables.TWSEDaily.f_foreign_flow_value.外陸資_賣出_金額,
+        '投信買進金額': schema.tables.TWSEDaily.f_trust_flow_value.投信_買進_金額,
+        '投信賣出金額': schema.tables.TWSEDaily.f_trust_flow_value.投信_賣出_金額,
+        '自營商買進金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_買進_金額,
+        '自營商賣出金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_賣出_金額,
     },
     True
 )
@@ -39,12 +39,12 @@ class VERSION_1(VERSION_0):
 version_1 = VERSION_1(
     schema.tables.TWSEDaily,
     {   
-        '自營商買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商買進金額,
-        '自營商賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商賣出金額,
-        '投信買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信買進金額,
-        '投信賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信賣出金額,
-        '外資及陸資買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資買進金額,
-        '外資及陸資賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資賣出金額,
+        '外資及陸資買進金額': schema.tables.TWSEDaily.f_foreign_flow_value.外陸資_買進_金額,
+        '外資及陸資賣出金額': schema.tables.TWSEDaily.f_foreign_flow_value.外陸資_賣出_金額,
+        '投信買進金額': schema.tables.TWSEDaily.f_trust_flow_value.投信_買進_金額,
+        '投信賣出金額': schema.tables.TWSEDaily.f_trust_flow_value.投信_賣出_金額,
+        '自營商買進金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_買進_金額,
+        '自營商賣出金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_賣出_金額,
     },
     True
 )
@@ -69,14 +69,14 @@ class VERSION_2(VERSION_0):
 version_2 = VERSION_2(
     schema.tables.TWSEDaily,
     {   
-        '自營商(自行買賣)買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_自行買賣_買進金額,
-        '自營商(自行買賣)賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_自行買賣_賣出金額,
-        '自營商(避險)買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_避險_買進金額,
-        '自營商(避險)賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_避險_賣出金額,
-        '投信買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信買進金額,
-        '投信賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信賣出金額,
-        '外資及陸資買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資買進金額,
-        '外資及陸資賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資賣出金額,
+        '外資及陸資買進金額': schema.tables.TWSEDaily.f_foreign_flow_value.外陸資_買進_金額,
+        '外資及陸資賣出金額': schema.tables.TWSEDaily.f_foreign_flow_value.外陸資_賣出_金額,
+        '投信買進金額': schema.tables.TWSEDaily.f_trust_flow_value.投信_買進_金額,
+        '投信賣出金額': schema.tables.TWSEDaily.f_trust_flow_value.投信_賣出_金額,
+        '自營商(自行買賣)買進金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_自行買賣_買進_金額,
+        '自營商(自行買賣)賣出金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_自行買賣_賣出_金額,
+        '自營商(避險)買進金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_避險_買進_金額,
+        '自營商(避險)賣出金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_避險_賣出_金額,
     },
     True
 )
@@ -103,16 +103,16 @@ class VERSION_3(VERSION_0):
 version_3 = VERSION_3(
     schema.tables.TWSEDaily,
     {   
-        '自營商(自行買賣)買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_自行買賣_買進金額,
-        '自營商(自行買賣)賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_自行買賣_賣出金額,
-        '自營商(避險)買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_避險_買進金額,
-        '自營商(避險)賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.自營商_避險_賣出金額,
-        '投信買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信買進金額,
-        '投信賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.投信賣出金額,
-        '外資及陸資(不含外資自營商)買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資_不含外資自營商_買進金額,
-        '外資及陸資(不含外資自營商)賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.外陸資_不含外資自營商_賣出金額,
-        '外資自營商買進金額': schema.tables.TWSEDaily.f_institution_fund_flow.外資自營商買進金額,
-        '外資自營商賣出金額': schema.tables.TWSEDaily.f_institution_fund_flow.外資自營商賣出金額,
+        '外資及陸資(不含外資自營商)買進金額': schema.tables.TWSEDaily.f_foreign_flow_value.外陸資_不含外資自營商_買進_金額,
+        '外資及陸資(不含外資自營商)賣出金額': schema.tables.TWSEDaily.f_foreign_flow_value.外陸資_不含外資自營商_賣出_金額,
+        '外資自營商買進金額': schema.tables.TWSEDaily.f_foreign_flow_value.外資自營商_買進_金額,
+        '外資自營商賣出金額': schema.tables.TWSEDaily.f_foreign_flow_value.外資自營商_賣出_金額,
+        '投信買進金額': schema.tables.TWSEDaily.f_trust_flow_value.投信_買進_金額,
+        '投信賣出金額': schema.tables.TWSEDaily.f_trust_flow_value.投信_賣出_金額,
+        '自營商(自行買賣)買進金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_自行買賣_買進_金額,
+        '自營商(自行買賣)賣出金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_自行買賣_賣出_金額,
+        '自營商(避險)買進金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_避險_買進_金額,
+        '自營商(避險)賣出金額': schema.tables.TWSEDaily.f_dealer_flow_value.自營商_避險_賣出_金額,
     },
     True
 )

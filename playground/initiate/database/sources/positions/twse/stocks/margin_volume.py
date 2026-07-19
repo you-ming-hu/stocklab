@@ -52,10 +52,10 @@ version_0 = VERSION_0(
     schema.tables.StockDaily,
     {
         '股票代號': schema.tables.StockDaily.f_stock_info.代號,
-        '融資買進': schema.tables.StockDaily.f_margin.融資買進股數,
-        '融資賣出': schema.tables.StockDaily.f_margin.融資賣出股數,
-        '融資現金償還': schema.tables.StockDaily.f_margin.融資現償股數,
-        '融資今日餘額': schema.tables.StockDaily.f_margin.融資餘額股數,
+        '融資買進': schema.tables.StockDaily.f_margin_flow_volume.融資_買進_股數,
+        '融資賣出': schema.tables.StockDaily.f_margin_flow_volume.融資_賣出_股數,
+        '融資現金償還': schema.tables.StockDaily.f_margin_flow_volume.融資_現償_股數,
+        '融資今日餘額': schema.tables.StockDaily.f_margin_balance_volume.融資_餘額_股數,
     },
     True
 )
