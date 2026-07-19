@@ -1,1 +1,1 @@
-from . import techincals, participants, positions
+from . import technicals, participants, positions
