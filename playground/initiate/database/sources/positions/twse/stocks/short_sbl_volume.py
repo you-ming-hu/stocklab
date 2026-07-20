@@ -1,8 +1,8 @@
 from ..... import schema
 
-from ..base import SHORT_SBL
+from ..base import SHORT_SBL_VOLUME
 
-class VERSION_0(SHORT_SBL):
+class VERSION_0(SHORT_SBL_VOLUME):
     
     def to_df(self, content):
         df = super().to_df(content, 14)
@@ -43,7 +43,7 @@ version_0 = VERSION_0(
     True
 )
 
-class VERSION_1(SHORT_SBL):
+class VERSION_1(SHORT_SBL_VOLUME):
     
     def to_df(self, content):
         df = super().to_df(content, 15)

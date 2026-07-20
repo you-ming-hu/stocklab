@@ -12,7 +12,7 @@ class MARGIN(Source):
     def check_empty(self, content):
         return content['stat'] == '很抱歉，沒有符合條件的資料'
     
-class SHORT_SBL(Source):
+class SHORT_SBL_VOLUME(Source):
     def open(self, file):
         with open(file, encoding="utf-8") as f:
             content = json.load(f)
@@ -41,6 +41,15 @@ class SHORT_SBL(Source):
             df[name] = df[name].str.replace(',','').astype(int)
         return df
     
+class SHORT_SBL_VALUE(Source):
+    def open(self, file):
+        with open(file, encoding="utf-8") as f:
+            content = json.load(f)
+        return content
+    
+    def check_empty(self, content):
+        return content['stat'] == '很抱歉，沒有符合條件的資料!'
+
 class SUM:
     def format_dtype(self, df):
         for name in df.columns:

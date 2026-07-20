@@ -9,7 +9,7 @@ class FlowVolume(FG):
     借券賣出_不含賣出_總異動_股數 = F('sbl_ex_sell_change_volume', int)
     
 class FlowValue(FG):
-    借券賣出_賣出_金額 = F('sbl_transaction_value', int)
+    借券賣出_賣出_金額 = F('sbl_sell_value', int)
 
 class BalanceVolume(FG):
     借券賣出_餘額_股數 = F('sbl_balance_volume', int)
