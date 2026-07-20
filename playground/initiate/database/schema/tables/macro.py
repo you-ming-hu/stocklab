@@ -3,6 +3,8 @@ from . import base
 
 class MarketDaily(base.Table):
 
+    f_market_info = fields.market.Info
+
     f_technicals_price = fields.technicals.Price
     f_technicals_volume = fields.technicals.Volume
     
