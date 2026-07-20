@@ -104,7 +104,7 @@
                     - https://www.twse.com.tw/exchangeReport/TWT93U
                     - response='json'
                     - date='yyyymmdd'
-            2. 當日融券賣出與借券賣出成交量值: https://www.twse.com.tw/zh/trading/historical/twtasu.html **NEW!**
+            2. 當日融券賣出與借券賣出成交量值: https://www.twse.com.tw/zh/trading/historical/twtasu.html
                 - Content
                     - 成交金額（元）
                         - 融券、借券賣出

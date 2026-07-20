@@ -8,7 +8,7 @@ class FlowVolume(FG):
     融券_現償_股數 = F('short_stock_repayment_volume', int)
     
 class FlowValue(FG):
-    融券_成交_金額 = F('short_transaction_value', int)
+    融券_賣出_金額 = F('short_transaction_value', int)
 
 class BalanceVolume(FG):
     融券_餘額_股數 = F('short_balance_volume', int)
