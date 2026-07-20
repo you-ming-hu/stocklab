@@ -3,7 +3,6 @@ import pandas as pd
 from .decorators import *
 from .utils import list2text
 from ..sources.base import Source
-# from ..schema.tables.base import DataTimestampTable, UpdateTimestampTable
 
 class Saver:
     def __init__(self, path):
@@ -22,18 +21,9 @@ class Saver:
         self.conn.close()
         del self.conn
         del self.item
-
-    def register_save_date(self, df:pd.DataFrame):
-        if issubclass(self.item.table, DataTimestampTable):
-            key = self.item.table.f_datatimestamp.添加日期
-        elif issubclass(self.item.table, UpdateTimestampTable):
-            key = self.item.table.f_updatetimestamp.更新日期
-        df[key] = self.session_date
-        return df
     
     @exec_many
     def save_df(self, df:pd.DataFrame, execute=True):
-        df = self.register_save_date(df)
         data = [self.item.pydatamodel(**row.to_dict()).model_dump(exclude_unset=True) for _,row in df.iterrows()]
         
         columns = list(data[0].keys())
