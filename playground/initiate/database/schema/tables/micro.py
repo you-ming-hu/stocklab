@@ -7,7 +7,10 @@ class StockDaily(base.Table):
         fields.base.DataTimestamp.資料日期
     ]
     __additional_index__ = [
-        fields.base.DataTimestamp.資料日期
+        [
+            fields.stock.Info.交易中,
+            fields.base.DataTimestamp.資料日期,
+        ]
     ]
     
     f_stock_info = fields.stock.Info
