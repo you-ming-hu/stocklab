@@ -1,23 +1,12 @@
 from ..... import schema
 
-from ..stocks import foreign_trust_dealer_flow_volume as base
+from ..base import FLOW_VALUE
 
 import pandas as pd
 
-class VERSION_0(base.VERSION_0):
+class VERSION_0(FLOW_VALUE):
     def to_df(self, content):
-        df = pd.DataFrame(columns=content['fields'], data=content['data']).set_index('單位名稱')
-        rearrange = {}
-        for item, values in df.iterrows():
-            for cate, value in values.items():
-                rearrange[item+cate] = value
-        assert len(rearrange) == 12
-        df = pd.Series(rearrange).to_frame().T
-        return df
-
-    def format_dtype(self, df):
-        for name in df.columns:
-            df[name] = df[name].str.replace(',','').astype(int)
+        df = super().to_df(content, 12)
         return df
 
 version_0 = VERSION_0(
@@ -33,8 +22,10 @@ version_0 = VERSION_0(
     True
 )
 
-class VERSION_1(VERSION_0):
-    pass
+class VERSION_1(FLOW_VALUE):
+    def to_df(self, content):
+        df = super().to_df(content, 12)
+        return df
 
 version_1 = VERSION_1(
     schema.tables.TWSEDaily,
@@ -49,21 +40,15 @@ version_1 = VERSION_1(
     True
 )
 
-class VERSION_2(VERSION_0):
+class VERSION_2(FLOW_VALUE):
     def to_df(self, content):
-        df = pd.DataFrame(columns=content['fields'], data=content['data']).set_index('單位名稱')
-        rearrange = {}
-        for item, values in df.iterrows():
-            for cate, value in values.items():
-                rearrange[item+cate] = value
-        assert len(rearrange) == 15
-        df = pd.Series(rearrange).to_frame().T
+        df = super().to_df(content, 15)
         return df
     
     def add_other_columns(self, df):
-        cols = self.table.cols
-        df[cols['自營商買進金額']] = df[cols['自營商_自行買賣_買進金額']] + df[cols['自營商_避險_買進金額']]
-        df[cols['自營商賣出金額']] = df[cols['自營商_自行買賣_賣出金額']] + df[cols['自營商_避險_賣出金額']]
+        cols = self.table.columns
+        df[cols['自營商_買進_金額']] = df[cols['自營商_自行買賣_買進_金額']] + df[cols['自營商_避險_買進_金額']]
+        df[cols['自營商_賣出_金額']] = df[cols['自營商_自行買賣_賣出_金額']] + df[cols['自營商_避險_賣出_金額']]
         return df
 
 version_2 = VERSION_2(
@@ -81,23 +66,17 @@ version_2 = VERSION_2(
     True
 )
 
-class VERSION_3(VERSION_0):
+class VERSION_3(FLOW_VALUE):
     def to_df(self, content):
-        df = pd.DataFrame(columns=content['fields'], data=content['data']).set_index('單位名稱')
-        rearrange = {}
-        for item, values in df.iterrows():
-            for cate, value in values.items():
-                rearrange[item+cate] = value
-        assert len(rearrange) == 18
-        df = pd.Series(rearrange).to_frame().T
+        df = super().to_df(content, 18)
         return df
     
     def add_other_columns(self, df):
-        cols = self.table.cols
-        df[cols['自營商買進金額']] = df[cols['自營商_自行買賣_買進金額']] + df[cols['自營商_避險_買進金額']]
-        df[cols['自營商賣出金額']] = df[cols['自營商_自行買賣_賣出金額']] + df[cols['自營商_避險_賣出金額']]
-        df[cols['外陸資買進金額']] = df[cols['外陸資_不含外資自營商_買進金額']] + df[cols['外資自營商買進金額']]
-        df[cols['外陸資賣出金額']] = df[cols['外陸資_不含外資自營商_賣出金額']] + df[cols['外資自營商賣出金額']]
+        cols = self.table.columns
+        df[cols['自營商_買進_金額']] = df[cols['自營商_自行買賣_買進_金額']] + df[cols['自營商_避險_買進_金額']]
+        df[cols['自營商_賣出_金額']] = df[cols['自營商_自行買賣_賣出_金額']] + df[cols['自營商_避險_賣出_金額']]
+        df[cols['外陸資_買進_金額']] = df[cols['外陸資_不含外資自營商_買進_金額']] + df[cols['外資自營商_買進_金額']]
+        df[cols['外陸資_賣出_金額']] = df[cols['外陸資_不含外資自營商_賣出_金額']] + df[cols['外資自營商_賣出_金額']]
         return df
 
 version_3 = VERSION_3(

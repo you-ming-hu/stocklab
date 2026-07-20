@@ -1,13 +1,11 @@
 from ..... import schema
 
+from ..base import SUM
+
 from ..stocks import foreign_trust_dealer_flow_volume as base
 
-class VERSION_0(base.VERSION_0):
-    def format_dtype(self, df):
-        for name in df.columns:
-            df[name] = df[name].str.replace(',','').astype(int)
-        df = df.sum(axis=0).to_frame().T
-        return df
+class VERSION_0(SUM, base.VERSION_0):
+    pass
     
 version_0 = VERSION_0(
     schema.tables.TWSEDaily,
@@ -22,7 +20,7 @@ version_0 = VERSION_0(
     True
 )
     
-class VERSION_1(VERSION_0, base.VERSION_1):
+class VERSION_1(SUM, base.VERSION_1):
     pass
 
 version_1 = VERSION_1(
@@ -41,7 +39,7 @@ version_1 = VERSION_1(
     True
 )
 
-class VERSION_2(VERSION_0, base.VERSION_2):
+class VERSION_2(SUM, base.VERSION_2):
     pass
 
 version_2 = VERSION_2(
