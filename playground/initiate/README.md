@@ -109,6 +109,9 @@
                     - 成交金額（元）
                         - 融券、借券賣出
                 - API
+                    - https://www.twse.com.tw/rwd/zh/afterTrading/TWTASU
+                    - response='json'
+                    - date='yyyymmdd'
         - 資料庫欄位結構
             - 個股
                 - 成交量（股）
