@@ -47,17 +47,21 @@ class Source:
         return df.dropna()
     
     def add_data_date(self, df, date):
+        assert not self.table.f_datatimestamp.資料日期 in df
         df[self.table.f_datatimestamp.資料日期] = pd.Timestamp(date)
         return df
     
-    def standardize(self, content, date):
+    def standardize(self, content, file):
         df = self.to_df(content)
         if not df is None: 
             df = self.keep_interest(df)
             df = self.rename_columns(df)
             df = self.format_dtype(df)
             df = self.drop_incomplete(df)
-            df = self.add_data_date(df, date)
+            if self.filename_is_data_date:
+                df = self.add_data_date(df, file.stem)
+            else:
+                assert self.table.f_datatimestamp.資料日期 in df
             df = self.add_other_columns(df)
         return df
 
@@ -67,10 +71,5 @@ class Source:
         if self.check_empty(content):
             return None
         else:
-            if self.filename_is_data_date:
-                date = file.stem
-            else:
-                date = pd.Timestamp.today()
-            df = self.standardize(content, date)
+            df = self.standardize(content, file)
             return df
-    
