@@ -3,8 +3,8 @@ from ..utils import FieldGroup as FG
 from ..utils import disabled
 
 class FlowVolume(FG):
-    融券_買進_股數 = F('short_cover_volume', int)
     融券_賣出_股數 = F('short_sell_volume', int)
+    融券_買進_股數 = F('short_cover_volume', int)
     融券_現償_股數 = F('short_stock_repayment_volume', int)
     
 class FlowValue(FG):
