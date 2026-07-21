@@ -1,7 +1,6 @@
 from .. import Scraper
 
 import pandas as pd
-import json
 
 class OTCScraper(Scraper):
     
