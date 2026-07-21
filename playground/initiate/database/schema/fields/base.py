@@ -1,8 +1,6 @@
-import enum
+import datetime
+from .utils import Field as F
+from .utils import FieldGroup as FG
 
-class Field(enum.StrEnum):
-    def __new__(cls, value, dtype):
-        obj = str.__new__(cls, value)
-        obj._value_ = value
-        obj.pytype, obj.sqltype = dtype
-        return obj
+class DataTimestamp(FG):
+    資料日期 = F('date', datetime.date)

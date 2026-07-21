@@ -1,176 +1,437 @@
 # Sources
-- 技術面-價量
-    - 上市
+
+- 技術分析
+    - TWSE
         - 個股
-            - 開高低收 交易量
-                - https://www.twse.com.tw/zh/trading/historical/mi-index.html
-                - 分類項目 選取 **每日收盤行情(全部(不含權證、牛熊證、可展延牛熊證))**
-                - 這個選項可以保留大盤資訊 並且 移除不是標的的項目
-                - 但是早期資料內容並不包含指數點數，只有交易量
-                    - 但這邊只能取得收盤價，沒有完整開高低收
-                - 後期交易量更新可以只依據此查詢進行，但前期資料應該要到**每日市場成交資訊查詢**
-                - API: 
+            1. 每日收盤行情: https://www.twse.com.tw/zh/trading/historical/mi-index.html
+                - 選取 **全部(不含大盤、指數、權證、牛熊證、可展延牛熊證)**
+                - Content
+                    - 開高低收
+                    - 成交金額（元）、成交股數（股）、成交筆數（筆）
+                - API
                     - https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX
-                    - type=ALLBUT0999 (ALLBUT0999NOTIND**每日收盤行情(全部(不含大盤、指數、權證、牛熊證、可展延牛熊證))**)
-                    - response=json
-                    - date=yyyymmdd
-        - 總體市場
-            - 交易量
-                - https://www.twse.com.tw/zh/trading/historical/fmtqik.html
-                - API:
-                    - https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK
-                    - response=json
-                    - date=yyyymmdd
-            - 開高低收
-                - https://www.twse.com.tw/zh/indices/taiex/mi-5min-hist.html
-                - API:
+                    - type='ALLBUT0999NOTIND'
+                    - response='json'
+                    - date='yyyymmdd'
+        - 總體
+            1. 發行量加權股價指數歷史資料: https://www.twse.com.tw/zh/indices/taiex/mi-5min-hist.html
+                - Content
+                    - 開高低收
+                - API
                     - https://www.twse.com.tw/indicesReport/MI_5MINS_HIST
-                    - response=json
-                    - date=yyyymmdd
-                
-    - 上櫃
+                    - response='json'
+                    - date='yyyymmdd'
+            2. 每日市場成交資訊: https://www.twse.com.tw/zh/trading/historical/fmtqik.html
+                - Content
+                    - 成交金額（元）、成交股數（股）、成交筆數（筆）
+                - API
+                    - https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK
+                    - response='json'
+                    - date='yyyymmdd'
+        - 資料庫欄位結構
+            - 個股
+                - 開盤價，最高價，最低價，收盤價，成交金額（元），成交股數（股），成交筆數（筆）
+            - 總體
+                - 開盤價，最高價，最低價，收盤價，成交金額（元），成交股數（股），成交筆數（筆）
+        
+    - OTC
         - 個股
-            1. 民國92年8月至95年12月資訊
-                - https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES/param_3104.html
-                - API: 
+            1. 上櫃股票行情: https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES/param_3104.html
+                - 民國92年8月至95年12月資訊
+                - Content
+                    - 開高低收
+                    - 成交金額（元）、成交股數（股）、成交筆數（筆）
+                - API
                     - https://hist.tpex.org.tw/Hist/STOCK/AFTERTRADING/DAILY_CLOSE_QUOTES
                     - '/RSTA3104_' + date + '.HTML'
-            2. 民國96年1月2日至96年4月20日資訊
-                - https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing_hist96.html
-                - API:
+            2. 上櫃股票行情: https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing_hist96.html
+                - 民國96年1月2日至96年4月20日資訊
+                - Content
+                    - 開高低收
+                    - 成交金額（元）、成交股數（股）、成交筆數（筆）
+                - API
                     - https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotesHis
-                    - id = ''
-                    - response = 'json'
-                    - date = 
-            3. 民國96年1月起開始
-                - https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html
-                - API:
-                    - 'https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotes'
-                    - id = ''
-                    - response = 'json'
-                    - date = 
-        - 總體市場
-            1. Not start yet
+                    - response='json'
+                    - date='yyyymmdd'
+            3. 上櫃股票行情: https://www.tpex.org.tw/zh-tw/mainboard/trading/info/pricing.html
+                - 民國96年1月起開始
+                - Content
+                    - 開高低收
+                    - 成交金額（元）、成交股數（股）、成交筆數（筆）
+                - API
+                    - https://www.tpex.org.tw/www/zh-tw/afterTrading/dailyQuotes'
+                    - response='json'
+                    - date='yyyymmdd'
+        - 總體
+            1. 櫃買指數(月查詢): https://www.tpex.org.tw/zh-tw/indices/stock-index/industrial/inxh.html
+                - Content
+                    - 開高低收
+                - API
+            2. 日成交量值指數: https://www.tpex.org.tw/zh-tw/mainboard/trading/info/daily-indices.html
+                - Content
+                    - 成交金額（千元）、成交股數（張）、成交筆數（筆）
+                - API
+        - 資料庫欄位結構
+            - 個股
+                - 開盤價，最高價，最低價，收盤價，成交金額（元），成交股數（股），成交筆數（筆）
+            - 總體
+                - 開盤價，最高價，最低價，收盤價，成交金額（千元），成交股數（張），成交筆數（筆）
 
-- 籌碼面
-    - 上市
-        - 金流
-            - 融券,借券賣出
-                - https://www.twse.com.tw/zh/trading/margin/twt93u.html
-                - 個股 (股)
-                - 總體市場: 總體市場為合計列，並非獨立項目 (股)
-                - API:
-                    - https://www.twse.com.tw/exchangeReport/TWT93U
-                    - response = 'json'
-                    - date = 
-            - 融資,融券
-                - https://www.twse.com.tw/zh/trading/margin/mi-margn.html 
-                - 總體市場加總、個股: 分類項目 選取 **全部** (張, 千元)
-                - API:
+- 融資融券
+    - TWSE
+        - 個股總體合併
+            1. 融資融券餘額: https://www.twse.com.tw/zh/trading/margin/mi-margn.html
+                - 選取 **全部**
+                - Content
+                    - 個股
+                        - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額、次日限額）
+                    - 總體
+                        - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額）
+                        - 成交金額（千元）：（融資）Ｘ（買進、賣出、償還、餘額）
+                - API
                     - https://www.twse.com.tw/exchangeReport/MI_MARGN
-                    - response = 'json',
-                    - selectType = 'ALL',
-                    - date = 
-            - 三大法人
-                - 總體市場
-                    - https://www.twse.com.tw/zh/trading/foreign/bfi82u.html
-                    - 選取 **日報表**
-                    - API:
-                        - https://www.twse.com.tw/rwd/zh/fund/BFI82U
-                        - response = 'json'
-                        - type = 'day'
-                        - dayDate = 
-                - 個股
-                    - https://www.twse.com.tw/zh/trading/foreign/t86.html
-                    - 分類項目 選取 **全部(不含權證、牛熊證、可展延牛熊證)**
-                    - API:
-                        - https://www.twse.com.tw/rwd/zh/fund/T86
-                        - response = json
-                        - selectType = 'ALLBUT0999'
-                        - date = 
-        - 持股比例
-            - 外資及陸資
-                - https://www.twse.com.tw/zh/trading/foreign/mi-qfiis.html
+                    - response='json',
+                    - selectType='ALL',
+                    - date='yyyymmdd'
+        - 資料庫欄位結構
+            - 個股
+                - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額、次日限額）
+            - 總體
+                - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額）
+                - 成交金額（千元）：（融資）Ｘ（買進、賣出、償還、餘額）
+    - OTC
+        - 個股總體合併
+            1. 上櫃股票融資融券餘額: https://hist.tpex.org.tw/Hist/STOCK/MARGIN_TRADING/MARGIN_BALANCE/param_3106.HTML
+                - 民國92年8月至95年12月資訊
+                - Content
+                    - 個股
+                        - 成交量（張）：（融資）Ｘ（買進、賣出、償還、餘額、次日限額）
+                        - 成交量（張）：（融券）Ｘ（買進、賣出、償還、餘額）
+                    - 總體
+                        - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額）
+                        - 成交金額（千元）：（融資）Ｘ（買進、賣出、償還、餘額）
+                - API
+            2. 上櫃股票融資融券餘額: https://www.tpex.org.tw/zh-tw/mainboard/trading/margin-trading/transactions.html
+                - 民國96年1月起開始
+                - Content
+                    - 個股
+                        - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額、次日限額）
+                    - 總體
+                        - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額）
+                        - 成交金額（千元）：（融資）Ｘ（買進、賣出、償還、餘額）
+                - API
+        - 資料庫欄位結構
+            - 個股
+                - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額、次日限額）
+            - 總體
+                - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額）
+                - 成交金額（千元）：（融資）Ｘ（買進、賣出、償還、餘額）
+    
+- 融券借券賣出
+    - TWSE
+        - 個股
+            1. 融券借券賣出餘額: https://www.twse.com.tw/zh/trading/margin/twt93u.html
+                - Content
+                    - 成交量（股）
+                        - （融券）Ｘ（賣出、買進、償還、餘額、次日限額）
+                        - （借券賣出）Ｘ（賣出、償還、調整、餘額、次日限額）
+                - API
+                    - https://www.twse.com.tw/exchangeReport/TWT93U
+                    - response='json'
+                    - date='yyyymmdd'
+            2. 當日融券賣出與借券賣出成交量值: https://www.twse.com.tw/zh/trading/historical/twtasu.html
+                - Content
+                    - 成交金額（元）
+                        - 融券、借券賣出
+                - API
+                    - https://www.twse.com.tw/rwd/zh/afterTrading/TWTASU
+                    - response='json'
+                    - date='yyyymmdd'
+        - 資料庫欄位結構
+            - 個股
+                - 成交量（股）
+                    - （融券）Ｘ（賣出、買進、償還、餘額、次日限額）
+                    - （借券賣出）Ｘ（賣出、償還、調整、餘額、次日限額）
+                - 成交金額（元）
+                    - 融券、借券賣出
+            - 總體
+                - 成交量（股）
+                    - （融券）Ｘ（賣出、買進、償還、餘額）
+                    - （借券賣出）Ｘ（賣出、償還、調整、餘額）
+                - 成交金額（元）
+                    - 融券、借券賣出
+    - OTC
+        - 個股
+            1. 信用額度總量管制餘額表: https://www.tpex.org.tw/zh-tw/mainboard/trading/margin-trading/sbl_hist10103.html
+                - 民國95年1月至民國101年03月16日
+                - Content
+                    - 成交量（股）
+                        - （融券）Ｘ（賣出、買進、償還、餘額、次日限額）
+                        - （借券賣出）Ｘ（賣出、調整、餘額、次日限額）
+                - API
+            2. 信用額度總量管制餘額表: https://www.tpex.org.tw/zh-tw/mainboard/trading/margin-trading/sbl_hist10110.html
+                - 民國101年03月19日至民國101年10月01日資訊
+                - Content
+                    - 成交量（股）
+                        - （融券）Ｘ（賣出、買進、償還、餘額、次日限額）
+                        - （借券賣出）Ｘ（賣出、償還、調整、餘額、次日限額）
+                - API
+            3. 信用額度總量管制餘額表: https://www.tpex.org.tw/zh-tw/mainboard/trading/margin-trading/sbl.html
+                - 民國101年10月02日資訊起開始
+                - Content
+                    - 成交量（股）
+                        - （融券）Ｘ（買進、賣出、償還、餘額、次日限額）
+                        - （借券賣出）Ｘ（賣出、償還、調整、餘額、次日限額）
+                - API
+            4. 當日融券賣出與借券賣出成交量值: https://www.tpex.org.tw/zh-tw/mainboard/trading/info/short.html
+                - Content
+                    - 成交金額（元）
+                        - 融券、借券賣出
+                - API
+        - 資料庫欄位結構
+            - 個股
+                - 成交量（股）
+                    - （融券）Ｘ（賣出、買進、償還、餘額、次日限額）
+                    - （借券賣出）Ｘ（賣出、償還、調整、餘額、次日限額）
+                - 成交金額（元）
+                    - 融券、借券賣出
+            - 總體
+                - 成交量（股）
+                    - （融券）Ｘ（賣出、買進、償還、餘額）
+                    - （借券賣出）Ｘ（賣出、償還、調整、餘額）
+                - 成交金額（元）
+                    - 融券、借券賣出
+
+- 三大法人
+    - TWSE
+        - 個股
+            1. 三大法人買賣超日報: https://www.twse.com.tw/zh/trading/foreign/t86.html
+                - 選取 **全部(不含權證、牛熊證、可展延牛熊證)**
+                - Content
+                    - 交易量（股）
+                        - （自營商(自行買賣)、自營商(避險)、投信、外資及陸資(不含外資自營商)、外資自營商）Ｘ（買進、賣出）
+                - API
+                    - https://www.twse.com.tw/rwd/zh/fund/T86
+                    - response='json'
+                    - selectType='ALLBUT0999'
+                    - date='yyyymmdd'
+        - 總體
+            1. 三大法人買賣金額統計表: https://www.twse.com.tw/zh/trading/foreign/bfi82u.html
+                - 選取 **日報表**
+                - Content
+                    - 成交金額（元）
+                        - （自營商(自行買賣)、自營商(避險)、投信、外資及陸資(不含外資自營商)、外資自營商）Ｘ（買進、賣出）
+                - API
+                    - https://www.twse.com.tw/rwd/zh/fund/BFI82U
+                    - response='json'
+                    - type='day'
+                    - dayDate='yyyymmdd' 
+        - 資料庫欄位結構
+            - 個股
+                - 交易量（股）
+                    - （自營商(自行買賣)、自營商(避險)、投信、外資及陸資(不含外資自營商)、外資自營商）Ｘ（買進、賣出）
+            - 總體
+                - 交易量（股）
+                    - （自營商(自行買賣)、自營商(避險)、投信、外資及陸資(不含外資自營商)、外資自營商）Ｘ（買進、賣出）
+                - 成交金額（元）
+                    - （自營商(自行買賣)、自營商(避險)、投信、外資及陸資(不含外資自營商)、外資自營商）Ｘ（買進、賣出）   
+    - OTC
+        - 個股
+            1. 三大法人買賣明細資訊: https://www.tpex.org.tw/zh-tw/mainboard/trading/major-institutional/3itrade/day.html
+                - 民國96年04月21日至民國103年11月30日
+                - Content
+                    - 交易量（股）
+                - API
+            2. 三大法人買賣明細資訊: https://www.tpex.org.tw/zh-tw/mainboard/trading/major-institutional/detail/day.html
+                - 自民國103年12月01日起開始
+                - Content
+                    - 交易量（股）
+                - API
+        - 總體
+            1. 三大法人買賣金額彙總表: https://hist.tpex.org.tw/Hist/STOCK/3INSTI/3INSTISUM.HTML 
+                - 民國93年6月至95年12月資訊
+                - Content
+                    - 成交金額（元）
+            2. 三大法人買賣金額彙總表: https://www.tpex.org.tw/zh-tw/mainboard/trading/major-institutional/summary/day.html
+                - 自民國96年1月起開始
+                - Content
+                    - 成交金額（元）
+
+- 外資持股
+    - TWSE
+        - 個股
+            1. 外資及陸資投資持股統計: https://www.twse.com.tw/zh/trading/foreign/mi-qfiis.html
                 - 選取 **全部(不含權證)**
-                - API:
+                - Content
+                    - 發行量（股）
+                    - 全體外資及陸資持有量（股）
+                    - 外資及陸資共用法令投資上限比率
+                - API
                     - https://www.twse.com.tw/rwd/zh/fund/MI_QFIIS
-                    - response = 'json'
-                    - selectType = 'ALLBUT0999'
-                    - date = 
-            
-    - 上櫃
+                    - response='json'
+                    - selectType='ALLBUT0999'
+                    - date='yyyymmdd'
+        - 資料庫欄位結構
+            - 個股
+                - 發行量（股）、全體外資及陸資持有量（股）、外資及陸資共用法令投資上限比率
+    - OTC
+        - 個股
+            1. 外資及陸資投資持股統計: https://mopsov.twse.com.tw/server-java/t13sa150_otc?step=0
+                - 民國93年8月4日
+                - Content
+                    - 發行量（股）
+                    - 全體外資及陸資持有量（股）
+                    - 外資及陸資共用法令投資上限比率
+                - API
+        - 資料庫欄位結構
+            - 個股
+                - 發行量（股）、全體外資及陸資持有量（股）、外資及陸資共用法令投資上限比率
 
+- 股權分散表
+    - BOTH
 
-# Schema
-    - micro
-        - StockDaily
-                - fields.DataTimestamp
-                    - 添加日期 - auto
-                    - 資料日期 - 
-                - fields.StockInfo
-                    - 代號 - key
-                    - 名稱 - 
-                    - 市場別 - 
-                - fields.Technicals
-                    - 開盤價
-                    - 最高價
-                    - 最低價
-                    - 收盤價
-                    - 交易股數
-                    - 交易金額
-                    - 交易筆數
-                - fields.Margin
-                    - 融資買進股數
-                    - 融資賣出股數
-                    - 融資現償股數
-                    - 融資餘額股數
-                - fields.Short
-                    - 融券買進股數
-                    - 融券賣出股數
-                    - 融券現償股數
-                    - 融券餘額股數
-                    - 借券賣出賣出股數
-                    - 借券賣出還券股數
-                    - 借券賣出調整股數
-                    - 借券賣出不含賣出總異動股數
-                    - 借券賣出餘額股數
-                - fields.ShortAdditional
-                    - 融券次日限額股數
-                    - 借券賣出次日限額股數
-                - fields.InstitutionShareFlow
-                    - 外陸資_不含外資自營商_買進股數
-                    - 外陸資_不含外資自營商_賣出股數
-                    - 外資自營商買進股數
-                    - 外資自營商賣出股數
-                    - 外陸資買進股數
-                    - 外陸資賣出股數
-                    - 投信買進股數
-                    - 投信賣出股數
-                    - 自營商_自行買賣_買進股數
-                    - 自營商_自行買賣_賣出股數
-                    - 自營商_避險_買進股數
-                    - 自營商_避險_賣出股數
-                    - 自營商買進股數
-                    - 自營商賣出股數
-                - fields.Ownership
-                    - 總發行股數
-                    - 外陸資持有股數
-                    - 外陸資投資上限比率
-        - CompanyInfo
-        - ShareholdingDistribution
-    - macro
-        - TWSEDaily
-        - OTCDaily
+# schema
+- micro
+    - StockDaily
 
+        - 基本欄位
+            - 資料日期
+        
+        - 股票資訊
+            - 代號: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
+            - 名稱: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
+            - 市場別: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
+            - 交易中: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
+            - 總發行股數: TWSE/個股/外資及陸資投資持股統計, OTC/個股/外資及陸資投資持股統計
+        
+        - 技術分析
+            - 開盤價: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
+            - 最高價: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
+            - 最低價: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
+            - 收盤價: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
+            - 成交金額: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
+            - 成交股數: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
+            - 成交筆數: TWSE/個股/每日收盤行情, OTC/個股/上櫃股票行情
 
+        - 融資
+            - 融資_買進_股數: TWSE/個股總體合併/融資融券餘額（張）->（股）, OTC/個股總體合併/上櫃股票融資融券餘額（張）->（股）
+            - 融資_賣出_股數: TWSE/個股總體合併/融資融券餘額（張）->（股）, OTC/個股總體合併/上櫃股票融資融券餘額（張）->（股）
+            - 融資_現償_股數: TWSE/個股總體合併/融資融券餘額（張）->（股）, OTC/個股總體合併/上櫃股票融資融券餘額（張）->（股）
+            - 融資_餘額_股數: TWSE/個股總體合併/融資融券餘額（張）->（股）, OTC/個股總體合併/上櫃股票融資融券餘額（張）->（股）
+            - 融資_次日限額_股數: TWSE/個股總體合併/融資融券餘額（張）->（股）, OTC/個股總體合併/上櫃股票融資融券餘額（張）->（股）
 
+        - 融券
+            - 融券_賣出_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 融券_買進_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 融券_現償_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 融券_餘額_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 融券_次日限額_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 融券_賣出_金額: TWSE/個股/當日融券賣出與借券賣出成交量值, OTC/個股/當日融券賣出與借券賣出成交量值
 
+        - 借券賣出
+            - 借券賣出_賣出_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_還券_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_調整_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_不含賣出_總異動_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_餘額_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_次日限額_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_成交_金額: TWSE/個股/當日融券賣出與借券賣出成交量值, OTC/個股/當日融券賣出與借券賣出成交量值
+        
+        - 三大法人
+            - 外陸資_不含外資自營商_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外陸資_不含外資自營商_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外資自營商_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外資自營商_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外陸資_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外陸資_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外陸資_餘額_股數: TWSE/個股/外資及陸資投資持股統計, OTC/個股/外資及陸資投資持股統計
+            - 外陸資_投資上限_比率: TWSE/個股/外資及陸資投資持股統計, OTC/個股/外資及陸資投資持股統計
 
+            - 投信_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 投信_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
 
+            - 自營商_自行買賣_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 自營商_自行買賣_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 自營商_避險_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 自營商_避險_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 自營商_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 自營商_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+                    
+- macro
+    - MarketDaily (TWSEDaily, OTCDaily)
+        
+        - 基本欄位
+            - 資料日期
+        
+        - 技術分析
+            - 開盤價: TWSE/總體/發行量加權股價指數歷史資料, OTC/總體/櫃買指數(月查詢)
+            - 最高價: TWSE/總體/發行量加權股價指數歷史資料, OTC/總體/櫃買指數(月查詢)
+            - 最低價: TWSE/總體/發行量加權股價指數歷史資料, OTC/總體/櫃買指數(月查詢)
+            - 收盤價: TWSE/總體/發行量加權股價指數歷史資料, OTC/總體/櫃買指數(月查詢)
+            - 成交金額: TWSE/總體/每日市場成交資訊, OTC/總體/日成交量值指數（千元）->（元）
+            - 成交股數: TWSE/總體/每日市場成交資訊, OTC/總體/日成交量值指數（張）->（股）
+            - 成交筆數: TWSE/總體/每日市場成交資訊, OTC/總體/日成交量值指數
 
+        - 融資
+            - 融資_買進_股數: TWSE/個股總體合併/融資融券餘額（張）->（股）, OTC/個股總體合併/上櫃股票融資融券餘額（張）->（股）
+            - 融資_賣出_股數: TWSE/個股總體合併/融資融券餘額（張）->（股）, OTC/個股總體合併/上櫃股票融資融券餘額（張）->（股）
+            - 融資_現償_股數: TWSE/個股總體合併/融資融券餘額（張）->（股）, OTC/個股總體合併/上櫃股票融資融券餘額（張）->（股）
+            - 融資_餘額_股數: TWSE/個股總體合併/融資融券餘額（張）->（股）, OTC/個股總體合併/上櫃股票融資融券餘額（張）->（股）
+            - 融資_買進_金額: TWSE/個股總體合併/融資融券餘額（千元）->（元）, OTC/個股總體合併/上櫃股票融資融券餘額（千元）->（元）
+            - 融資_賣出_金額: TWSE/個股總體合併/融資融券餘額（千元）->（元）, OTC/個股總體合併/上櫃股票融資融券餘額（千元）->（元）
+            - 融資_現償_金額: TWSE/個股總體合併/融資融券餘額（千元）->（元）, OTC/個股總體合併/上櫃股票融資融券餘額（千元）->（元）
+            - 融資_餘額_金額: TWSE/個股總體合併/融資融券餘額（千元）->（元）, OTC/個股總體合併/上櫃股票融資融券餘額（千元）->（元）
 
+        - 融券
+            - 融券_賣出_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 融券_買進_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 融券_現償_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 融券_餘額_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 融券_賣出_金額: TWSE/個股/當日融券賣出與借券賣出成交量值, OTC/個股/當日融券賣出與借券賣出成交量值
 
+        - 借券賣出
+            - 借券賣出_賣出_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_還券_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_調整_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_不含賣出_總異動_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_餘額_股數: TWSE/個股/融券借券賣出餘額, OTC/個股/信用額度總量管制餘額表
+            - 借券賣出_成交_金額: TWSE/個股/當日融券賣出與借券賣出成交量值, OTC/個股/當日融券賣出與借券賣出成交量值
+        
+        - 三大法人
+            - 外陸資_不含外資自營商_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外陸資_不含外資自營商_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外資自營商_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外資自營商_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外陸資_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外陸資_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 外陸資_餘額_股數: TWSE/個股/外資及陸資投資持股統計, OTC/個股/外資及陸資投資持股統計
 
+            - 外陸資_不含外資自營商_買進_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 外陸資_不含外資自營商_賣出_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 外資自營商_買進_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 外資自營商_賣出_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 外陸資_買進_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 外陸資_賣出_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+
+            - 投信_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 投信_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+
+            - 投信_買進_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 投信_賣出_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+
+            - 自營商_自行買賣_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 自營商_自行買賣_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 自營商_避險_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 自營商_避險_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 自營商_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+            - 自營商_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+
+            - 自營商_自行買賣_買進_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 自營商_自行買賣_賣出_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 自營商_避險_買進_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 自營商_避險_賣出_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 自營商_買進_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
+            - 自營商_賣出_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
 
 # OpenAPI swagger
 上市: https://openapi.twse.com.tw/
