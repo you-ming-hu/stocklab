@@ -5,7 +5,9 @@ class Checker:
     DIFF_KEY = 'files'
     
     def read(self, path):
-        raise NotImplementedError
+        with open(path, encoding='utf-8') as f:
+            content = json.load(f)
+        return content
 
     def standardize(self, c):
         return c
@@ -78,6 +80,3 @@ class Checker:
             print(f'removed: {target1[d]}')
             target2[d].unlink()
             print(f'removed: {target2[d]}')
-        
-
-
