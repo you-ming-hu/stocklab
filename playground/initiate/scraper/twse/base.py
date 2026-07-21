@@ -1,4 +1,3 @@
-import json
 import pandas as pd
 import time
 
@@ -10,11 +9,6 @@ class TWSEScraper(Scraper):
         url, params = request_info
         res = session.get(url, params=params, timeout=timeout)
         return res
-
-    def save(self, res, filename):
-        data = res.json()
-        with open(filename, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
 
     def create_session(self):
         header = {

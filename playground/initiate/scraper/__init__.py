@@ -3,6 +3,7 @@ import pandas as pd
 import time
 import pathlib
 import random
+import json
 
 class Scraper:
     RESTART_SESSION_COUNT = 1000
@@ -24,7 +25,9 @@ class Scraper:
         raise NotImplementedError
 
     def save(self, res, filename):
-        raise NotImplementedError
+        data = res.json()
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
     
     def create_session(self, header):
         session = requests.Session()
