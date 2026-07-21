@@ -19,7 +19,7 @@ class VERSION_0(OTCScraper):
         res.encoding = 'big5'
         pathlib.Path(filename).write_text(res.text, encoding='utf-8')
 
-version_0 = VERSION_0('D', '.json')
+version_0 = VERSION_0('D', '.html')
 
 class VERSION_1(OTCScraper):
 
