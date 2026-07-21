@@ -12,8 +12,8 @@ class FlowValue(FG):
 
 @disabled
 class BalanceVolume(FG):
-    投信_持有_股數 = F('trust_balance_volume', int)
+    投信_餘額_股數 = F('trust_balance_volume', int)
 
 @disabled
 class BalanceValue(FG):
-    投信_持有_金額 = F('trust_balance_value', int)
+    投信_餘額_金額 = F('trust_balance_value', int)

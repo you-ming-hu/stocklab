@@ -11,7 +11,7 @@ version_0 = VERSION_0(
     schema.tables.TWSEDaily,
     {
         '發行股數': schema.tables.TWSEDaily.f_market_info.總發行股數,
-        '全體外資持有股數': schema.tables.TWSEDaily.f_foreign_balance_volume.外陸資_持有_股數,
+        '全體外資持有股數': schema.tables.TWSEDaily.f_foreign_balance_volume.外陸資_餘額_股數,
     },
     True
 )
@@ -23,7 +23,7 @@ version_1 = VERSION_1(
     schema.tables.TWSEDaily,
     {
         '發行股數': schema.tables.TWSEDaily.f_market_info.總發行股數,
-        '全體外資及陸資持有股數': schema.tables.TWSEDaily.f_foreign_balance_volume.外陸資_持有_股數,
+        '全體外資及陸資持有股數': schema.tables.TWSEDaily.f_foreign_balance_volume.外陸資_餘額_股數,
     },
     True
 )

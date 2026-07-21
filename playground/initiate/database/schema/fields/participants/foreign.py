@@ -23,11 +23,11 @@ class FlowValue(FG):
     外陸資_賣出_金額 = F('foreign_sell_value', int)
 
 class BalanceVolume(FG):
-    外陸資_持有_股數 = F('foreign_balance_volume', int)
+    外陸資_餘額_股數 = F('foreign_balance_volume', int)
 
 @disabled
 class BalanceValue(FG):
-    外陸資_持有_金額 = F('foreign_balance_value', int)
+    外陸資_餘額_金額 = F('foreign_balance_value', int)
 
 class Limit(FG):
     外陸資_投資上限_比率 = F('foreign_volume_limit_ratio', float)
