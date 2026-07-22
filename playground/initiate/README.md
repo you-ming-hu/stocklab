@@ -66,10 +66,18 @@
                 - Content
                     - 開高低收
                 - API
+                    - https://www.tpex.org.tw/www/zh-tw/indexInfo/inx
+                    - date = yyyy/mm/dd
+                    - id = ''
+                    - response = 'json'
             2. 日成交量值指數: https://www.tpex.org.tw/zh-tw/mainboard/trading/info/daily-indices.html
                 - Content
                     - 成交金額（千元）、成交股數（張）、成交筆數（筆）
                 - API
+                    - https://www.tpex.org.tw/www/zh-tw/afterTrading/tradingIndex
+                    - date = yyyy/mm/dd
+                    - id = ''
+                    - response = 'json'
         - 資料庫欄位結構
             - 個股
                 - 開盤價，最高價，最低價，收盤價，成交金額（元），成交股數（股），成交筆數（筆）
@@ -110,6 +118,7 @@
                         - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額）
                         - 成交金額（千元）：（融資）Ｘ（買進、賣出、償還、餘額）
                 - API
+                    - https://hist.tpex.org.tw/Hist/STOCK/MARGIN_TRADING/MARGIN_BALANCE + '/RSTA3106_' + date + '.html'
             2. 上櫃股票融資融券餘額: https://www.tpex.org.tw/zh-tw/mainboard/trading/margin-trading/transactions.html
                 - 民國96年1月起開始
                 - Content
@@ -119,6 +128,11 @@
                         - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額）
                         - 成交金額（千元）：（融資）Ｘ（買進、賣出、償還、餘額）
                 - API
+                    - https://www.tpex.org.tw/www/zh-tw/margin/balance
+                    - date = yyyy/mm/dd
+                    - id = ''
+                    - response = 'json'
+
         - 資料庫欄位結構
             - 個股
                 - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額、次日限額）
