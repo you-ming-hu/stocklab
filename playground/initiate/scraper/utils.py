@@ -8,6 +8,8 @@ def download_raw_material(material, start_date, end_date, save_path, iterations,
                 finish = material.download_by_date_range(
                     start_date, end_date, save_path, iteration
                 )
+            except AssertionError as err:
+                raise err
             except Exception as err:
                 print('some unexpected error occurred')
                 print(err)
