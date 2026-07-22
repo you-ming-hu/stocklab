@@ -97,6 +97,10 @@ class Scraper:
         return True
 
     def download_by_date_range(self, start_date, end_date, save_dir, iteration, timeout=10):
+        if start_date is None:
+            start_date = pd.Timestamp.today().date()
+        if end_date is None:
+            end_date = pd.Timestamp.today().date()
         dates = pd.date_range(start_date, end_date, freq=self.freq)
         self.download_batch(dates, save_dir, iteration, timeout)
         return True
