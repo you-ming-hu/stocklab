@@ -286,6 +286,19 @@
             - 個股
                 - 發行量（股）、全體外資及陸資持有量（股）、外資及陸資共用法令投資上限比率
 
+- 公司資訊
+    - 總表
+        - TWSE: https://openapi.twse.com.tw/
+            - API
+                - https://openapi.twse.com.tw/v1/opendata/t187ap14_L
+        - OTC: https://www.tpex.org.tw/openapi/
+            - API
+                - https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap14_O
+    - 產業別: https://ic.tpex.org.tw/index.php
+        - API
+            - https://ic.tpex.org.tw/company_chain.php
+            - stk_code=stock_id
+
 - 股權分散表
     - BOTH
 
@@ -348,6 +361,13 @@
             - 自營商_避險_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
             - 自營商_買進_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
             - 自營商_賣出_股數: TWSE/個股/三大法人買賣超日報, OTC/個股/三大法人買賣明細資訊
+    - CompanyInfo
+        - 代號: 公司資訊/總表
+        - 名稱: 公司資訊/總表
+        - 市場別: 公司資訊/總表
+        - 主要登記產業: 公司資訊/總表
+        - 營運產業: 公司資訊/產業別
+        - 題材: 公司資訊/產業別
                     
 - macro
     - MarketDaily (TWSEDaily, OTCDaily)
@@ -418,38 +438,3 @@
             - 自營商_避險_賣出_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
             - 自營商_買進_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
             - 自營商_賣出_金額: TWSE/總體/三大法人買賣金額統計表, OTC/總體/三大法人買賣金額彙總表
-
-# OpenAPI swagger
-上市: https://openapi.twse.com.tw/
-上櫃: https://www.tpex.org.tw/openapi/
-
-
-# 公司完整資訊處理方式
-1. 先從openapi下載總表 (這邊只有當下資料，沒有歷史資料)
-    - 上市: https://openapi.twse.com.tw/v1/opendata/t187ap14_L
-    - 上櫃: https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap14_O
-2. 依據股票代號查詢:
-    - 來源網站: https://ic.tpex.org.tw/index.php
-    - 上市櫃共用
-    - 如下
-```
-from bs4 import BeautifulSoup
-import requests
-
-stock_id = '1101'
-
-url = f"https://ic.tpex.org.tw/company_chain.php?stk_code={stock_id}"
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-}
-
-response = requests.get(url, headers=headers, timeout=10)
-response.encoding = 'utf-8'
-
-soup = BeautifulSoup(response.text, 'html.parser')
-table = soup.find('body').find('center').find('div', 'main-panel').find('div', 'content-panel-main').find('div', 'content').find_all('h4')
-
-[l.text.replace('►','').replace('\xa0','').split('>') for l in table[1:]]
-```
-
-
