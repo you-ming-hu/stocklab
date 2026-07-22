@@ -123,8 +123,9 @@ class IndustryScraper(Scraper):
         return res
     
     def download_batch(self, dates, save_dir, iteration, timeout=10):
+        assert len(dates) == 1, 'the dates parameter is just a placeholder for formality, multiple dates is invalid'
         RESTART_SESSION_COUNT = self.RESTART_SESSION_COUNT
-        save_dir = pathlib.Path(save_dir, iteration)
+        save_dir = pathlib.Path(save_dir, dates[0], iteration)
         save_dir.mkdir(parents=True, exist_ok=True)
 
         with open(self.company_table_path) as f:
