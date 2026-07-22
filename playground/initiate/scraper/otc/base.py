@@ -24,6 +24,4 @@ class OTCScraper(Scraper):
         return date
     
     def request(self, session, request_info, timeout):
-        url, data = request_info
-        res = session.post(url, data=data, timeout=timeout)
-        return res
+        return super().request(session, request_info, 'post', timeout)

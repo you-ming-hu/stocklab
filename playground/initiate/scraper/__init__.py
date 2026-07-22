@@ -19,8 +19,16 @@ class Scraper:
     def create_request_info(self, date):
         raise NotImplementedError
     
-    def request(self, session, request_info, timeout):
-        raise NotImplementedError
+    def request(self, session, request_info, method, timeout):
+        if method == 'get':
+            url, params = request_info
+            res = getattr(session, method)(url, params=params, timeout=timeout)
+        elif method == 'post':
+            url, data = request_info
+            res = getattr(session, method)(url, data=data, timeout=timeout)
+        else:
+            assert False, f'not recognizable request method: {method}'
+        return res
 
     def save(self, res, filename):
         data = res.json()
@@ -115,17 +123,17 @@ class IndustryScraper(Scraper):
         return super().create_session(header)
     
     def create_request_info(self, stock_id):
-        url = f"https://ic.tpex.org.tw/company_chain.php?stk_code={stock_id}"
-        return url
+        url = 'https://ic.tpex.org.tw/company_chain.php'
+        param = {'stk_code':stock_id}
+        return url, param
     
     def request(self, session, request_info, timeout):
-        res = session.get(request_info, timeout=timeout)
-        return res
+        return super().request(session, request_info, 'get', timeout)
     
     def download_batch(self, dates, save_dir, iteration, timeout=10):
         assert len(dates) == 1, 'the dates parameter is just a placeholder for formality, multiple dates is invalid'
         RESTART_SESSION_COUNT = self.RESTART_SESSION_COUNT
-        save_dir = pathlib.Path(save_dir, dates[0], iteration)
+        save_dir = pathlib.Path(save_dir, iteration, dates[0].strftime("%Y%m%d"))
         save_dir.mkdir(parents=True, exist_ok=True)
 
         with open(self.company_table_path) as f:

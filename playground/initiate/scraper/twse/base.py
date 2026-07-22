@@ -6,9 +6,7 @@ from .. import Scraper
 class TWSEScraper(Scraper):
 
     def request(self, session, request_info, timeout):
-        url, params = request_info
-        res = session.get(url, params=params, timeout=timeout)
-        return res
+        return super().request(session, request_info, 'get', timeout)
 
     def create_session(self):
         header = {

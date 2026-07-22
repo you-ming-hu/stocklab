@@ -11,8 +11,7 @@ class VERSION_0(OTCScraper):
         return url
     
     def request(self, session, request_info, timeout):
-        url = request_info
-        res = session.get(url, timeout=timeout)
+        res = session.get(request_info, timeout=timeout)
         return res
 
     def save(self, res, filename):
