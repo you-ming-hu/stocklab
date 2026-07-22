@@ -43,7 +43,8 @@ class StockDaily(base.Table):
 class CompanyInfo(base.Table):
     __primary_keys__ = [
         fields.base.DataTimestamp.資料日期,
-        fields.company.Info.產業別,
+        fields.company.Info.主要登記產業,
+        fields.company.Info.營運產業,
         fields.company.Info.題材,
         fields.company.Info.市場別,
         fields.company.Info.代號
