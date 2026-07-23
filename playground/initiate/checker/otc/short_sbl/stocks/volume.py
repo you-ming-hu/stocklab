@@ -4,3 +4,13 @@ class VERSION_0(OTCChecker):
     pass
 
 version_0 = VERSION_0()
+
+class VERSION_1(OTCChecker):
+    pass
+
+version_1 = VERSION_1()
+
+class VERSION_2(OTCChecker):
+    pass
+
+version_2 = VERSION_2()
