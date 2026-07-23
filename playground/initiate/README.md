@@ -132,7 +132,6 @@
                     - date = yyyy/mm/dd
                     - id = ''
                     - response = 'json'
-
         - 資料庫欄位結構
             - 個股
                 - 成交量（張）：（融資、融券）Ｘ（買進、賣出、償還、餘額、次日限額）
@@ -182,6 +181,10 @@
                         - （融券）Ｘ（賣出、買進、償還、餘額、次日限額）
                         - （借券賣出）Ｘ（賣出、調整、餘額、次日限額）
                 - API
+                    - https://www.tpex.org.tw/www/zh-tw/margin/sblHis
+                    - date = yyyy/mm/dd
+                    - id = ''
+                    - response = 'json'
             2. 信用額度總量管制餘額表: https://www.tpex.org.tw/zh-tw/mainboard/trading/margin-trading/sbl_hist10110.html
                 - 民國101年03月19日至民國101年10月01日資訊
                 - Content
@@ -189,6 +192,10 @@
                         - （融券）Ｘ（賣出、買進、償還、餘額、次日限額）
                         - （借券賣出）Ｘ（賣出、償還、調整、餘額、次日限額）
                 - API
+                    - https://www.tpex.org.tw/www/zh-tw/margin/sblHis2
+                    - date = yyyy/mm/dd
+                    - id = ''
+                    - response = 'json'
             3. 信用額度總量管制餘額表: https://www.tpex.org.tw/zh-tw/mainboard/trading/margin-trading/sbl.html
                 - 民國101年10月02日資訊起開始
                 - Content
@@ -196,11 +203,19 @@
                         - （融券）Ｘ（買進、賣出、償還、餘額、次日限額）
                         - （借券賣出）Ｘ（賣出、償還、調整、餘額、次日限額）
                 - API
+                    - https://www.tpex.org.tw/www/zh-tw/margin/sbl
+                    - date = yyyy/mm/dd
+                    - id = ''
+                    - response = 'json'
             4. 當日融券賣出與借券賣出成交量值: https://www.tpex.org.tw/zh-tw/mainboard/trading/info/short.html
                 - Content
                     - 成交金額（元）
                         - 融券、借券賣出
                 - API
+                    - https://www.tpex.org.tw/www/zh-tw/afterTrading/shortShtSell
+                    - date = yyyy/mm/dd
+                    - id = ''
+                    - response = 'json'
         - 資料庫欄位結構
             - 個股
                 - 成交量（股）
@@ -315,6 +330,7 @@
 
 - 股權分散表
     - BOTH
+    - https://openapi.tdcc.com.tw/v1/opendata/1-5
 
 # schema
 - micro
