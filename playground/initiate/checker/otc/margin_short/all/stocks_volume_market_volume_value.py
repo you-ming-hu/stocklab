@@ -5,7 +5,10 @@ from ...base import OTCChecker
 class VERSION_0(OTCChecker):
     
     def read(self, path):
-        return path.read_text(encoding='utf-8')
+        content = path.read_text(encoding='utf-8')
+        if '嚙' in content:
+            raise Exception
+        return content
     
     def standardize(self, c):
         c = re.sub(r'<script>.*?</script>', '', c)
