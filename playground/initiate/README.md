@@ -333,6 +333,12 @@
                     - 全體外資及陸資持有量（股）
                     - 外資及陸資共用法令投資上限比率
                 - API
+                    - https://mopsov.twse.com.tw/server-java/t13sa150_otc
+                    - years = yyyy
+                    - months = mm
+                    - days = dd
+                    - bcode = ''
+                    - step = '2'
         - 資料庫欄位結構
             - 個股
                 - 發行量（股）、全體外資及陸資持有量（股）、外資及陸資共用法令投資上限比率
