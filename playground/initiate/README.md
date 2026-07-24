@@ -270,20 +270,42 @@
                 - Content
                     - 交易量（股）
                 - API
+                    - https://www.tpex.org.tw/www/zh-tw/insti/dailyTradeHis
+                    - type = 'Daily'
+                    - cate = 'EW'
+                    - date = yyyy/mm/dd
+                    - id = ''
+                    - response = 'json'
             2. 三大法人買賣明細資訊: https://www.tpex.org.tw/zh-tw/mainboard/trading/major-institutional/detail/day.html
                 - 自民國103年12月01日起開始
                 - Content
                     - 交易量（股）
                 - API
+                    - https://www.tpex.org.tw/www/zh-tw/insti/dailyTrade
+                    - type = 'Daily'
+                    - cate = 'EW'
+                    - date = yyyy/mm/dd
+                    - id = ''
+                    - response = 'json'
         - 總體
             1. 三大法人買賣金額彙總表: https://hist.tpex.org.tw/Hist/STOCK/3INSTI/3INSTISUM.HTML 
                 - 民國93年6月至95年12月資訊
                 - Content
                     - 成交金額（元）
+                - API
+                    - https://hist.tpex.org.tw/Hist/STOCK/3INSTI/3INSTI_SUMMARY/BIGDSUM
+                    - yymmdd + .htm
             2. 三大法人買賣金額彙總表: https://www.tpex.org.tw/zh-tw/mainboard/trading/major-institutional/summary/day.html
                 - 自民國96年1月起開始
                 - Content
                     - 成交金額（元）
+                - API
+                    - https://www.tpex.org.tw/www/zh-tw/insti/summary
+                    - type = 'Daily'
+                    - prod = '0' if date <= 2016/12/30 else '1'
+                    - date = 2026/07/23
+                    - id = ''
+                    - response = 'json'
 
 - 外資持股
     - TWSE
