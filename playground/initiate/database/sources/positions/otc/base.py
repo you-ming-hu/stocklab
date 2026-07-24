@@ -118,19 +118,14 @@ class MARGIN_V1(Source):
 class SHORT_SBL_VOLUME(Source):
     
     def check_empty(self, content):
-        return content['data'] == []
+        return len(content['tables'][0]['data']) == 0
     
-    def to_df(self, content, column_count):
-        head_cols = []
-        i = 0
-        for group in content['groups']:
-            span = group['span']
-            title = group['title']
-            head_cols.extend([title+n for n in content['fields'][i:i+span]])
-            i += span
-        assert len(head_cols) == column_count
-        df = pd.DataFrame(columns=head_cols, data=content['data'])
-        df = df.loc[df['股票代號']!='']
+    def to_df(self, content):
+        content = content['tables'][0]
+        df = pd.DataFrame(
+            data=content['data'],
+            columns=content['fields'],
+        )
         return df
         
     def format_dtype(self, df, stock_info_cols, volume_cols):
@@ -140,14 +135,22 @@ class SHORT_SBL_VOLUME(Source):
             df[name] = df[name].str.replace(',','').astype(int)
         return df
     
-# class SHORT_SBL_VALUE(Source):
+class SHORT_SBL_VALUE(Source):
     
-#     def check_empty(self, content):
-#         return content['stat'] == '很抱歉，沒有符合條件的資料!'
+    def check_empty(self, content):
+        return len(content['tables'][0]['data']) == 0
+    
+    def to_df(self, content):
+        content = content['tables'][0]
+        df = pd.DataFrame(
+            data=content['data'],
+            columns=content['fields'],
+        )
+        return df
 
-# class SUM:
-#     def format_dtype(self, df):
-#         for name in df.columns:
-#             df[name] = df[name].str.replace(',','').astype(int)
-#         df = df.sum(axis=0).to_frame().T
-#         return df
+class SUM:
+    def format_dtype(self, df):
+        for name in df.columns:
+            df[name] = df[name].str.replace(',','').astype(int)
+        df = df.sum(axis=0).to_frame().T
+        return df
