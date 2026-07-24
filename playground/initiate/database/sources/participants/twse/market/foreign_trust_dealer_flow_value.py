@@ -2,8 +2,6 @@ from ..... import schema
 
 from ..base import FLOW_VALUE
 
-import pandas as pd
-
 class VERSION_0(FLOW_VALUE):
     def to_df(self, content):
         df = super().to_df(content, 12)

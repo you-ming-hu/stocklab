@@ -1,17 +1,11 @@
 from ...base import STOCKS
 from ..... import schema
 
-import json
 import pandas as pd
 import re
 
 class VERSION_0(STOCKS):
     market_type = 'TWSE'
-    
-    def open(self, file):
-        with open(file, encoding="utf-8") as f:
-            content = json.load(f)
-        return content
     
     def check_empty(self, content):
         return not 'tables' in content

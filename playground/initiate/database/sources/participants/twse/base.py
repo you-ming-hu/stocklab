@@ -1,13 +1,8 @@
 from ...base import Source
 
-import json
 import pandas as pd
 
 class FLOW_VOLUME(Source):
-    def open(self, file):
-        with open(file, encoding="utf-8") as f:
-            content = json.load(f)
-        return content
     
     def check_empty(self, content):
         return content['stat'] == '很抱歉，沒有符合條件的資料!'
@@ -25,10 +20,6 @@ class FLOW_VOLUME(Source):
         return df
     
 class BALANCE_VOLUME(Source):
-    def open(self, file):
-        with open(file, encoding="utf-8") as f:
-            content = json.load(f)
-        return content
     
     def check_empty(self, content):
         return content['data'] == []
@@ -48,10 +39,6 @@ class BALANCE_VOLUME(Source):
         return df
 
 class FLOW_VALUE(Source):
-    def open(self, file):
-        with open(file, encoding="utf-8") as f:
-            content = json.load(f)
-        return content
     
     def check_empty(self, content):
         return content['stat'] == '很抱歉，沒有符合條件的資料!'

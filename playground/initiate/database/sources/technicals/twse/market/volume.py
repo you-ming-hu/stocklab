@@ -1,14 +1,9 @@
 from ....base import Source
 from ..... import schema
 
-import json
 import pandas as pd
 
 class VERSION_0(Source):
-    def open(self, file):
-        with open(file, encoding="utf-8") as f:
-            content = json.load(f)
-        return content
     
     def check_empty(self, content):
         return content['stat'] != 'OK'

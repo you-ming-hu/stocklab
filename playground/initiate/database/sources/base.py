@@ -3,6 +3,7 @@ from ..schema.tables.base import Table
 import pathlib
 import pandas as pd
 import pydantic
+import json
 
 class Source:
     def __init__(self, table: Table, mapping: dict, filename_is_data_date=True):
@@ -16,7 +17,9 @@ class Source:
         self.filename_is_data_date = filename_is_data_date
     
     def open(self, file):
-        raise NotImplementedError
+        with open(file, encoding="utf-8") as f:
+            content = json.load(f)
+        return content
     
     def check_empty(self, content):
         raise NotImplementedError

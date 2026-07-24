@@ -1,8 +1,6 @@
 from ..base import BALANCE_VOLUME
 from ..... import schema
 
-import pandas as pd
-
 class BASE(BALANCE_VOLUME):
     def format_dtype(self, df):
         stock_info_cols = [
