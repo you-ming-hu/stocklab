@@ -4,13 +4,18 @@ import pandas as pd
 
 class FLOW_VOLUME(Source):
     
-    def check_empty(self, content):
-        return len(content['tables'][0]['data']) == 0
-    
-    def to_df(self, content, name='三大法人買賣明細資訊'):
+    def check_empty(self, content, name='totalCount'):
         target_table = None
         for table in content['tables']:
-            if name in table.get('title',''):
+            if name in table:
+                target_table = table
+        return len(target_table['data']) == 0
+        # return len(content['tables'][0]['data']) == 0
+    
+    def to_df(self, content, name='totalCount'):
+        target_table = None
+        for table in content['tables']:
+            if name in table:
                 target_table = table
         assert target_table is not None
         df = pd.DataFrame(
