@@ -1,2 +1,1 @@
-from . import twse
-from . import otc
+from . import twse, otc
