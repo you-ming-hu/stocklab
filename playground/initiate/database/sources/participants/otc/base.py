@@ -1,6 +1,8 @@
 from ...base import Source
 
 import pandas as pd
+import pathlib
+from bs4 import BeautifulSoup
 
 class FLOW_VOLUME(Source):
     
@@ -30,24 +32,35 @@ class FLOW_VOLUME(Source):
             df[name] = df[name].str.replace(',','').astype(int)
         return df
     
-# class BALANCE_VOLUME(Source):
+class BALANCE_VOLUME(Source):
+    def open(self, file):
+        content = pathlib.Path(file).read_text('utf-8')
+        return content
     
-#     def check_empty(self, content):
-#         return content['data'] == []
+    def check_empty(self, content):
+        return '查無所需資料' in content
     
-#     def to_df(self, content, column_count):
-#         df = pd.DataFrame(columns=content['fields'], data=content['data'])
-#         assert len(df.columns) == column_count
-#         return df
+    def to_df(self, content, column_count):
+        content = BeautifulSoup(content, "html.parser")
+        table = content.find_all('table')[0]
+        rows = table.find_all('tr')
+
+        col_idx = 1
+        columns = [c.text for c in rows[col_idx].find_all('th')]
+        data = [[c.text for c in r.find_all('td')] for r in rows[col_idx+1:]]
+
+        df = pd.DataFrame(data, columns=columns)
+        assert len(df.columns) == column_count, len(df.columns)
+        return df
     
-#     def format_dtype(self, df, stock_info_cols, volume_cols, ratio_cols):
-#         for name in stock_info_cols:
-#             df[name] = df[name].str.replace(' ','').replace('*','')
-#         for name in volume_cols:
-#             df[name] = df[name].str.replace(',','').astype(int)
-#         for name in ratio_cols:
-#             df[name] = df[name].astype(float)
-#         return df
+    def format_dtype(self, df, stock_info_cols, volume_cols, ratio_cols):
+        for name in stock_info_cols:
+            df[name] = df[name].str.replace(' ','').replace('*','')
+        for name in volume_cols:
+            df[name] = df[name].str.replace(',','').astype(int)
+        for name in ratio_cols:
+            df[name] = df[name].astype(float)
+        return df
 
 class FLOW_VALUE(Source):
     def check_empty(self, content):
