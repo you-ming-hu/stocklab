@@ -1,6 +1,7 @@
 from ...base import TWSEScraper
 
 class URL_0(TWSEScraper):
+    
     def create_request_info(self, date):
         url = 'https://www.twse.com.tw/rwd/zh/fund/BFI82U'
         params = {
