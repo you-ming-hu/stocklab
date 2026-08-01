@@ -7,16 +7,14 @@ class URL_0(OTCScraper):
     def create_request_info(self, date):
         root_url = 'https://hist.tpex.org.tw/Hist/STOCK/MARGIN_TRADING/MARGIN_BALANCE'
         date = self.create_request_date(date, is_taiwanese=True, sep='')
-        url = root_url + '/RSTA3106_' + date + '.html'
+        url = '/'.join([root_url, f'RSTA3106_{date}.html'])
         return url
     
     def request(self, session, request_info, timeout):
-        res = session.get(request_info, timeout=timeout)
-        return res
-    
+        return self.old_api_request(session, request_info, timeout)
+
     def save(self, res, filename):
-        res.encoding = 'big5'
-        pathlib.Path(filename).write_text(res.text, encoding='utf-8')
+        return self.old_api_save(res, filename)
 
 url_0 = URL_0('D', '.html')
 

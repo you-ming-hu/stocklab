@@ -5,19 +5,17 @@ from ...base import OTCScraper
 
 class URL_0(OTCScraper):
     def create_request_info(self, date):
-        root_url = 'https://hist.tpex.org.tw/Hist/STOCK/3INSTI/3INSTI_SUMMARY/BIGDSUM'
+        root_url = 'https://hist.tpex.org.tw/Hist/STOCK/3INSTI/3INSTI_SUMMARY'
         date = self.create_request_date(date, is_taiwanese=True, sep='')
-        url = root_url + date + '.htm'
+        url = '/'.join([root_url, f'BIGDSUM{date}.htm'])
         return url
     
     def request(self, session, request_info, timeout):
-        res = session.get(request_info, timeout=timeout)
-        return res
+        return self.old_api_request(session, request_info, timeout)
 
     def save(self, res, filename):
-        res.encoding = 'big5'
-        pathlib.Path(filename).write_text(res.text, encoding='utf-8')
-
+        return self.old_api_save(res, filename)
+        
 url_0 = URL_0('D', '.html')
 
 class URL_1(OTCScraper):
