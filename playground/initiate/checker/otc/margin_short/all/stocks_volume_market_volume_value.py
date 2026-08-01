@@ -2,7 +2,7 @@ import re
 
 from ...base import OTCChecker
 
-class VERSION_0(OTCChecker):
+class URL_0(OTCChecker):
     
     def read(self, path):
         content = path.read_text(encoding='utf-8')
@@ -24,9 +24,9 @@ class VERSION_0(OTCChecker):
                     target.unlink()
                     print(f'removed: {target}')
     
-version_0 = VERSION_0()
+url_0 = URL_0()
 
-class VERSION_1(OTCChecker):
+class URL_1(OTCChecker):
     pass
 
-version_1 = VERSION_1()
+url_1 = URL_1()

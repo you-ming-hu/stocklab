@@ -112,6 +112,8 @@ class Scraper:
         return True
     
 class IndustryScraper(Scraper):
+    MIN_SLEEP_TIME = 0.1
+    MAX_SLEEP_TIME = 1
 
     def __init__(self, suffix='.json'):
         super().__init__('D', suffix)

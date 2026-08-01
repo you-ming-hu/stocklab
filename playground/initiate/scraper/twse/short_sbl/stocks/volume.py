@@ -1,6 +1,6 @@
 from ...base import TWSEScraper
 
-class VERSION_0(TWSEScraper):
+class URL_0(TWSEScraper):
 
     def create_request_info(self, date):
         url = 'https://www.twse.com.tw/exchangeReport/TWT93U'
@@ -11,4 +11,4 @@ class VERSION_0(TWSEScraper):
         }
         return url, params
 
-version_0 = VERSION_0('D', '.json')
+url_0 = URL_0('D', '.json')

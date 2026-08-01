@@ -3,7 +3,7 @@ import pandas as pd
 
 from ...base import OTCScraper
 
-class VERSION_0(OTCScraper):
+class URL_0(OTCScraper):
     def create_request_info(self, date):
         root_url = 'https://hist.tpex.org.tw/Hist/STOCK/3INSTI/3INSTI_SUMMARY/BIGDSUM'
         date = self.create_request_date(date, is_taiwanese=True, sep='')
@@ -18,9 +18,9 @@ class VERSION_0(OTCScraper):
         res.encoding = 'big5'
         pathlib.Path(filename).write_text(res.text, encoding='utf-8')
 
-version_0 = VERSION_0('D', '.html')
+url_0 = URL_0('D', '.html')
 
-class VERSION_1(OTCScraper):
+class URL_1(OTCScraper):
     def create_request_info(self, date):
         if pd.Timestamp(date) <= pd.Timestamp('2016/12/30'):
             prod = '0'
@@ -36,4 +36,4 @@ class VERSION_1(OTCScraper):
         )
         return url, data
 
-version_1 = VERSION_1('D', '.json')
+url_1 = URL_1('D', '.json')

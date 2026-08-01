@@ -1,16 +1,16 @@
 from ...base import OTCChecker
     
-class VERSION_0(OTCChecker):
+class URL_0(OTCChecker):
     pass
 
-version_0 = VERSION_0()
+url_0 = URL_0()
 
-class VERSION_1(OTCChecker):
+class URL_1(OTCChecker):
     pass
 
-version_1 = VERSION_1()
+url_1 = URL_1()
 
-class VERSION_2(OTCChecker):
+class URL_2(OTCChecker):
     pass
 
-version_2 = VERSION_2()
+url_2 = URL_2()

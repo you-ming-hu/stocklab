@@ -13,17 +13,17 @@ class PRICE_VOLUME(OTCChecker):
         # return c.text
         return c.split('\n')[:-5]
 
-class VERSION_0(PRICE_VOLUME):
+class URL_0(PRICE_VOLUME):
     pass
     
-version_0 = VERSION_0()
+url_0 = URL_0()
 
-class VERSION_1(PRICE_VOLUME):
+class URL_1(PRICE_VOLUME):
     pass
     
-version_1 = VERSION_1()
+url_1 = URL_1()
 
-class VERSION_2(PRICE_VOLUME):
+class URL_2(PRICE_VOLUME):
     pass
     
-version_2 = VERSION_2()
+url_2 = URL_2()

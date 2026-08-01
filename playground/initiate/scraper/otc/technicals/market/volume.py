@@ -1,6 +1,6 @@
 from ...base import OTCScraper
     
-class VERSION_0(OTCScraper):
+class URL_0(OTCScraper):
 
     def create_request_info(self, date):
         url = 'https://www.tpex.org.tw/www/zh-tw/afterTrading/tradingIndex'
@@ -11,4 +11,4 @@ class VERSION_0(OTCScraper):
         )
         return url, data
 
-version_0 = VERSION_0('MS', '.json')
+url_0 = URL_0('MS', '.json')

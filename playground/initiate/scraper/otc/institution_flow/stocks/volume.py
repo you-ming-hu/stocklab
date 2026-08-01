@@ -1,6 +1,6 @@
 from ...base import OTCScraper
     
-class VERSION_0(OTCScraper):
+class URL_0(OTCScraper):
     def create_request_info(self, date):
         url = 'https://www.tpex.org.tw/www/zh-tw/insti/dailyTradeHis'
         data = dict(
@@ -12,9 +12,9 @@ class VERSION_0(OTCScraper):
         )
         return url, data
 
-version_0 = VERSION_0('D', '.json')
+url_0 = URL_0('D', '.json')
 
-class VERSION_1(OTCScraper):
+class URL_1(OTCScraper):
     def create_request_info(self, date):
         url = 'https://www.tpex.org.tw/www/zh-tw/insti/dailyTrade'
         data = dict(
@@ -26,4 +26,4 @@ class VERSION_1(OTCScraper):
         )
         return url, data
 
-version_1 = VERSION_1('D', '.json')
+url_1 = URL_1('D', '.json')

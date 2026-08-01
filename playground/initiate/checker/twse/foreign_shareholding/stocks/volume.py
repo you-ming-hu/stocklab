@@ -1,6 +1,6 @@
 from ...base import TWSEChecker
     
-class VERSION_0(TWSEChecker):
+class URL_0(TWSEChecker):
     pass
 
-version_0 = VERSION_0()
+url_0 = URL_0()

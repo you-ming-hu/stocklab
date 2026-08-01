@@ -3,6 +3,9 @@ from .. import Scraper
 import pandas as pd
 
 class OTCScraper(Scraper):
+
+    def request(self, session, request_info, timeout):
+        return super().request(session, request_info, 'post', timeout)
     
     def create_session(self):
         header = {
@@ -22,6 +25,3 @@ class OTCScraper(Scraper):
                 f'{date.day:0>2}'
             ])
         return date
-    
-    def request(self, session, request_info, timeout):
-        return super().request(session, request_info, 'post', timeout)

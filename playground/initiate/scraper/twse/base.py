@@ -1,7 +1,7 @@
+from .. import Scraper
+
 import pandas as pd
 import time
-
-from .. import Scraper
 
 class TWSEScraper(Scraper):
 
