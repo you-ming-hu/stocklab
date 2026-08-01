@@ -1,12 +1,11 @@
 from .. import Scraper
 
-import pandas as pd
 import time
 
 class TWSEScraper(Scraper):
 
-    def request(self, session, request_info, timeout):
-        return super().request(session, request_info, 'get', timeout)
+    def request(self, session, request_info, timeout, method='get'):
+        return super().request(session, request_info, method, timeout)
 
     def create_session(self):
         header = {
@@ -15,15 +14,8 @@ class TWSEScraper(Scraper):
         }
         return super().create_session(header)
 
-    def create_request_date(self, date):
-        if isinstance(date, pd.Timestamp):
-            date = date.strftime("%Y%m%d")
-        elif isinstance(date, str):
-            date = pd.Timestamp(date)
-            date = date.strftime("%Y%m%d")
-        else:
-            assert False, 'not recognized date type'
-        return date
+    def create_request_date(self, date, is_taiwanese=False, sep=''):
+        return super().create_request_date(self, date, is_taiwanese, sep)
     
     def create_cache_id(self):
         return str(int(time.time()*1000))

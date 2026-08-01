@@ -15,6 +15,18 @@ class Scraper:
     def __init__(self, freq, suffix):
         self.freq = freq
         self.suffix = suffix
+
+    def create_request_date(self, date, is_taiwanese, sep):
+        date = pd.Timestamp(date)
+        if not is_taiwanese:
+            date = date.strftime(sep.join(['%Y','%m','%d']))
+        else:
+            date = sep.join([
+                f'{date.year-1911}',
+                f'{date.month:0>2}',
+                f'{date.day:0>2}'
+            ])
+        return date
     
     def create_request_info(self, date):
         raise NotImplementedError
