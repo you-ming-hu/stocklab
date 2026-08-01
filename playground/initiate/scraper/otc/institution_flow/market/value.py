@@ -1,9 +1,9 @@
-import pathlib
-import pandas as pd
-
 from ...base import OTCScraper
 
+import pandas as pd
+
 class URL_0(OTCScraper):
+
     def create_request_info(self, date):
         root_url = 'https://hist.tpex.org.tw/Hist/STOCK/3INSTI/3INSTI_SUMMARY'
         date = self.create_request_date(date, is_taiwanese=True, sep='')
@@ -19,6 +19,7 @@ class URL_0(OTCScraper):
 url_0 = URL_0('D', '.html')
 
 class URL_1(OTCScraper):
+    
     def create_request_info(self, date):
         if pd.Timestamp(date) <= pd.Timestamp('2016/12/30'):
             prod = '0'

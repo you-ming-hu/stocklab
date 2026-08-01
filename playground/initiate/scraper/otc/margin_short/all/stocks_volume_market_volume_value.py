@@ -1,5 +1,3 @@
-import pathlib
-
 from ...base import OTCScraper
 
 class URL_0(OTCScraper):

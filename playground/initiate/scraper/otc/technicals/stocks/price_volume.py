@@ -1,6 +1,6 @@
-import pathlib
-
 from ...base import OTCScraper
+
+import pathlib
 
 class URL_0(OTCScraper):
     

@@ -1,6 +1,7 @@
 from ...base import OTCScraper
 
 class URL_0(OTCScraper):
+    
     def create_request_info(self, date):
         url = 'https://mopsov.twse.com.tw/server-java/t13sa150_otc'
         y,m,d = self.create_request_date(date).split('/')
