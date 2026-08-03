@@ -1,6 +1,7 @@
 from ...base import TWSEChecker
     
 class URL_0(TWSEChecker):
+    
     def standardize(self, c):
         data_name = 'data'
         if data_name in c:

@@ -1,13 +1,12 @@
-import re
-
 from ...base import OTCChecker
+
+import re
 
 class URL_0(OTCChecker):
     
     def read(self, path):
-        content = path.read_text(encoding='utf-8')
-        if '嚙' in content:
-            raise Exception
+        content = self.old_api_read(path)
+        assert not '嚙' in content
         return content
     
     def standardize(self, c):

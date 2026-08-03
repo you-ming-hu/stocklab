@@ -1,12 +1,12 @@
-import re
-
 from ...base import OTCChecker
+
+import re
 
 class URL_0(OTCChecker):
     
     def read(self, path):
-        return path.read_text(encoding='utf-8')
-    
+        return self.old_api_read(path)
+        
     def standardize(self, c):
         c = re.sub(r'<script>.*?</script>', '', c)
         return c

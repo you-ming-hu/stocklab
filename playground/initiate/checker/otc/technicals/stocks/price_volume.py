@@ -3,7 +3,7 @@ from ...base import OTCChecker
 class PRICE_VOLUME(OTCChecker):
     
     def read(self, path):
-        return path.read_text(encoding='utf-8')
+        return self.old_api_read(path)
     
     def standardize(self, c):
         # standard process but extremely slow
