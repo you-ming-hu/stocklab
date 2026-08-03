@@ -15,7 +15,7 @@ class OTCScraper(Scraper):
         return super().create_session(header)
     
     def create_request_date(self, date, is_taiwanese=False, sep='/'):
-        return super().create_request_date(self, date, is_taiwanese, sep)
+        return super().create_request_date(date, is_taiwanese, sep)
     
     def old_api_request(self, session, request_info, timeout):
         res = session.get(request_info, timeout=timeout)

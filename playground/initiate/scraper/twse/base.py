@@ -15,7 +15,7 @@ class TWSEScraper(Scraper):
         return super().create_session(header)
 
     def create_request_date(self, date, is_taiwanese=False, sep=''):
-        return super().create_request_date(self, date, is_taiwanese, sep)
+        return super().create_request_date(date, is_taiwanese, sep)
     
     def create_cache_id(self):
         return str(int(time.time()*1000))
