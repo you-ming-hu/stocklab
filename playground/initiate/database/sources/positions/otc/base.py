@@ -127,13 +127,6 @@ class SHORT_SBL_VOLUME(Source):
             columns=content['fields'],
         )
         return df
-        
-    def format_dtype(self, df, stock_info_cols, volume_cols):
-        for name in stock_info_cols:
-            df[name] = df[name].str.replace(' ','').replace('*','')
-        for name in volume_cols:
-            df[name] = df[name].str.replace(',','').astype(int)
-        return df
     
 class SHORT_SBL_VALUE(Source):
     
@@ -148,9 +141,8 @@ class SHORT_SBL_VALUE(Source):
         )
         return df
 
-class SUM:
+class SUM(Source):
     def format_dtype(self, df):
-        for name in df.columns:
-            df[name] = df[name].str.replace(',','').astype(int)
+        super().format_dtype(df, int_cols=df.columns)
         df = df.sum(axis=0).to_frame().T
         return df

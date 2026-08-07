@@ -24,24 +24,18 @@ class VERSION_0(MARGIN):
         return df
         
     def format_dtype(self, df):
-        stock_info_cols= [
+        str_cols= [
             schema.tables.StockDaily.f_stock_info.代號,
         ]
-
-        volume_cols = [
+        int_cols = [
             schema.tables.StockDaily.f_margin_flow_volume.融資_買進_股數,
             schema.tables.StockDaily.f_margin_flow_volume.融資_賣出_股數,
             schema.tables.StockDaily.f_margin_flow_volume.融資_現償_股數,
             schema.tables.StockDaily.f_margin_balance_volume.融資_餘額_股數,
             schema.tables.StockDaily.f_margin_limit.融資_次日限額_股數
         ]
-
-        for name in stock_info_cols:
-            df[name] = df[name].str.replace(' ','').replace('*','')
-
-        for name in volume_cols:
-            df[name] = df[name].str.replace(',','').astype(int) * 1000
-
+        df = super().format_dtype(df, str_cols, int_cols)
+        df[int_cols] = df[int_cols] * 1000
         return df
 
 version_0 = VERSION_0(

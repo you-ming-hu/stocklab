@@ -16,21 +16,16 @@ class VERSION_0(Source):
         return df
         
     def format_dtype(self, df):
-        date_col = schema.tables.TWSEDaily.f_datatimestamp.資料日期
-        ymd = df[date_col].str.split('/', expand=True).astype(int)
-        ymd[0] = ymd[0] + 1911
-        ymd = ymd.apply(lambda cols: pd.Timestamp(f'{cols[0]}{cols[1]:0>2}{cols[2]:0>2}'),axis=1)
-        df[date_col] = ymd
-
-        price_cols = [
+        taiwan_date_cols = [
+            schema.tables.TWSEDaily.f_datatimestamp.資料日期
+        ]
+        float_cols = [
             schema.tables.TWSEDaily.f_technicals_price.開盤價,
             schema.tables.TWSEDaily.f_technicals_price.最高價,
             schema.tables.TWSEDaily.f_technicals_price.最低價,
             schema.tables.TWSEDaily.f_technicals_price.收盤價
         ]
-
-        for name in price_cols:
-            df[name] = df[name].str.replace(',','').astype(float)
+        df = super().format_dtype(df, float_cols=float_cols, taiwan_date_cols=taiwan_date_cols)
         return df
 
 version_0 = VERSION_0(

@@ -20,8 +20,8 @@ class VERSION_0(MARGIN):
         return df
     
     def format_dtype(self, df):
-        for name in df.columns:
-            df[name] = df[name].str.replace(',','').astype(int) * 1000
+        df = super().format_dtype(df, int_cols=df.columns)
+        df = df * 1000
         return df
 
 version_0 = VERSION_0(

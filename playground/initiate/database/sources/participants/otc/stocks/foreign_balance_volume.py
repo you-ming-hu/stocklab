@@ -4,17 +4,17 @@ from ..... import schema
 class BASE(BALANCE_VOLUME):
 
     def format_dtype(self, df):
-        stock_info_cols = [
+        str_cols = [
             schema.tables.StockDaily.f_stock_info.代號
         ]
-        volume_cols = [
+        int_cols = [
             schema.tables.StockDaily.f_stock_info.總發行股數,
             schema.tables.StockDaily.f_foreign_balance_volume.外陸資_餘額_股數,
         ]
-        ratio_cols = [
+        float_cols = [
             schema.tables.StockDaily.f_foreign_limit.外陸資_投資上限_比率
         ]
-        super().format_dtype(df, stock_info_cols, volume_cols, ratio_cols)
+        df = super().format_dtype(df, str_cols, int_cols, float_cols)
         return df
 
 class VERSION_0(BASE):

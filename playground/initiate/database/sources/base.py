@@ -4,6 +4,7 @@ import pathlib
 import pandas as pd
 import pydantic
 import json
+import re
 
 class Source:
     def __init__(self, table: Table, mapping: dict, filename_is_data_date=True):
@@ -16,10 +17,18 @@ class Source:
         self.sqldatamodel = {v:v.sqltype for v in table.columns.values()}
         self.filename_is_data_date = filename_is_data_date
     
-    def open(self, file):
-        with open(file, encoding="utf-8") as f:
-            content = json.load(f)
-        return content
+    def open(self, file, method, return_path):
+        if method == 'json':
+            with open(file, encoding="utf-8") as f:
+                content = json.load(f)
+        elif method == 'text':
+            content = pathlib.Path(file).read_text('utf-8')
+        else:
+            assert False, f'not recognizable method: {method}'
+        if return_path:
+            return content, file
+        else:
+            return content
     
     def check_empty(self, content):
         raise NotImplementedError
@@ -27,8 +36,23 @@ class Source:
     def to_df(self, content):
         raise NotImplementedError
     
-    def format_dtype(self, df):
-        raise NotImplementedError
+    def format_dtype(self, df, str_cols=[], int_cols=[], float_cols=[], date_cols=[], taiwan_date_cols=[]):
+        for c in str_cols:
+            df[c] = df[c].str.replace(' ','').str.replace('*','')
+        for cols,dtype in [[int_cols,int],[float_cols,float]]:
+            for c in cols:
+                if df[c].dtype == dtype:
+                    continue
+                df[c] = df[c].map(lambda t: re.sub(r'[^0-9.-]','',t)).replace('',pd.NA)
+                df[c] = df[c].map(lambda x: dtype(x) if not pd.isna(x) else x)
+        for c in date_cols:
+            df[c] = df[c].apply(pd.Timestamp)
+        for c in taiwan_date_cols:
+            ymd = df[c].str.split('/', expand=True).astype(int)
+            ymd[0] = ymd[0] + 1911
+            ymd = ymd.apply(lambda cols: pd.Timestamp(f'{cols[0]}{cols[1]:0>2}{cols[2]:0>2}'),axis=1)
+            df[c] = ymd
+        return df
     
     def add_other_columns(self, df):
         return df

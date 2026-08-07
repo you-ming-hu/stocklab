@@ -23,32 +23,23 @@ class VERSION_0(STOCKS):
         return df
         
     def format_dtype(self, df):
-        stock_info_cols= [
+        str_cols= [
             schema.tables.StockDaily.f_stock_info.代號,
             schema.tables.StockDaily.f_stock_info.名稱
         ]
-        volume_cols = [
+        int_cols = [
             schema.tables.StockDaily.f_technicals_volume.交易股數,
             schema.tables.StockDaily.f_technicals_volume.交易筆數,
             schema.tables.StockDaily.f_technicals_volume.交易金額
         ]
-        price_cols = [
+        float_cols = [
             schema.tables.StockDaily.f_technicals_price.開盤價,
             schema.tables.StockDaily.f_technicals_price.最高價,
             schema.tables.StockDaily.f_technicals_price.最低價,
             schema.tables.StockDaily.f_technicals_price.收盤價,
         ]
-
-        for name in stock_info_cols:
-            df[name] = df[name].str.replace(' ','').replace('*','')
-
-        for name in volume_cols:
-            df[name] = df[name].str.replace(',','').astype(int)
-
-        for name in price_cols:
-            df[name] = df[name].map(lambda t: re.sub(r'[^0-9.]','',t)).replace('',pd.NA).astype(float)
-        
-        df = df.loc[~(df[volume_cols+price_cols] == 0).all(axis=1)]
+        df = super().format_dtype(df, str_cols, int_cols, float_cols)
+        df = df.loc[~(df[int_cols+float_cols] == 0).all(axis=1)]
         return df
 
 version_0 = VERSION_0(

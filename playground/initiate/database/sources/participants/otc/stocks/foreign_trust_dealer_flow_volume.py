@@ -6,10 +6,10 @@ import pandas as pd
 class VERSION_0(FLOW_VOLUME):
     
     def format_dtype(self, df):
-        stock_info_cols= [
+        str_cols= [
             schema.tables.StockDaily.f_stock_info.代號
         ]
-        volume_cols = [
+        int_cols = [
             schema.tables.StockDaily.f_foreign_flow_volume.外陸資_買進_股數,
             schema.tables.StockDaily.f_foreign_flow_volume.外陸資_賣出_股數,
             schema.tables.StockDaily.f_trust_flow_volume.投信_買進_股數,
@@ -17,7 +17,7 @@ class VERSION_0(FLOW_VOLUME):
             schema.tables.StockDaily.f_dealer_flow_volume.自營商_買進_股數,
             schema.tables.StockDaily.f_dealer_flow_volume.自營商_賣出_股數
         ]
-        df = super().format_dtype(df, stock_info_cols, volume_cols)
+        df = super().format_dtype(df, str_cols, int_cols)
         return df
 
 version_0 = VERSION_0(
@@ -37,10 +37,10 @@ version_0 = VERSION_0(
 class VERSION_1(FLOW_VOLUME):
     
     def format_dtype(self, df):
-        stock_info_cols= [
+        str_cols= [
             schema.tables.StockDaily.f_stock_info.代號
         ]
-        volume_cols = [
+        int_cols = [
             schema.tables.StockDaily.f_foreign_flow_volume.外陸資_買進_股數,
             schema.tables.StockDaily.f_foreign_flow_volume.外陸資_賣出_股數,
             schema.tables.StockDaily.f_trust_flow_volume.投信_買進_股數,
@@ -50,7 +50,7 @@ class VERSION_1(FLOW_VOLUME):
             schema.tables.StockDaily.f_dealer_flow_volume.自營商_避險_買進_股數,
             schema.tables.StockDaily.f_dealer_flow_volume.自營商_避險_賣出_股數
         ]
-        df = super().format_dtype(df, stock_info_cols, volume_cols)
+        df = super().format_dtype(df, str_cols, int_cols)
         return df
     
     def add_other_columns(self, df):
@@ -93,10 +93,10 @@ class VERSION_2(FLOW_VOLUME):
         return df
     
     def format_dtype(self, df):
-        stock_info_cols= [
+        str_cols= [
             schema.tables.StockDaily.f_stock_info.代號
         ]
-        volume_cols = [
+        int_cols = [
             schema.tables.StockDaily.f_foreign_flow_volume.外陸資_不含外資自營商_買進_股數,
             schema.tables.StockDaily.f_foreign_flow_volume.外陸資_不含外資自營商_賣出_股數,
             schema.tables.StockDaily.f_foreign_flow_volume.外資自營商_買進_股數,
@@ -113,7 +113,7 @@ class VERSION_2(FLOW_VOLUME):
             schema.tables.StockDaily.f_dealer_flow_volume.自營商_賣出_股數
 
         ]
-        df = super().format_dtype(df, stock_info_cols, volume_cols)
+        df = super().format_dtype(df, str_cols, int_cols)
         return df
 
 version_2 = VERSION_2(

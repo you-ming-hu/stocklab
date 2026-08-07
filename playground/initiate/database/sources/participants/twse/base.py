@@ -12,13 +12,6 @@ class FLOW_VOLUME(Source):
         assert len(df.columns) == column_count
         return df
     
-    def format_dtype(self, df, stock_info_cols, volume_cols):
-        for name in stock_info_cols:
-            df[name] = df[name].str.replace(' ','').replace('*','')
-        for name in volume_cols:
-            df[name] = df[name].str.replace(',','').astype(int)
-        return df
-    
 class BALANCE_VOLUME(Source):
     
     def check_empty(self, content):
@@ -27,15 +20,6 @@ class BALANCE_VOLUME(Source):
     def to_df(self, content, column_count):
         df = pd.DataFrame(columns=content['fields'], data=content['data'])
         assert len(df.columns) == column_count
-        return df
-    
-    def format_dtype(self, df, stock_info_cols, volume_cols, ratio_cols):
-        for name in stock_info_cols:
-            df[name] = df[name].str.replace(' ','').replace('*','')
-        for name in volume_cols:
-            df[name] = df[name].str.replace(',','').astype(int)
-        for name in ratio_cols:
-            df[name] = df[name].astype(float)
         return df
 
 class FLOW_VALUE(Source):
@@ -54,13 +38,11 @@ class FLOW_VALUE(Source):
         return df
 
     def format_dtype(self, df):
-        for name in df.columns:
-            df[name] = df[name].str.replace(',','').astype(int)
+        df = super().format_dtype(df, int_cols=df.columns)
         return df
 
-class SUM:
+class SUM(Source):
     def format_dtype(self, df):
-        for name in df.columns:
-            df[name] = df[name].str.replace(',','').astype(int)
+        df = super().format_dtype(df, int_cols=df.columns)
         df = df.sum(axis=0).to_frame().T
         return df

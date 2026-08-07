@@ -7,10 +7,10 @@ import pandas as pd
 class VERSION_0(SHORT_SBL_VOLUME):
         
     def format_dtype(self, df):
-        stock_info_cols = [
+        str_cols = [
             schema.tables.StockDaily.f_stock_info.代號,
         ]
-        volume_cols = [
+        int_cols = [
             schema.tables.StockDaily.f_short_flow_volume.融券_賣出_股數,
             schema.tables.StockDaily.f_short_flow_volume.融券_買進_股數,
             schema.tables.StockDaily.f_short_flow_volume.融券_現償_股數,
@@ -21,7 +21,7 @@ class VERSION_0(SHORT_SBL_VOLUME):
             schema.tables.StockDaily.f_sbl_balance_volume.借券賣出_餘額_股數,
             schema.tables.StockDaily.f_sbl_limit.借券賣出_次日限額_股數
         ]
-        df = super().format_dtype(df, stock_info_cols, volume_cols)
+        df = super().format_dtype(df, str_cols, int_cols)
         return df
 
 version_0 = VERSION_0(
@@ -49,10 +49,10 @@ class VERSION_1(SHORT_SBL_VOLUME):
         return df
     
     def format_dtype(self, df):
-        stock_info_cols = [
+        str_cols = [
             schema.tables.StockDaily.f_stock_info.代號,
         ]
-        volume_cols = [
+        int_cols = [
             schema.tables.StockDaily.f_short_flow_volume.融券_賣出_股數,
             schema.tables.StockDaily.f_short_flow_volume.融券_買進_股數,
             schema.tables.StockDaily.f_short_flow_volume.融券_現償_股數,
@@ -64,7 +64,7 @@ class VERSION_1(SHORT_SBL_VOLUME):
             schema.tables.StockDaily.f_sbl_balance_volume.借券賣出_餘額_股數,
             schema.tables.StockDaily.f_sbl_limit.借券賣出_次日限額_股數
         ]
-        df = super().format_dtype(df, stock_info_cols, volume_cols)
+        df = super().format_dtype(df, str_cols, int_cols)
         return df
     
     def add_other_columns(self, df):

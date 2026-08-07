@@ -17,30 +17,21 @@ class VERSION_0(Source):
         return df
         
     def format_dtype(self, df):
-        date_col = schema.tables.OTCDaily.f_datatimestamp.資料日期
-        ymd = df[date_col].str.split('/', expand=True).astype(int)
-        ymd[0] = ymd[0] + 1911
-        ymd = ymd.apply(lambda cols: pd.Timestamp(f'{cols[0]}{cols[1]:0>2}{cols[2]:0>2}'),axis=1)
-        df[date_col] = ymd
-        
-        volume_cols = [
-            schema.tables.OTCDaily.f_technicals_volume.交易股數,
-            schema.tables.OTCDaily.f_technicals_volume.交易筆數,
-            schema.tables.OTCDaily.f_technicals_volume.交易金額
+        taiwan_date_cols = [
+            schema.tables.OTCDaily.f_datatimestamp.資料日期
         ]
-
-        price_cols = [
+        int_cols = [
+            schema.tables.OTCDaily.f_technicals_volume.交易股數,
+            schema.tables.OTCDaily.f_technicals_volume.交易金額,
+            schema.tables.OTCDaily.f_technicals_volume.交易筆數,
+        ]
+        float_cols = [
             schema.tables.OTCDaily.f_technicals_price.收盤價
         ]
+        df = super().format_dtype(df, int_cols=int_cols, float_cols=float_cols, taiwan_date_cols=taiwan_date_cols)
 
-        for name in volume_cols:
-            df[name] = df[name].str.replace(',','').astype(int)
-            if name != schema.tables.OTCDaily.f_technicals_volume.交易筆數:
-                df[name] = df[name]*1000
-
-        for name in price_cols:
-            df[name] = df[name].astype(float)
-
+        thousand_cols = int_cols[:2]
+        df[thousand_cols] = df[thousand_cols] * 1000
         return df
 
 version_0 = VERSION_0(
