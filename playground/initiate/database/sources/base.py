@@ -34,7 +34,11 @@ class Source:
         raise NotImplementedError
     
     def to_df(self, content):
-        raise NotImplementedError
+        df = pd.DataFrame(
+            data=content['data'],
+            columns=content['fields'],
+        )
+        return df
     
     def format_dtype(self, df, str_cols=[], int_cols=[], float_cols=[], date_cols=[], taiwan_date_cols=[]):
         for c in str_cols:
@@ -44,6 +48,7 @@ class Source:
                 if df[c].dtype == dtype:
                     continue
                 df[c] = df[c].map(lambda t: re.sub(r'[^0-9.-]','',t)).replace('',pd.NA)
+                df[c] = df[c].map(lambda t: t if bool(re.match(r'^[+-]?[0-9]*\.?[0-9]*$',t)) else pd.NA)
                 df[c] = df[c].map(lambda x: dtype(x) if not pd.isna(x) else x)
         for c in date_cols:
             df[c] = df[c].apply(pd.Timestamp)
@@ -78,13 +83,14 @@ class Source:
         df[self.table.f_datatimestamp.資料日期] = pd.Timestamp(date)
         return df
     
-    def standardize(self, content, file):
+    def standardize(self, content, file, drop_incomplete=True):
         df = self.to_df(content)
         if not df is None: 
             df = self.keep_interest(df)
             df = self.rename_columns(df)
             df = self.format_dtype(df)
-            df = self.drop_incomplete(df)
+            if drop_incomplete:
+                df = self.drop_incomplete(df)
             if self.filename_is_data_date:
                 df = self.add_data_date(df, file.stem)
             else:
@@ -100,3 +106,11 @@ class Source:
         else:
             df = self.standardize(content, file)
             return df
+
+class TWSESource(Source):
+    def open(self, file, method='json', return_path=False):
+        return super().open(file, method, return_path)
+
+class OTCSource(Source):
+    def open(self, file, method='json', return_path=True):
+        return super().open(file, method, return_path)

@@ -1,19 +1,7 @@
-from ....base import Source
+from ..base import TWSE_MARKET
 from ..... import schema
 
-import pandas as pd
-
-class VERSION_0(Source):
-    
-    def check_empty(self, content):
-        return content['stat'] != 'OK'
-    
-    def to_df(self, content):
-        df = pd.DataFrame(
-            data=content['data'],
-            columns=content['fields'],
-        )
-        return df
+class VERSION_0(TWSE_MARKET):
         
     def format_dtype(self, df):
         taiwan_date_cols = [

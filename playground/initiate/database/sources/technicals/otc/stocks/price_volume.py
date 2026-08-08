@@ -1,18 +1,14 @@
-from ...base import STOCKS
+from ..base import OTC_STOCKS
 from ..... import schema
 
-import pathlib
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
-import json
 
-class VERSION_0(STOCKS):
-    market_type = 'OTC'
+class VERSION_0(OTC_STOCKS):
 
     def open(self, file):
-        content = pathlib.Path(file).read_text('utf-8')
-        return content, file
+        return super().open(file, 'text')
     
     def check_empty(self, content):
         content, file = content
@@ -99,26 +95,6 @@ class VERSION_0(STOCKS):
 
         return complete_df
         
-    def format_dtype(self, df):
-        str_cols= [
-            schema.tables.StockDaily.f_stock_info.代號,
-            schema.tables.StockDaily.f_stock_info.名稱
-        ]
-        int_cols = [
-            schema.tables.StockDaily.f_technicals_volume.交易股數,
-            schema.tables.StockDaily.f_technicals_volume.交易筆數,
-            schema.tables.StockDaily.f_technicals_volume.交易金額
-        ]
-        float_cols = [
-            schema.tables.StockDaily.f_technicals_price.開盤價,
-            schema.tables.StockDaily.f_technicals_price.最高價,
-            schema.tables.StockDaily.f_technicals_price.最低價,
-            schema.tables.StockDaily.f_technicals_price.收盤價,
-        ]
-        df = super().format_dtype(df, str_cols, int_cols, float_cols)
-        df = df.loc[~(df[int_cols+float_cols] == 0).all(axis=1)]
-        return df
-
 version_0 = VERSION_0(
     schema.tables.StockDaily,
     {
@@ -135,17 +111,19 @@ version_0 = VERSION_0(
     True
 )
 
-class VERSION_1(VERSION_0):
-    
+class VERSION_1(OTC_STOCKS):
+
     def open(self, file):
-        content = pathlib.Path(file)
-        return content
+        return super().open(file, 'text')
     
     def check_empty(self, content):
-        return content.read_text('utf-8') == '\ufeff'
+        content, file = content
+        return content == '\ufeff'
     
     def to_df(self, content):
-        soup = BeautifulSoup(content.read_text('utf-8'), 'html.parser')
+        content, file = content
+
+        soup = BeautifulSoup(file.read_text('utf-8'), 'html.parser')
 
         tables = []
         for table in soup.find_all("table"):
@@ -192,25 +170,18 @@ version_1 = VERSION_1(
     True
 )
 
-class VERSION_2(VERSION_0):
+class VERSION_2(OTC_STOCKS):
     
     def open(self, file):
-        with open(file, encoding='utf-8') as f:
-            content = json.load(f)
-        assert content['date'] == file.stem
-        assert len(content['tables']) == 2
-        content = content['tables'][0]
-        assert content['title'] == '上櫃股票行情'
-        return content
+        return super().open(file, 'json', False)
     
     def check_empty(self, content):
-        return len(content['data']) == 0
+        return len(content['tables'][0]['data']) == 0
     
     def to_df(self, content):
-        df = pd.DataFrame(
-            data=content['data'],
-            columns=content['fields'],
-        )
+        assert len(content['tables']) == 2
+        table = content['tables'][0]
+        df = super().to_df(table)
         return df
     
 version_2 = VERSION_2(
