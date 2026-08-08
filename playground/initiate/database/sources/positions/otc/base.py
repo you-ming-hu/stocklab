@@ -143,6 +143,6 @@ class SHORT_SBL_VALUE(Source):
 
 class SUM(Source):
     def format_dtype(self, df):
-        super().format_dtype(df, int_cols=df.columns)
+        df = super().format_dtype(df, int_cols=df.columns)
         df = df.sum(axis=0).to_frame().T
         return df

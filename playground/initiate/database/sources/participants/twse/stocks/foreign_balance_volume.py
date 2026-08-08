@@ -13,7 +13,7 @@ class BASE(BALANCE_VOLUME):
         float_cols = [
             schema.tables.StockDaily.f_foreign_limit.外陸資_投資上限_比率
         ]
-        super().format_dtype(df, str_cols, int_cols, float_cols)
+        df = super().format_dtype(df, str_cols, int_cols, float_cols)
         return df
 
 class VERSION_0(BASE):
