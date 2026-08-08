@@ -27,8 +27,7 @@ class FLOW_VOLUME(Source):
     
 class BALANCE_VOLUME(Source):
     def open(self, file):
-        content = pathlib.Path(file).read_text('utf-8')
-        return content
+        return super().open(file, 'text', True)
     
     def check_empty(self, content):
         return '查無所需資料' in content

@@ -8,8 +8,7 @@ import json
 
 class MARGIN_V0(Source):
     def open(self, file):
-        content = pathlib.Path(file).read_text('utf-8')
-        return content, file
+        return super().open(file, 'json', True)
     
     def to_df(self, content):
         content, file = content
@@ -96,9 +95,14 @@ class MARGIN_V0(Source):
     
 class MARGIN_V1(Source):
     def open(self, file):
-        with open(file, encoding='utf-8') as f:
-            content = json.load(f)
-        return content, file
+        return super().open(file, 'json', True)
+
+    def check_empty(self, content):
+        content, file = content
+        if 'tables' in content:
+            return len(content['tables'][0]['data']) == 0
+        else:
+            return content['stat'] =='很抱歉，沒有符合條件的資料!'
     
     def to_df(self, content):
         content, file = content
@@ -107,13 +111,6 @@ class MARGIN_V1(Source):
         content = content['tables'][0]
         assert content['title'] == '上櫃股票融資融券餘額'
         return content
-
-    def check_empty(self, content):
-        content, file = content
-        if 'tables' in content:
-            return len(content['tables'][0]['data']) == 0
-        else:
-            return content['stat'] =='很抱歉，沒有符合條件的資料!'
     
 class SHORT_SBL_VOLUME(Source):
     

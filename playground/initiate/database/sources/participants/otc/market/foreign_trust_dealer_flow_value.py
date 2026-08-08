@@ -8,8 +8,7 @@ import pandas as pd
 class VERSION_0(FLOW_VALUE):
     
     def open(self, file):
-        content = pathlib.Path(file).read_text('utf-8')
-        return content, file
+        return super().open(file, 'text', True)
     
     def check_empty(self, content):
         content, file = content
