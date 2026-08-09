@@ -1,7 +1,7 @@
-from ..base import TWSE_MARKET
+from ..base import TWSE_MARKET_V0
 from ..... import schema
 
-class VERSION_0(TWSE_MARKET):
+class VERSION_0(TWSE_MARKET_V0):
         
     def format_dtype(self, df):
         taiwan_date_cols = [

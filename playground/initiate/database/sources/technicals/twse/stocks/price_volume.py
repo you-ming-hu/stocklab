@@ -1,7 +1,7 @@
-from ..base import TWSE_STOCKS
+from ..base import TWSE_STOCKS_V0
 from ..... import schema
 
-class VERSION_0(TWSE_STOCKS):
+class VERSION_0(TWSE_STOCKS_V0):
     
     def check_empty(self, content):
         return not 'tables' in content

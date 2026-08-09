@@ -17,7 +17,7 @@ class Source:
         self.sqldatamodel = {v:v.sqltype for v in table.columns.values()}
         self.filename_is_data_date = filename_is_data_date
     
-    def open(self, file, method, return_path):
+    def open(self, file, method='json', return_path=False):
         if method == 'json':
             with open(file, encoding="utf-8") as f:
                 content = json.load(f)
@@ -106,11 +106,3 @@ class Source:
         else:
             df = self.standardize(content, file)
             return df
-
-class TWSESource(Source):
-    def open(self, file, method='json', return_path=False):
-        return super().open(file, method, return_path)
-
-class OTCSource(Source):
-    def open(self, file, method='json', return_path=True):
-        return super().open(file, method, return_path)

@@ -1,20 +1,7 @@
-from ....base import Source
+from ..base import OTC_MARKET_V0
 from ..... import schema
 
-import pandas as pd
-
-class VERSION_0(Source):
-    
-    def check_empty(self, content):
-        return content['stat'] != 'ok'
-    
-    def to_df(self, content):
-        content = content['tables'][0]
-        df = pd.DataFrame(
-            data=content['data'],
-            columns=content['fields'],
-        )
-        return df
+class VERSION_0(OTC_MARKET_V0):
         
     def format_dtype(self, df):
         date_cols = [

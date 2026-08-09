@@ -1,14 +1,11 @@
-from ..base import OTC_STOCKS
+from ..base import OTC_STOCKS_V0, OTC_STOCKS_V1
 from ..... import schema
 
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
 
-class VERSION_0(OTC_STOCKS):
-
-    def open(self, file):
-        return super().open(file, 'text')
+class VERSION_0(OTC_STOCKS_V0):
     
     def check_empty(self, content):
         content, file = content
@@ -111,11 +108,8 @@ version_0 = VERSION_0(
     True
 )
 
-class VERSION_1(OTC_STOCKS):
+class VERSION_1(OTC_STOCKS_V0):
 
-    def open(self, file):
-        return super().open(file, 'text')
-    
     def check_empty(self, content):
         content, file = content
         return content == '\ufeff'
@@ -170,10 +164,7 @@ version_1 = VERSION_1(
     True
 )
 
-class VERSION_2(OTC_STOCKS):
-    
-    def open(self, file):
-        return super().open(file, 'json', False)
+class VERSION_2(OTC_STOCKS_V1):
     
     def check_empty(self, content):
         return len(content['tables'][0]['data']) == 0
