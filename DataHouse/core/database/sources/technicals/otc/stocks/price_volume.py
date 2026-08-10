@@ -1,5 +1,5 @@
 from ..base import OTC_STOCKS_V0, OTC_STOCKS_V1
-from ..... import schema
+from .....schema.tables import StockDaily
 
 from bs4 import BeautifulSoup
 import re
@@ -93,17 +93,17 @@ class VERSION_0(OTC_STOCKS_V0):
         return complete_df
         
 version_0 = VERSION_0(
-    schema.tables.StockDaily,
+    StockDaily,
     {
-        '代號': schema.tables.StockDaily.f_stock_info.代號,
-        '證券名稱': schema.tables.StockDaily.f_stock_info.名稱,
-        '開盤價': schema.tables.StockDaily.f_technicals_price.開盤價,
-        '最高價': schema.tables.StockDaily.f_technicals_price.最高價,
-        '最低價': schema.tables.StockDaily.f_technicals_price.最低價,
-        '收盤價': schema.tables.StockDaily.f_technicals_price.收盤價,
-        '成交股數': schema.tables.StockDaily.f_technicals_volume.交易股數,
-        '成交金額': schema.tables.StockDaily.f_technicals_volume.交易金額,
-        '成交筆數': schema.tables.StockDaily.f_technicals_volume.交易筆數
+        '代號': StockDaily.f_stock_info.代號,
+        '證券名稱': StockDaily.f_stock_info.名稱,
+        '開盤價': StockDaily.f_technicals_price.開盤價,
+        '最高價': StockDaily.f_technicals_price.最高價,
+        '最低價': StockDaily.f_technicals_price.最低價,
+        '收盤價': StockDaily.f_technicals_price.收盤價,
+        '成交股數': StockDaily.f_technicals_volume.交易股數,
+        '成交金額': StockDaily.f_technicals_volume.交易金額,
+        '成交筆數': StockDaily.f_technicals_volume.交易筆數
     },
     True
 )
@@ -149,17 +149,17 @@ class VERSION_1(OTC_STOCKS_V0):
         return df
 
 version_1 = VERSION_1(
-    schema.tables.StockDaily,
+    StockDaily,
     {
-        '代號': schema.tables.StockDaily.f_stock_info.代號,
-        '名稱': schema.tables.StockDaily.f_stock_info.名稱,
-        '收盤': schema.tables.StockDaily.f_technicals_price.收盤價,
-        '開盤': schema.tables.StockDaily.f_technicals_price.開盤價,
-        '最高': schema.tables.StockDaily.f_technicals_price.最高價,
-        '最低': schema.tables.StockDaily.f_technicals_price.最低價,
-        '成交股數': schema.tables.StockDaily.f_technicals_volume.交易股數,
-        '成交金額(元)': schema.tables.StockDaily.f_technicals_volume.交易金額,
-        '成交筆數': schema.tables.StockDaily.f_technicals_volume.交易筆數
+        '代號': StockDaily.f_stock_info.代號,
+        '名稱': StockDaily.f_stock_info.名稱,
+        '收盤': StockDaily.f_technicals_price.收盤價,
+        '開盤': StockDaily.f_technicals_price.開盤價,
+        '最高': StockDaily.f_technicals_price.最高價,
+        '最低': StockDaily.f_technicals_price.最低價,
+        '成交股數': StockDaily.f_technicals_volume.交易股數,
+        '成交金額(元)': StockDaily.f_technicals_volume.交易金額,
+        '成交筆數': StockDaily.f_technicals_volume.交易筆數
     },
     True
 )
@@ -176,17 +176,17 @@ class VERSION_2(OTC_STOCKS_V1):
         return df
     
 version_2 = VERSION_2(
-    schema.tables.StockDaily,
+    StockDaily,
     {
-        '代號': schema.tables.StockDaily.f_stock_info.代號,
-        '名稱': schema.tables.StockDaily.f_stock_info.名稱,
-        '收盤': schema.tables.StockDaily.f_technicals_price.收盤價,
-        '開盤': schema.tables.StockDaily.f_technicals_price.開盤價,
-        '最高': schema.tables.StockDaily.f_technicals_price.最高價,
-        '最低': schema.tables.StockDaily.f_technicals_price.最低價,
-        '成交股數': schema.tables.StockDaily.f_technicals_volume.交易股數,
-        '成交金額(元)': schema.tables.StockDaily.f_technicals_volume.交易金額,
-        '成交筆數': schema.tables.StockDaily.f_technicals_volume.交易筆數
+        '代號': StockDaily.f_stock_info.代號,
+        '名稱': StockDaily.f_stock_info.名稱,
+        '收盤': StockDaily.f_technicals_price.收盤價,
+        '開盤': StockDaily.f_technicals_price.開盤價,
+        '最高': StockDaily.f_technicals_price.最高價,
+        '最低': StockDaily.f_technicals_price.最低價,
+        '成交股數': StockDaily.f_technicals_volume.交易股數,
+        '成交金額(元)': StockDaily.f_technicals_volume.交易金額,
+        '成交筆數': StockDaily.f_technicals_volume.交易筆數
     },
     True
 )

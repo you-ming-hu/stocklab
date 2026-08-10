@@ -1,4 +1,4 @@
-from ..... import schema
+from .....schema.tables import OTCDaily
 
 from ..base import MARGIN_V0, MARGIN_V1
 
@@ -23,16 +23,16 @@ class VERSION_0(MARGIN_V0):
         return df
 
 version_0 = VERSION_0(
-    schema.tables.OTCDaily,
+    OTCDaily,
     {
-        '融資買進合計(張)': schema.tables.OTCDaily.f_margin_flow_volume.融資_買進_股數,
-        '融資賣出合計(張)': schema.tables.OTCDaily.f_margin_flow_volume.融資_賣出_股數,
-        '現金償還合計(張)': schema.tables.OTCDaily.f_margin_flow_volume.融資_現償_股數,
-        '本日融資餘額合計(張)': schema.tables.OTCDaily.f_margin_balance_volume.融資_餘額_股數,
-        '融資買進融資金(仟元)': schema.tables.OTCDaily.f_margin_flow_value.融資_買進_金額,
-        '融資賣出融資金(仟元)': schema.tables.OTCDaily.f_margin_flow_value.融資_賣出_金額,
-        '現金償還融資金(仟元)': schema.tables.OTCDaily.f_margin_flow_value.融資_現償_金額,
-        '本日融資餘額融資金(仟元)': schema.tables.OTCDaily.f_margin_balance_value.融資_餘額_金額
+        '融資買進合計(張)': OTCDaily.f_margin_flow_volume.融資_買進_股數,
+        '融資賣出合計(張)': OTCDaily.f_margin_flow_volume.融資_賣出_股數,
+        '現金償還合計(張)': OTCDaily.f_margin_flow_volume.融資_現償_股數,
+        '本日融資餘額合計(張)': OTCDaily.f_margin_balance_volume.融資_餘額_股數,
+        '融資買進融資金(仟元)': OTCDaily.f_margin_flow_value.融資_買進_金額,
+        '融資賣出融資金(仟元)': OTCDaily.f_margin_flow_value.融資_賣出_金額,
+        '現金償還融資金(仟元)': OTCDaily.f_margin_flow_value.融資_現償_金額,
+        '本日融資餘額融資金(仟元)': OTCDaily.f_margin_balance_value.融資_餘額_金額
     },
     True
 )
@@ -59,16 +59,16 @@ class VERSION_1(MARGIN_V1):
         return df
 
 version_1 = VERSION_1(
-    schema.tables.OTCDaily,
+    OTCDaily,
     {
-        '資買合計(張)': schema.tables.OTCDaily.f_margin_flow_volume.融資_買進_股數,
-        '資賣合計(張)': schema.tables.OTCDaily.f_margin_flow_volume.融資_賣出_股數,
-        '現償合計(張)': schema.tables.OTCDaily.f_margin_flow_volume.融資_現償_股數,
-        '資餘額合計(張)': schema.tables.OTCDaily.f_margin_balance_volume.融資_餘額_股數,
-        '資買融資金(仟元)': schema.tables.OTCDaily.f_margin_flow_value.融資_買進_金額,
-        '資賣融資金(仟元)': schema.tables.OTCDaily.f_margin_flow_value.融資_賣出_金額,
-        '現償融資金(仟元)': schema.tables.OTCDaily.f_margin_flow_value.融資_現償_金額,
-        '資餘額融資金(仟元)': schema.tables.OTCDaily.f_margin_balance_value.融資_餘額_金額
+        '資買合計(張)': OTCDaily.f_margin_flow_volume.融資_買進_股數,
+        '資賣合計(張)': OTCDaily.f_margin_flow_volume.融資_賣出_股數,
+        '現償合計(張)': OTCDaily.f_margin_flow_volume.融資_現償_股數,
+        '資餘額合計(張)': OTCDaily.f_margin_balance_volume.融資_餘額_股數,
+        '資買融資金(仟元)': OTCDaily.f_margin_flow_value.融資_買進_金額,
+        '資賣融資金(仟元)': OTCDaily.f_margin_flow_value.融資_賣出_金額,
+        '現償融資金(仟元)': OTCDaily.f_margin_flow_value.融資_現償_金額,
+        '資餘額融資金(仟元)': OTCDaily.f_margin_balance_value.融資_餘額_金額
     },
     True
 )

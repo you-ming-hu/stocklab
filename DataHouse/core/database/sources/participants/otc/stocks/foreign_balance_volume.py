@@ -1,18 +1,18 @@
 from ..base import BALANCE_VOLUME_V0
-from ..... import schema
+from .....schema.tables import StockDaily
 
 class BASE(BALANCE_VOLUME_V0):
 
     def format_dtype(self, df):
         str_cols = [
-            schema.tables.StockDaily.f_stock_info.代號
+            StockDaily.f_stock_info.代號
         ]
         int_cols = [
-            schema.tables.StockDaily.f_stock_info.總發行股數,
-            schema.tables.StockDaily.f_foreign_balance_volume.外陸資_餘額_股數,
+            StockDaily.f_stock_info.總發行股數,
+            StockDaily.f_foreign_balance_volume.外陸資_餘額_股數,
         ]
         float_cols = [
-            schema.tables.StockDaily.f_foreign_limit.外陸資_投資上限_比率
+            StockDaily.f_foreign_limit.外陸資_投資上限_比率
         ]
         df = super().format_dtype(df, str_cols, int_cols, float_cols)
         return df
@@ -24,12 +24,12 @@ class VERSION_0(BASE):
         return df
 
 version_0 = VERSION_0(
-    schema.tables.StockDaily,
+    StockDaily,
     {
-        '證券代號': schema.tables.StockDaily.f_stock_info.代號,
-        '發行股數': schema.tables.StockDaily.f_stock_info.總發行股數,
-        '全體外資持有股數': schema.tables.StockDaily.f_foreign_balance_volume.外陸資_餘額_股數,
-        '法令投資上限比率': schema.tables.StockDaily.f_foreign_limit.外陸資_投資上限_比率,
+        '證券代號': StockDaily.f_stock_info.代號,
+        '發行股數': StockDaily.f_stock_info.總發行股數,
+        '全體外資持有股數': StockDaily.f_foreign_balance_volume.外陸資_餘額_股數,
+        '法令投資上限比率': StockDaily.f_foreign_limit.外陸資_投資上限_比率,
     },
     True
 )
@@ -41,12 +41,12 @@ class VERSION_1(BASE):
         return df
 
 version_1 = VERSION_1(
-    schema.tables.StockDaily,
+    StockDaily,
     {
-        '證券代號': schema.tables.StockDaily.f_stock_info.代號,
-        '發行股數': schema.tables.StockDaily.f_stock_info.總發行股數,
-        '全體外資及陸資持有股數': schema.tables.StockDaily.f_foreign_balance_volume.外陸資_餘額_股數,
-        '外資及陸資共用法令投資上限比率': schema.tables.StockDaily.f_foreign_limit.外陸資_投資上限_比率,
+        '證券代號': StockDaily.f_stock_info.代號,
+        '發行股數': StockDaily.f_stock_info.總發行股數,
+        '全體外資及陸資持有股數': StockDaily.f_foreign_balance_volume.外陸資_餘額_股數,
+        '外資及陸資共用法令投資上限比率': StockDaily.f_foreign_limit.外陸資_投資上限_比率,
     },
     True
 )

@@ -1,4 +1,4 @@
-from ..... import schema
+from .....schema.tables import TWSEDaily
 
 from ..base import MARGIN_V0
 
@@ -26,16 +26,16 @@ class VERSION_0(MARGIN_V0):
         return df
 
 version_0 = VERSION_0(
-    schema.tables.TWSEDaily,
+    TWSEDaily,
     {
-        '融資(交易單位)買進': schema.tables.TWSEDaily.f_margin_flow_volume.融資_買進_股數,
-        '融資(交易單位)賣出': schema.tables.TWSEDaily.f_margin_flow_volume.融資_賣出_股數,
-        '融資(交易單位)現金(券)償還': schema.tables.TWSEDaily.f_margin_flow_volume.融資_現償_股數,
-        '融資(交易單位)今日餘額': schema.tables.TWSEDaily.f_margin_balance_volume.融資_餘額_股數,
-        '融資金額(仟元)買進': schema.tables.TWSEDaily.f_margin_flow_value.融資_買進_金額,
-        '融資金額(仟元)賣出': schema.tables.TWSEDaily.f_margin_flow_value.融資_賣出_金額,
-        '融資金額(仟元)現金(券)償還': schema.tables.TWSEDaily.f_margin_flow_value.融資_現償_金額,
-        '融資金額(仟元)今日餘額': schema.tables.TWSEDaily.f_margin_balance_value.融資_餘額_金額
+        '融資(交易單位)買進': TWSEDaily.f_margin_flow_volume.融資_買進_股數,
+        '融資(交易單位)賣出': TWSEDaily.f_margin_flow_volume.融資_賣出_股數,
+        '融資(交易單位)現金(券)償還': TWSEDaily.f_margin_flow_volume.融資_現償_股數,
+        '融資(交易單位)今日餘額': TWSEDaily.f_margin_balance_volume.融資_餘額_股數,
+        '融資金額(仟元)買進': TWSEDaily.f_margin_flow_value.融資_買進_金額,
+        '融資金額(仟元)賣出': TWSEDaily.f_margin_flow_value.融資_賣出_金額,
+        '融資金額(仟元)現金(券)償還': TWSEDaily.f_margin_flow_value.融資_現償_金額,
+        '融資金額(仟元)今日餘額': TWSEDaily.f_margin_balance_value.融資_餘額_金額
     },
     True
 )
