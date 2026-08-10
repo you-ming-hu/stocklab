@@ -12,7 +12,7 @@ class Source:
         self.mapping = mapping
         self.pydatamodel = pydantic.create_model(
             table.__name__,
-            **{v: (v.pytype, None)for v in table.columns.values()}
+            **{v: (v.pytype, None) for v in table.columns.values()}
         )
         self.sqldatamodel = {v:v.sqltype for v in table.columns.values()}
         self.filename_is_data_date = filename_is_data_date
