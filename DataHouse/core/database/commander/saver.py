@@ -47,7 +47,7 @@ class Saver:
         table = self.item.table
         name = table.__name__
         
-        create = [f'\t{v} {v.sqltype}' for v in table.columns.values()]
+        create = [f'\t{v} {v.sqltype}' if v.default is None else f'\t{v} {v.sqltype} DEFAULT {v.default}' for v in table.columns.values()]
         create = create + [f'PRIMARY KEY {utils.to_sql_tuple(table.__primary_keys__)}']
         create = ',\n'.join(create)
         create = [
