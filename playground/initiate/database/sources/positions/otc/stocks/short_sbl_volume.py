@@ -1,10 +1,10 @@
 from ..... import schema
 
-from ..base import SHORT_SBL_VOLUME
+from ..base import SHORT_SBL_VOLUME_V0
 
 import pandas as pd
 
-class VERSION_0(SHORT_SBL_VOLUME):
+class VERSION_0(SHORT_SBL_VOLUME_V0):
         
     def format_dtype(self, df):
         str_cols = [
@@ -41,12 +41,7 @@ version_0 = VERSION_0(
     True
 )
 
-class VERSION_1(SHORT_SBL_VOLUME):
-
-    def to_df(self, content):
-        df = super().to_df(content)
-        df.columns = [c.replace(' ','') for c in df.columns]
-        return df
+class VERSION_1(SHORT_SBL_VOLUME_V0):
     
     def format_dtype(self, df):
         str_cols = [
@@ -91,6 +86,7 @@ version_1 = VERSION_1(
 )
 
 class VERSION_2(VERSION_1):
+
     def to_df(self, content):
         df = super().to_df(content)
         df.columns = pd.Index(['']*2+['融券']*6+['借券賣出']*6+['']) + df.columns

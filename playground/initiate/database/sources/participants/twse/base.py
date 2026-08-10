@@ -1,34 +1,35 @@
-from ...base import Source
+from ...base import Source, SUM
 
 import pandas as pd
 
-class FLOW_VOLUME(Source):
+class FLOW_VOLUME_V0(Source):
     
     def check_empty(self, content):
         return content['stat'] == '很抱歉，沒有符合條件的資料!'
     
     def to_df(self, content, column_count):
-        df = pd.DataFrame(columns=content['fields'], data=content['data'])
+        df = super().to_df(content)
         assert len(df.columns) == column_count
         return df
     
-class BALANCE_VOLUME(Source):
+class BALANCE_VOLUME_V0(Source):
     
     def check_empty(self, content):
         return content['data'] == []
     
     def to_df(self, content, column_count):
-        df = pd.DataFrame(columns=content['fields'], data=content['data'])
+        df = super().to_df(content)
         assert len(df.columns) == column_count
         return df
 
-class FLOW_VALUE(Source):
+class FLOW_VALUE_V0(Source):
     
     def check_empty(self, content):
         return content['stat'] == '很抱歉，沒有符合條件的資料!'
 
     def to_df(self, content, column_count):
-        df = pd.DataFrame(columns=content['fields'], data=content['data']).set_index('單位名稱')
+        df = super().to_df(content)
+        df = df.set_index('單位名稱')
         rearrange = {}
         for item, values in df.iterrows():
             for cate, value in values.items():
@@ -39,10 +40,4 @@ class FLOW_VALUE(Source):
 
     def format_dtype(self, df):
         df = super().format_dtype(df, int_cols=df.columns)
-        return df
-
-class SUM(Source):
-    def format_dtype(self, df):
-        df = super().format_dtype(df, int_cols=df.columns)
-        df = df.sum(axis=0).to_frame().T
         return df

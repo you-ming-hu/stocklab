@@ -1,10 +1,10 @@
 from ..... import schema
 
-from ..base import SHORT_SBL_VALUE
+from ..base import SHORT_SBL_VALUE_V0
 
 import pandas as pd
 
-class VERSION_0(SHORT_SBL_VALUE):
+class VERSION_0(SHORT_SBL_VALUE_V0):
     
     def to_df(self, content):
         head_cols = []

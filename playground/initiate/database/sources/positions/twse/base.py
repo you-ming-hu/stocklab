@@ -1,13 +1,13 @@
-from ...base import Source
+from ...base import Source, SUM
 
 import pandas as pd
 
-class MARGIN(Source):
+class MARGIN_V0(Source):
     
     def check_empty(self, content):
         return content['stat'] == '很抱歉，沒有符合條件的資料'
     
-class SHORT_SBL_VOLUME(Source):
+class SHORT_SBL_VOLUME_V0(Source):
     
     def check_empty(self, content):
         return content['data'] == []
@@ -25,13 +25,7 @@ class SHORT_SBL_VOLUME(Source):
         df = df.loc[df['股票代號']!='']
         return df
     
-class SHORT_SBL_VALUE(Source):
+class SHORT_SBL_VALUE_V0(Source):
     
     def check_empty(self, content):
         return content['stat'] == '很抱歉，沒有符合條件的資料!'
-
-class SUM(Source):
-    def format_dtype(self, df):
-        df = super().format_dtype(df, int_cols=df.columns)
-        df = df.sum(axis=0).to_frame().T
-        return df

@@ -1,8 +1,9 @@
 from ..... import schema
 
-from ..base import FLOW_VALUE
+from ..base import FLOW_VALUE_V0
 
-class VERSION_0(FLOW_VALUE):
+class VERSION_0(FLOW_VALUE_V0):
+
     def to_df(self, content):
         df = super().to_df(content, 12)
         return df
@@ -20,7 +21,8 @@ version_0 = VERSION_0(
     True
 )
 
-class VERSION_1(FLOW_VALUE):
+class VERSION_1(FLOW_VALUE_V0):
+
     def to_df(self, content):
         df = super().to_df(content, 12)
         return df
@@ -38,7 +40,8 @@ version_1 = VERSION_1(
     True
 )
 
-class VERSION_2(FLOW_VALUE):
+class VERSION_2(FLOW_VALUE_V0):
+
     def to_df(self, content):
         df = super().to_df(content, 15)
         return df
@@ -64,7 +67,8 @@ version_2 = VERSION_2(
     True
 )
 
-class VERSION_3(FLOW_VALUE):
+class VERSION_3(FLOW_VALUE_V0):
+    
     def to_df(self, content):
         df = super().to_df(content, 18)
         return df

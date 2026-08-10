@@ -1,10 +1,11 @@
 from ..... import schema
 
-from ..base import MARGIN
+from ..base import MARGIN_V0
 
 import pandas as pd
 
-class VERSION_0(MARGIN):
+class VERSION_0(MARGIN_V0):
+    
     def to_df(self, content):
         for table in content['tables']:
             if 'title' in table:

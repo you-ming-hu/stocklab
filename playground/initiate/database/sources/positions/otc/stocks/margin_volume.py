@@ -5,6 +5,7 @@ from ..base import MARGIN_V0, MARGIN_V1
 import pandas as pd
 
 class VERSION_0(MARGIN_V0):
+
     def to_df(self, content):
         df, market = super().to_df(content)
         return df
@@ -38,6 +39,7 @@ version_0 = VERSION_0(
 )
 
 class VERSION_1(MARGIN_V1):
+    
     def to_df(self, content):
         content = super().to_df(content)
         df = pd.DataFrame(columns=content['fields'],data=content['data'])

@@ -1,11 +1,10 @@
 from ..... import schema
 
-from ..base import FLOW_VALUE
+from ..base import FLOW_VALUE_V0
 
-import pathlib
 import pandas as pd
 
-class VERSION_0(FLOW_VALUE):
+class VERSION_0(FLOW_VALUE_V0):
     
     def open(self, file):
         return super().open(file, 'text', True)
@@ -33,7 +32,7 @@ version_0 = VERSION_0(
     True
 )
 
-class VERSION_1(FLOW_VALUE):
+class VERSION_1(FLOW_VALUE_V0):
 
     def to_df(self, content):
         df = super().to_df(content)
@@ -69,7 +68,8 @@ version_2 = VERSION_2(
     True
 )
 
-class VERSION_3(FLOW_VALUE):
+class VERSION_3(FLOW_VALUE_V0):
+
     def to_df(self, content):
         df = super().to_df(content)
         df = self.flat_df(df,'單位名稱', 18)
@@ -92,7 +92,8 @@ version_3 = VERSION_3(
     True
 )
 
-class VERSION_4(FLOW_VALUE):
+class VERSION_4(FLOW_VALUE_V0):
+
     def to_df(self, content):
         df = super().to_df(content)
         df = self.flat_df(df,'單位名稱', 12)
@@ -113,7 +114,8 @@ version_4 = VERSION_4(
     True
 )
 
-class VERSION_5(FLOW_VALUE):
+class VERSION_5(FLOW_VALUE_V0):
+    
     def to_df(self, content):
         df = super().to_df(content)
         df = self.flat_df(df,'單位名稱', 24)

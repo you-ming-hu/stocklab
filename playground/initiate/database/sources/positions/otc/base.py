@@ -1,14 +1,13 @@
-from ...base import Source
+from ...base import Source, SUM
 
 import pandas as pd
-import pathlib
 from bs4 import BeautifulSoup
 import re
-import json
 
 class MARGIN_V0(Source):
+
     def open(self, file):
-        return super().open(file, 'json', True)
+        return super().open(file, 'text', True)
     
     def to_df(self, content):
         content, file = content
@@ -92,54 +91,38 @@ class MARGIN_V0(Source):
     def check_empty(self, content):
         text, file = content
         return 'Sorry, the page you requested was not found' in text
-    
-class MARGIN_V1(Source):
-    def open(self, file):
-        return super().open(file, 'json', True)
 
+class MARGIN_V1(Source):
+    
     def check_empty(self, content):
-        content, file = content
         if 'tables' in content:
             return len(content['tables'][0]['data']) == 0
         else:
             return content['stat'] =='很抱歉，沒有符合條件的資料!'
     
     def to_df(self, content):
-        content, file = content
-        assert content['date'] == file.stem
         assert len(content['tables']) == 1
         content = content['tables'][0]
         assert content['title'] == '上櫃股票融資融券餘額'
         return content
     
-class SHORT_SBL_VOLUME(Source):
+class SHORT_SBL_VOLUME_V0(Source):
     
     def check_empty(self, content):
         return len(content['tables'][0]['data']) == 0
     
     def to_df(self, content):
-        content = content['tables'][0]
-        df = pd.DataFrame(
-            data=content['data'],
-            columns=content['fields'],
-        )
+        table = content['tables'][0]
+        df = super().to_df(table)
+        df.columns = [c.replace(' ','') for c in df.columns]
         return df
     
-class SHORT_SBL_VALUE(Source):
+class SHORT_SBL_VALUE_V0(Source):
     
     def check_empty(self, content):
         return len(content['tables'][0]['data']) == 0
-    
-    def to_df(self, content):
-        content = content['tables'][0]
-        df = pd.DataFrame(
-            data=content['data'],
-            columns=content['fields'],
-        )
-        return df
 
-class SUM(Source):
-    def format_dtype(self, df):
-        df = super().format_dtype(df, int_cols=df.columns)
-        df = df.sum(axis=0).to_frame().T
+    def to_df(self, content):
+        table = content['tables'][0]
+        df = super().to_df(table)
         return df

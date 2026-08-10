@@ -1,7 +1,8 @@
-from ..base import FLOW_VOLUME
+from ..base import FLOW_VOLUME_V0
 from ..... import schema
 
-class VERSION_0(FLOW_VOLUME):
+class VERSION_0(FLOW_VOLUME_V0):
+
     def to_df(self, content):
         df = super().to_df(content, 12)
         return df
@@ -35,7 +36,8 @@ version_0 = VERSION_0(
     True
 )
 
-class VERSION_1(FLOW_VOLUME):
+class VERSION_1(FLOW_VOLUME_V0):
+
     def to_df(self, content):
         df = super().to_df(content, 16)
         return df
@@ -80,7 +82,8 @@ version_1 = VERSION_1(
     True
 )
 
-class VERSION_2(FLOW_VOLUME):
+class VERSION_2(FLOW_VOLUME_V0):
+    
     def to_df(self, content):
         df = super().to_df(content, 19)
         return df

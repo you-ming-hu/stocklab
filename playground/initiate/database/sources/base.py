@@ -106,3 +106,10 @@ class Source:
         else:
             df = self.standardize(content, file)
             return df
+
+class SUM:
+    
+    def format_dtype(self, df):
+        df = Source.format_dtype(self, df, int_cols=df.columns)
+        df = df.sum(axis=0).to_frame().T
+        return df

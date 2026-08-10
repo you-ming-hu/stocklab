@@ -1,10 +1,9 @@
-from ...base import Source
+from ...base import Source, SUM
 
 import pandas as pd
-import pathlib
 from bs4 import BeautifulSoup
 
-class FLOW_VOLUME(Source):
+class FLOW_VOLUME_V0(Source):
     
     def check_empty(self, content, name='totalCount'):
         target_table = None
@@ -19,15 +18,13 @@ class FLOW_VOLUME(Source):
             if name in table:
                 target_table = table
         assert target_table is not None
-        df = pd.DataFrame(
-            target_table['data'],
-            columns=target_table['fields'],
-        )
+        df = super().to_df(target_table)
         return df
     
-class BALANCE_VOLUME(Source):
+class BALANCE_VOLUME_V0(Source):
+
     def open(self, file):
-        return super().open(file, 'text', True)
+        return super().open(file, 'text', False)
     
     def check_empty(self, content):
         return '查無所需資料' in content
@@ -45,7 +42,8 @@ class BALANCE_VOLUME(Source):
         assert len(df.columns) == column_count, len(df.columns)
         return df
 
-class FLOW_VALUE(Source):
+class FLOW_VALUE_V0(Source):
+    
     def check_empty(self, content):
         return len(content['tables'][0]['data']) == 0
 
@@ -67,8 +65,6 @@ class FLOW_VALUE(Source):
         df = pd.Series(rearrange).to_frame().T
         return df
 
-class SUM(Source):
     def format_dtype(self, df):
         df = super().format_dtype(df, int_cols=df.columns)
-        df = df.sum(axis=0).to_frame().T
         return df

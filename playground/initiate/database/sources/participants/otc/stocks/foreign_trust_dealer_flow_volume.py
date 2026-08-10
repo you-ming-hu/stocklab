@@ -1,9 +1,9 @@
-from ..base import FLOW_VOLUME
+from ..base import FLOW_VOLUME_V0
 from ..... import schema
 
 import pandas as pd
 
-class VERSION_0(FLOW_VOLUME):
+class VERSION_0(FLOW_VOLUME_V0):
     
     def format_dtype(self, df):
         str_cols= [
@@ -34,7 +34,7 @@ version_0 = VERSION_0(
     True
 )
 
-class VERSION_1(FLOW_VOLUME):
+class VERSION_1(FLOW_VOLUME_V0):
     
     def format_dtype(self, df):
         str_cols= [
@@ -75,7 +75,8 @@ version_1 = VERSION_1(
     True
 )
 
-class VERSION_2(FLOW_VOLUME):
+class VERSION_2(FLOW_VOLUME_V0):
+    
     def to_df(self, content):
         df = super().to_df(content)
         groups = pd.Index(

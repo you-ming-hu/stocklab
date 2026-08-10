@@ -38,6 +38,7 @@ version_0 = VERSION_0(
 )
 
 class VERSION_1(MARGIN_V1):
+    
     def to_df(self, content):
         content = super().to_df(content)
         df = pd.DataFrame(columns=content['fields'],data=content['summary'])

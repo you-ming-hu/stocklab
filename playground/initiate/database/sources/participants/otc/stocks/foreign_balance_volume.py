@@ -1,7 +1,7 @@
-from ..base import BALANCE_VOLUME
+from ..base import BALANCE_VOLUME_V0
 from ..... import schema
 
-class BASE(BALANCE_VOLUME):
+class BASE(BALANCE_VOLUME_V0):
 
     def format_dtype(self, df):
         str_cols = [
@@ -18,6 +18,7 @@ class BASE(BALANCE_VOLUME):
         return df
 
 class VERSION_0(BASE):
+
     def to_df(self, content):
         df = super().to_df(content, 10)
         return df
@@ -34,6 +35,7 @@ version_0 = VERSION_0(
 )
 
 class VERSION_1(BASE):
+    
     def to_df(self, content):
         df = super().to_df(content, 11)
         return df
