@@ -1,4 +1,6 @@
 {
-    "database_path": "data/stocklab.db",
-    "init_root_path": "data/init"
+    "database_path": "data/stocklab-test.db",
+    "download_backup_path": "data/backup",
+    "download_cache_path": "data/cache"
+
 }

@@ -47,8 +47,8 @@ class Source:
             for c in cols:
                 if df[c].dtype == dtype:
                     continue
-                df[c] = df[c].map(lambda t: re.sub(r'[^0-9.-]','',t)).replace('',pd.NA)
-                df[c] = df[c].map(lambda t: t if bool(re.match(r'^[+-]?[0-9]*\.?[0-9]*$',t)) else pd.NA)
+                df[c] = df[c].map(lambda t: re.sub(r'[^0-9.-]','',t))
+                df[c] = df[c].map(lambda t: t if bool(re.match(r'^[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)$',t)) else pd.NA)
                 df[c] = df[c].map(lambda x: dtype(x) if not pd.isna(x) else x)
         for c in date_cols:
             df[c] = df[c].apply(pd.Timestamp)
