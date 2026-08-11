@@ -1,5 +1,5 @@
 {
-    "database_path": "data/stocklab-test.db",
+    "database_path": "data/stocklab.db",
     "download_backup_path": "data/backup",
     "download_cache_path": "data/cache"
 
