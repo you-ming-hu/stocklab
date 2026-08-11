@@ -1,5 +1,3 @@
-import sqlite3
-
 from functools import wraps
 
 def exec_many(func):
