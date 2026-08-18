@@ -1,6 +1,9 @@
 from .utils import Field as F
 from .utils import FieldGroup as FG
 
+class Index(FG):
+    代號 = F('id', str)
+
 class Info(FG):
     代號 = F('id', str)
     名稱 = F('name', str)

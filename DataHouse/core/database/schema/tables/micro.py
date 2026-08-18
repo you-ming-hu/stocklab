@@ -40,6 +40,16 @@ class StockDaily(base.Table):
 
     f_dealer_flow_volume = fields.participants.dealer.FlowVolume
 
+class ShareholdingDistribution(base.Table):
+    __primary_keys__ = [
+        fields.stock.Index.代號,
+        fields.base.DataTimestamp.資料日期
+    ]
+    __additional_index__ = [
+    ]
+    f_index = fields.stock.Index
+    f_shareholding_distribution = fields.stock.ShareholdingDistribution
+
 class CompanyInfo(base.Table):
     __primary_keys__ = [
         fields.base.DataTimestamp.資料日期,
@@ -54,14 +64,11 @@ class CompanyInfo(base.Table):
     ]
     f_company_info = fields.company.Info
 
-class ShareholdingDistribution(base.Table):
+class FinancialStatement(base.Table):
     __primary_keys__ = [
-        fields.company.Info.代號,
+        fields.company.Index.代號,
         fields.base.DataTimestamp.資料日期
     ]
-    __additional_index__ = [
-    ]
-    f_shareholding_distribution = fields.stock.ShareholdingDistribution
-
-class FinancialStatement(base.Table):
-    pass
+    f_index = fields.company.Index
+    f_season = fields.meta.Season
+    f_financial_statement = fields.company.FinancialStatement
