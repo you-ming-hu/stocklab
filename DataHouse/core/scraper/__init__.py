@@ -42,7 +42,7 @@ class Scraper:
             assert False, f'not recognizable request method: {method}'
         return res
 
-    def save(self, res, filename):
+    def save(self, res, filename, sup=None):
         data = res.json()
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
@@ -52,7 +52,7 @@ class Scraper:
         session.headers.update(header)
         return session
 
-    def download(self, session, request_info, filename, timeout, cooldown_if_abnormal=False):
+    def download(self, session, request_info, filename, timeout, cooldown_if_abnormal=False, sup=None):
         COOLDOWN_TIME = self.COOLDOWN_TIME
         try:
             print('Requesting', end='\t')
@@ -73,7 +73,7 @@ class Scraper:
             return False
 
         try:
-            self.save(res, filename)
+            self.save(res, filename, sup)
         
         except Exception as err:
             print(err)
@@ -85,10 +85,10 @@ class Scraper:
         print('Finisih', end='\t')
         return True
 
-    def download_single(self, session, request_info, filename, timeout, cooldown_if_abnormal=False):
+    def download_single(self, session, request_info, filename, timeout, cooldown_if_abnormal=False, sup=None):
         MIN_SLEEP_TIME = self.MIN_SLEEP_TIME
         MAX_SLEEP_TIME = self.MAX_SLEEP_TIME
-        success = self.download(session, request_info, filename, timeout, cooldown_if_abnormal)
+        success = self.download(session, request_info, filename, timeout, cooldown_if_abnormal, sup)
         sleep_time = random.uniform(MIN_SLEEP_TIME, MAX_SLEEP_TIME)
         print(f'Sleep: {sleep_time:.1f}')
         time.sleep(sleep_time)
@@ -122,62 +122,87 @@ class Scraper:
         dates = pd.date_range(start_date, end_date, freq=self.freq)
         self.download_batch(dates, save_dir, iteration, timeout)
         return True
-    
-class IndustryScraper(Scraper):
+
+class CompanyInfoScraper(Scraper):
     MIN_SLEEP_TIME = 0.1
     MAX_SLEEP_TIME = 1
 
     def __init__(self, suffix='.json'):
         super().__init__('D', suffix)
+        self.overview_file_name = 'overview.json'
+        self.company_folder_name = 'companies'
 
-    def create_session(self):
+    def create_overview_session(self):
+        raise NotImplementedError
+
+    def create_overview_request_info(self):
+        raise NotImplementedError
+
+    def overview_request(self, session, request_info, timeout):
+        raise NotImplementedError
+
+    def parse_company_table(self, table, mapping):
+        df = pd.DataFrame(table)
+        df = df.loc[:, [c for c in mapping.keys()]]
+        df.columns = [mapping[c] for c in df.columns]
+        for c in df.columns:
+            df[c] = df[c].str.replace(' ','').str.replace('*','')
+        return df
+
+    def create_company_session(self):
         header = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         }
         return super().create_session(header)
     
-    def create_request_info(self, stock_id):
+    def create_company_request_info(self, stock_id):
         url = 'https://ic.tpex.org.tw/company_chain.php'
         param = {'stk_code':stock_id}
         return url, param
-    
-    def request(self, session, request_info, timeout):
+
+    def request(self, session, request_info, method, timeout):
         return super().request(session, request_info, 'get', timeout)
     
     def download_batch(self, dates, save_dir, iteration, timeout=10):
         assert len(dates) == 1, 'the dates parameter is just a placeholder for formality, multiple dates is invalid'
         RESTART_SESSION_COUNT = self.RESTART_SESSION_COUNT
         save_dir = pathlib.Path(save_dir, iteration, dates[0].strftime("%Y%m%d"))
-        save_dir.mkdir(parents=True, exist_ok=True)
+        company_dir = save_dir.joinpath(self.company_folder_name)
+        company_dir.mkdir(parents=True, exist_ok=True)
 
-        with open(self.company_table_path) as f:
-            table = json.load(f)
-        stocks = self.get_company_ids(table)
+        overview_path = save_dir.joinpath(self.overview_file_name)
+        overview_session = self.create_overview_session()
+        overview_request_info = self.create_overview_request_info()
+        overview_res = self.overview_request(overview_session, overview_request_info, timeout)
+        super().save(overview_res, overview_path)
+
+        with open(overview_path) as f:
+            company_table = json.load(f)
+
+        company_table = self.parse_company_table(company_table)
+        company_session = self.create_company_session()
 
         request_count = 0
-        for i, stock in enumerate(stocks):
-            print(f'{stock}, {i}/{len(stocks)}', end='\t')
-            filename = save_dir.joinpath(stock).with_suffix(self.suffix)
+        for i, row in company_table.iterrows():
+            company_id = row['代號']
+            print(f'{company_id}, {i}/{len(company_table)}', end='\t')
+            filename = company_dir.joinpath(company_id).with_suffix(self.suffix)
             if not filename.exists():
                 if request_count % RESTART_SESSION_COUNT == 0:
-                    session = self.create_session()
-                request_info = self.create_request_info(stock)
-                while not self.download_single(session, request_info, filename, timeout, True):
+                    company_session = self.create_company_session()
+                company_request_info = self.create_company_request_info(company_id)
+                while not self.download_single(company_session, company_request_info, filename, timeout, True, sup=row):
                     request_count += 1
             else:
                 print(f'{self.suffix.replace('.','').upper()} Exist')
         return True
     
-    def find_latest_company_table(self, path, suffix='.json'):
-        self.company_table_path = sorted(pathlib.Path(path).glob('*'+suffix))[-1]
-
-    def save(self, res, filename):
+    def save(self, res, filename, sup):
         res.encoding = 'utf-8'
         soup = BeautifulSoup(res.text, 'html.parser')
         table = soup.find('body').find('center').find('div', 'main-panel').find('div', 'content-panel-main').find('div', 'content').find_all('h4')
         data = [l.text.replace('►','').replace('\xa0','').split('>') for l in table[1:]]
+        data = [{'營運產業':d[0], '題材':d[1]} for d in data]
+        data = [sup.to_dict()|d for d in data]
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
-
-    def get_company_ids(self, table):
-        raise NotImplementedError

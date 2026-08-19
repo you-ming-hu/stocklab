@@ -13,7 +13,7 @@ class Info(FG):
     題材 = F('theme', str)
 
 class FinancialStatement(FG):
-    每股盈餘 = F('earnings_per_share', int)
+    每股盈餘 = F('earnings_per_share', float)
     營業收入 = F('operating_revenue', int)
     營業利益 = F('operating_income', int)
     營業外收入及支出 = F('non_operating_income_expenses', int)
