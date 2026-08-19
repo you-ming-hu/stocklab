@@ -115,17 +115,23 @@ class Scraper:
         return True
 
     def download_by_date_range(self, start_date, end_date, save_dir, iteration, timeout=10):
-        if start_date is None:
-            start_date = pd.Timestamp.today().date()
         if end_date is None:
             end_date = pd.Timestamp.today().date()
+        else:
+            end_date = pd.Timestamp(end_date)
+        if start_date is None:
+            start_date = pd.Timestamp.today().date()
+        elif isinstance(start_date, int):
+            start_date = end_date + pd.Timedelta(start_date, 'day')
+        else:
+            start_date = pd.Timestamp(start_date)        
         dates = pd.date_range(start_date, end_date, freq=self.freq)
         self.download_batch(dates, save_dir, iteration, timeout)
         return True
 
 class CompanyInfoScraper(Scraper):
-    MIN_SLEEP_TIME = 0.1
-    MAX_SLEEP_TIME = 1
+    MIN_SLEEP_TIME = 0
+    MAX_SLEEP_TIME = 0.1
 
     def __init__(self, suffix='.json'):
         super().__init__('D', suffix)

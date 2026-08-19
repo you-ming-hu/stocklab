@@ -1,6 +1,8 @@
 from .. import Scraper
 
-class URL_1(Scraper):
+class URL_0(Scraper):
+    MIN_SLEEP_TIME = 0
+    MAX_SLEEP_TIME = 0.1
 
     def request(self, session, request_info, timeout, method='get'):
         return super().request(session, request_info, method, timeout)
@@ -16,4 +18,4 @@ class URL_1(Scraper):
         params = {}
         return url, params
 
-url_1 = URL_1('WS', '.json')
+url_0 = URL_0('W-FRI', '.json')

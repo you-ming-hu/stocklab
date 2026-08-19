@@ -2,8 +2,6 @@ from ... import CompanyInfoScraper
 from ..base import OTCScraper
 
 class URL_0(OTCScraper, CompanyInfoScraper):
-    MIN_SLEEP_TIME = 0
-    MAX_SLEEP_TIME = 0.1
 
     def create_overview_session(self):
         return self.create_session()
