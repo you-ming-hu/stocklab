@@ -79,15 +79,18 @@ class Saver:
 
     def update_database(self, start_date=None, end_date=None):
         print(f'{self.item.table.__name__} start')
-        files = sorted(self.item.path.iterdir())
-        if not start_date is None:
-            files = [f for f in files if pd.Timestamp(f.stem) >= pd.Timestamp(start_date)]
-        if not end_date is None:
-            files = [f for f in files if pd.Timestamp(f.stem) <= pd.Timestamp(end_date)]
-        for file in files:
-            print(f'processing: {file.stem}')
-            df = self.item.get_df(file.name)
-            if df is None:
-                continue
-            self.save_df(df)
-        print(f'{self.item.table.__name__} finished')
+        if self.item.path.exists():
+            files = sorted(self.item.path.iterdir())
+            if not start_date is None:
+                files = [f for f in files if pd.Timestamp(f.stem) >= pd.Timestamp(start_date)]
+            if not end_date is None:
+                files = [f for f in files if pd.Timestamp(f.stem) <= pd.Timestamp(end_date)]
+            for file in files:
+                print(f'processing: {file.stem}')
+                df = self.item.get_df(file.name)
+                if df is None:
+                    continue
+                self.save_df(df)
+            print(f'{self.item.table.__name__} finished')
+        else:
+            print(f'{self.item.path} not exist')
