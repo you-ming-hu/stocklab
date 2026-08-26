@@ -14,7 +14,7 @@ class URL_0(OTCScraper):
         )
         return url, data
     
-    def save(self, res, filename):
+    def save(self, res, filename, sup):
         self.old_api_save(res, filename)
         
 url_0 = URL_0('D', '.html')
