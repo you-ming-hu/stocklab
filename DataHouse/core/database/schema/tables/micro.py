@@ -1,0 +1,74 @@
+from .. import fields
+from . import base
+
+class StockDaily(base.Table):
+    __primary_keys__ = [
+        fields.stock.Info.代號,
+        fields.base.DataTimestamp.資料日期
+    ]
+    __additional_index__ = [
+        [
+            fields.stock.Info.交易中,
+            fields.base.DataTimestamp.資料日期,
+        ]
+    ]
+    
+    f_stock_info = fields.stock.Info
+    
+    f_technicals_price = fields.technicals.Price
+    f_technicals_volume = fields.technicals.Volume
+    
+    f_margin_flow_volume = fields.positions.margin.FlowVolume
+    f_margin_balance_volume = fields.positions.margin.BalanceVolume
+    f_margin_limit = fields.positions.margin.Limit
+
+    f_short_flow_volume = fields.positions.short.FlowVolume
+    f_short_balance_volume = fields.positions.short.BalanceVolume
+    f_short_flow_value = fields.positions.short.FlowValue
+    f_short_limit = fields.positions.short.Limit
+    
+    f_sbl_flow_volume = fields.positions.shortSBL.FlowVolume
+    f_sbl_balance_volume = fields.positions.shortSBL.BalanceVolume
+    f_sbl_flow_value = fields.positions.shortSBL.FlowValue
+    f_sbl_limit = fields.positions.shortSBL.Limit
+
+    f_foreign_flow_volume = fields.participants.foreign.FlowVolume
+    f_foreign_balance_volume = fields.participants.foreign.BalanceVolume
+    f_foreign_limit = fields.participants.foreign.Limit
+
+    f_trust_flow_volume = fields.participants.trust.FlowVolume
+
+    f_dealer_flow_volume = fields.participants.dealer.FlowVolume
+
+class ShareholdingDistribution(base.Table):
+    __primary_keys__ = [
+        fields.stock.Index.代號,
+        fields.base.DataTimestamp.資料日期
+    ]
+    __additional_index__ = [
+    ]
+    f_index = fields.stock.Index
+    f_shareholding_distribution = fields.stock.ShareholdingDistribution
+
+class CompanyInfo(base.Table):
+    __primary_keys__ = [
+        fields.base.DataTimestamp.資料日期,
+        fields.company.Info.主要登記產業,
+        fields.company.Info.營運產業,
+        fields.company.Info.題材,
+        fields.company.Info.市場別,
+        fields.company.Info.代號
+    ]
+    __additional_index__ = [
+        fields.company.Info.名稱
+    ]
+    f_company_info = fields.company.Info
+
+class FinancialStatement(base.Table):
+    __primary_keys__ = [
+        fields.company.Index.代號,
+        fields.base.DataTimestamp.資料日期
+    ]
+    f_index = fields.company.Index
+    f_season = fields.meta.Season
+    f_financial_statement = fields.company.FinancialStatement
